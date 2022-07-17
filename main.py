@@ -126,10 +126,9 @@ def appProfileScan():
                 apps.append([appId, appType])
             elif profile[0] in line and "DefaultProfileId" in line:
                 if "GroupConfigs\\" in aaconfig[currIndex - 1]:
-                    groupId = aaconfig[currIndex + 4].replace("Id", "").replace("REG_SZ", "").replace(" ", "")
-                    groupName = aaconfig[currIndex + 5].replace("Name", "").replace("REG_SZ", "").replace(" ", "")
-                    groupType = aaconfig[currIndex + 6].replace("Type", "").replace("REG_DWORD", "").replace(" ", "")
-                    accounts.append(["Group", groupId, groupName, groupType])
+                    groupName = aaconfig[currIndex + 5].replace("Id", "").replace("REG_SZ", "").replace(" ", "")                    
+                    groupType = aaconfig[currIndex + 7].replace("Type", "").replace("REG_DWORD", "").replace(" ", "")
+                    accounts.append(["Group", groupName, groupType])
                 elif "Configs\\" in aaconfig[currIndex - 1]:
                     userId = aaconfig[currIndex + 4].replace("Id", "").replace("REG_SZ", "").replace(" ", "")
                     userName = aaconfig[currIndex + 5].replace("Name", "").replace("REG_SZ", "").replace(" ", "")
@@ -178,9 +177,10 @@ def problemCheck():
             print("\n And is assigned to the following accounts:\n")
 
             for account in accounts:
-                print("{}) {} {} of type {} with the name {}".format(accCount, account[0], account[1], account[3], account [2]))
-                accCount += 1
-                if account[0] == "User":
+                if account[0] == "Group":
+                    print("{}) Group {} of type {}".format(accCount, account[1], account [2]))
+                elif account[0] == "User":
+                    print("{}) User {} of type {} with the name {}".format(accCount, account[1], account[3], account [2]))  
                     for app in apps:
                         if app[0] not in notInstalled and app[1] == "UWP":
                             isInstalledForUser = False
@@ -196,7 +196,7 @@ def problemCheck():
                             
                             if not isInstalledForUser:
                                 errors.append("App {} not registered/installed for user {} with SID: {}.\n".format(app[0], account[2], account[1]))
-                            
+                accCount += 1                     
     return errors
 
 
