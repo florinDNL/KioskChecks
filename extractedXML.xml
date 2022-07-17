@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='utf-8'?>
+<AssignedAccessConfiguration xmlns="http://schemas.microsoft.com/AssignedAccess/2017/config">
+  <Profiles>
+    <Profile Id="{671F24EB-BE8E-4C2A-9E03-C22EBF0295EE}">
+      <AllAppsList>
+        <AllowedApps>
+          <App AppUserModelId="Microsoft.GetHelp_8wekyb3d8bbwe!App" />
+          <App AppUserModelId="Microsoft.PPIProjection_cw5n1h2txyewy!Microsoft.PPIProjection" />
+          <App AppUserModelId="Microsoft.549981C3F5F10_8wekyb3d8bbwe!App" />
+          <App AppUserModelId="Microsoft.ZuneMusic_8wekyb3d8bbwe!Microsoft.ZuneMusic" />
+        </AllowedApps>
+      </AllAppsList>
+      <StartLayout>&lt;LayoutModificationTemplate xmlns:defaultlayout="http://schemas.microsoft.com/Start/2014/FullDefaultLayout" Version="1" xmlns:start="http://schemas.microsoft.com/Start/2014/StartLayout" xmlns="http://schemas.microsoft.com/Start/2014/LayoutModification"&gt;   &lt;LayoutOptions StartTileGroupCellWidth="6" /&gt;   &lt;DefaultLayoutOverride&gt;     &lt;StartLayoutCollection&gt;       &lt;defaultlayout:StartLayout GroupCellWidth="6"&gt;         &lt;start:Group Name="App Group"&gt;           &lt;start:Tile Size="2x2" Column="0" Row="0" AppUserModelID="Microsoft.GetHelp_8wekyb3d8bbwe!App" /&gt;           &lt;start:Tile Size="2x2" Column="2" Row="0" AppUserModelID="Microsoft.PPIProjection_cw5n1h2txyewy!Microsoft.PPIProjection" /&gt;         &lt;/start:Group&gt;       &lt;/defaultlayout:StartLayout&gt;     &lt;/StartLayoutCollection&gt;   &lt;/DefaultLayoutOverride&gt; &lt;/LayoutModificationTemplate&gt;</StartLayout>
+      <Taskbar ShowTaskbar="false" />
+    </Profile>
+    <Profile Id="{709B5B23-D7BC-4FA4-8707-2EA1D4176CDE}">
+      <AllAppsList>
+        <AllowedApps>
+          <App AppUserModelId="Microsoft.549981C3F5F10_8wekyb3d8bbwe!App" />
+          <App AppUserModelId="Microsoft.GetHelp_8wekyb3d8bbwe!App" />
+          <App AppUserModelId="microsoft.windowscommunicationsapps_8wekyb3d8bbwe!microsoft.windowslive.mail" />
+        </AllowedApps>
+      </AllAppsList>
+      <StartLayout>&lt;LayoutModificationTemplate xmlns:defaultlayout="http://schemas.microsoft.com/Start/2014/FullDefaultLayout" Version="1" xmlns:start="http://schemas.microsoft.com/Start/2014/StartLayout" xmlns="http://schemas.microsoft.com/Start/2014/LayoutModification"&gt;   &lt;LayoutOptions StartTileGroupCellWidth="6" /&gt;   &lt;DefaultLayoutOverride&gt;     &lt;StartLayoutCollection&gt;       &lt;defaultlayout:StartLayout GroupCellWidth="6"&gt;         &lt;start:Group Name="App Group"&gt;           &lt;start:Tile Size="2x2" Column="0" Row="0" AppUserModelID="Microsoft.549981C3F5F10_8wekyb3d8bbwe!App" /&gt;         &lt;/start:Group&gt;       &lt;/defaultlayout:StartLayout&gt;     &lt;/StartLayoutCollection&gt;   &lt;/DefaultLayoutOverride&gt; &lt;/LayoutModificationTemplate&gt;</StartLayout>
+      <Taskbar ShowTaskbar="false" />
+    </Profile>
+  </Profiles>
+  <Configs>
+    <Config>
+      <Account>test</Account>
+      <DefaultProfile Id="{671F24EB-BE8E-4C2A-9E03-C22EBF0295EE}" />
+    </Config>
+    <Config>
+      <Account>EdgeKiosk</Account>
+      <DefaultProfile Id="{709B5B23-D7BC-4FA4-8707-2EA1D4176CDE}" />
+    </Config>
+  </Configs>
+</AssignedAccessConfiguration>
