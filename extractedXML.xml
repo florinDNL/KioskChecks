@@ -1,38 +1,85 @@
 <?xml version='1.0' encoding='utf-8'?>
-<AssignedAccessConfiguration xmlns="http://schemas.microsoft.com/AssignedAccess/2017/config">
+<AssignedAccessConfiguration xmlns="http://schemas.microsoft.com/AssignedAccess/2017/config" xmlns:v2="http://schemas.microsoft.com/AssignedAccess/201810/config" xmlns:v3="http://schemas.microsoft.com/AssignedAccess/2020/config">
   <Profiles>
-    <Profile Id="{671F24EB-BE8E-4C2A-9E03-C22EBF0295EE}">
+    <Profile Id="{85D1EB23-D08B-48B7-8E0A-7E777E99B698}">
       <AllAppsList>
         <AllowedApps>
-          <App AppUserModelId="Microsoft.GetHelp_8wekyb3d8bbwe!App" />
+          <App DesktopAppPath="C:\WINDOWS\system32\taskmgr.exe" />
           <App AppUserModelId="Microsoft.PPIProjection_cw5n1h2txyewy!Microsoft.PPIProjection" />
-          <App AppUserModelId="Microsoft.549981C3F5F10_8wekyb3d8bbwe!App" />
+          <App AppUserModelId="Microsoft.WindowsFeedbackHub_8wekyb3d8bbwe!App" />
+          <App AppUserModelId="Microsoft.WindowsAlarms_8wekyb3d8bbwe!App" />
+          <App DesktopAppPath="C:\Windows\explorer.exe" />
+          <App AppUserModelId="Microsoft.Microsoft3DViewer_8wekyb3d8bbwe!Microsoft.Microsoft3DViewer" />
+          <App AppUserModelId="microsoft.windowscommunicationsapps_8wekyb3d8bbwe!microsoft.windowslive.calendar" />
+        </AllowedApps>
+      </AllAppsList>
+      <v2:FileExplorerNamespaceRestrictions>
+        <v3:NoRestriction />
+      </v2:FileExplorerNamespaceRestrictions>
+      <StartLayout>&lt;LayoutModificationTemplate xmlns:defaultlayout="http://schemas.microsoft.com/Start/2014/FullDefaultLayout" Version="1" xmlns:start="http://schemas.microsoft.com/Start/2014/StartLayout" xmlns="http://schemas.microsoft.com/Start/2014/LayoutModification"&gt;   &lt;LayoutOptions StartTileGroupCellWidth="6" /&gt;   &lt;DefaultLayoutOverride&gt;     &lt;StartLayoutCollection&gt;       &lt;defaultlayout:StartLayout GroupCellWidth="6"&gt;         &lt;start:Group Name="App Group"&gt;           &lt;start:DesktopApplicationTile Size="2x2" Column="0" Row="0" DesktopApplicationLinkPath="C:\ProgramData\Microsoft\Windows\Start Menu\Programs\System Tools\Task Manager.lnk" /&gt;           &lt;start:Tile Size="2x2" Column="2" Row="0" AppUserModelID="Microsoft.PPIProjection_cw5n1h2txyewy!Microsoft.PPIProjection" /&gt;           &lt;start:Tile Size="2x2" Column="4" Row="0" AppUserModelID="Microsoft.WindowsFeedbackHub_8wekyb3d8bbwe!App" /&gt;           &lt;start:Tile Size="2x2" Column="4" Row="2" AppUserModelID="Microsoft.WindowsAlarms_8wekyb3d8bbwe!App" /&gt;         &lt;/start:Group&gt;         &lt;start:Group Name="App Group 2"&gt;           &lt;start:DesktopApplicationTile Size="2x2" Column="0" Row="0" DesktopApplicationLinkPath="C:\ProgramData\Microsoft\Windows\Start Menu\Programs\System Tools\Explorer.lnk" /&gt;           &lt;start:Tile Size="2x2" Column="2" Row="2" AppUserModelID="Microsoft.Microsoft3DViewer_8wekyb3d8bbwe!Microsoft.Microsoft3DViewer" /&gt;           &lt;start:Tile Size="2x2" Column="4" Row="2" AppUserModelID="microsoft.windowscommunicationsapps_8wekyb3d8bbwe!microsoft.windowslive.calendar" /&gt;         &lt;/start:Group&gt;       &lt;/defaultlayout:StartLayout&gt;     &lt;/StartLayoutCollection&gt;   &lt;/DefaultLayoutOverride&gt; &lt;/LayoutModificationTemplate&gt;</StartLayout>
+      <Taskbar ShowTaskbar="true" />
+    </Profile>
+    <Profile Id="{A19C7721-1A7F-406E-9D04-1AED49B4CBF1}">
+      <AllAppsList>
+        <AllowedApps>
+          <App AppUserModelId="Microsoft.WindowsMaps_8wekyb3d8bbwe!App" />
+          <App AppUserModelId="Microsoft.GetHelp_8wekyb3d8bbwe!App" />
+          <App AppUserModelId="Microsoft.WindowsStore_8wekyb3d8bbwe!App" />
+          <App AppUserModelId="Microsoft.WindowsFeedbackHub_8wekyb3d8bbwe!App" />
+          <App AppUserModelId="Microsoft.WinDbg_8wekyb3d8bbwe!Microsoft.WinDbg" />
           <App AppUserModelId="Microsoft.ZuneMusic_8wekyb3d8bbwe!Microsoft.ZuneMusic" />
         </AllowedApps>
       </AllAppsList>
-      <StartLayout>&lt;LayoutModificationTemplate xmlns:defaultlayout="http://schemas.microsoft.com/Start/2014/FullDefaultLayout" Version="1" xmlns:start="http://schemas.microsoft.com/Start/2014/StartLayout" xmlns="http://schemas.microsoft.com/Start/2014/LayoutModification"&gt;   &lt;LayoutOptions StartTileGroupCellWidth="6" /&gt;   &lt;DefaultLayoutOverride&gt;     &lt;StartLayoutCollection&gt;       &lt;defaultlayout:StartLayout GroupCellWidth="6"&gt;         &lt;start:Group Name="App Group"&gt;           &lt;start:Tile Size="2x2" Column="0" Row="0" AppUserModelID="Microsoft.GetHelp_8wekyb3d8bbwe!App" /&gt;           &lt;start:Tile Size="2x2" Column="2" Row="0" AppUserModelID="Microsoft.PPIProjection_cw5n1h2txyewy!Microsoft.PPIProjection" /&gt;         &lt;/start:Group&gt;       &lt;/defaultlayout:StartLayout&gt;     &lt;/StartLayoutCollection&gt;   &lt;/DefaultLayoutOverride&gt; &lt;/LayoutModificationTemplate&gt;</StartLayout>
+      <v2:FileExplorerNamespaceRestrictions>
+        <v2:AllowedNamespace Name="Downloads" />
+        <v3:AllowRemovableDrives />
+      </v2:FileExplorerNamespaceRestrictions>
+      <StartLayout>&lt;LayoutModificationTemplate xmlns:defaultlayout="http://schemas.microsoft.com/Start/2014/FullDefaultLayout" Version="1" xmlns:start="http://schemas.microsoft.com/Start/2014/StartLayout" xmlns="http://schemas.microsoft.com/Start/2014/LayoutModification"&gt;   &lt;LayoutOptions StartTileGroupCellWidth="6" /&gt;   &lt;DefaultLayoutOverride&gt;     &lt;StartLayoutCollection&gt;       &lt;defaultlayout:StartLayout GroupCellWidth="6"&gt;         &lt;start:Group Name="App Group"&gt;           &lt;start:Tile Size="2x2" Column="0" Row="0" AppUserModelID="Microsoft.WindowsMaps_8wekyb3d8bbwe!App" /&gt;           &lt;start:Tile Size="2x2" Column="0" Row="2" AppUserModelID="Microsoft.GetHelp_8wekyb3d8bbwe!App" /&gt;           &lt;start:Tile Size="2x2" Column="2" Row="2" AppUserModelID="Microsoft.WindowsStore_8wekyb3d8bbwe!App" /&gt;           &lt;start:Tile Size="2x2" Column="4" Row="2" AppUserModelID="Microsoft.WindowsFeedbackHub_8wekyb3d8bbwe!App" /&gt;         &lt;/start:Group&gt;         &lt;start:Group Name="teeer"&gt;           &lt;start:Tile Size="2x2" Column="0" Row="0" AppUserModelID="Microsoft.WinDbg_8wekyb3d8bbwe!Microsoft.WinDbg" /&gt;           &lt;start:Tile Size="2x2" Column="2" Row="0" AppUserModelID="Microsoft.ZuneMusic_8wekyb3d8bbwe!Microsoft.ZuneMusic" /&gt;         &lt;/start:Group&gt;       &lt;/defaultlayout:StartLayout&gt;     &lt;/StartLayoutCollection&gt;   &lt;/DefaultLayoutOverride&gt; &lt;/LayoutModificationTemplate&gt;</StartLayout>
       <Taskbar ShowTaskbar="false" />
     </Profile>
-    <Profile Id="{709B5B23-D7BC-4FA4-8707-2EA1D4176CDE}">
+    <Profile Id="{7A1D54E2-353E-4A4A-B7F1-79C050EBF242}">
       <AllAppsList>
         <AllowedApps>
+          <App DesktopAppPath="C:\WINDOWS\system32\WindowsPowerShell\v1.0\PowerShell_ISE.exe" />
+          <App AppUserModelId="PaloAltoNetworks.GlobalProtect_rn9aeerfb38dg!App" />
           <App AppUserModelId="Microsoft.549981C3F5F10_8wekyb3d8bbwe!App" />
-          <App AppUserModelId="Microsoft.GetHelp_8wekyb3d8bbwe!App" />
-          <App AppUserModelId="microsoft.windowscommunicationsapps_8wekyb3d8bbwe!microsoft.windowslive.mail" />
+          <App AppUserModelId="Microsoft.WindowsAlarms_8wekyb3d8bbwe!App" />
+          <App AppUserModelId="Microsoft.CompanyPortal_8wekyb3d8bbwe!App" />
+          <App AppUserModelId="Microsoft.ZuneMusic_8wekyb3d8bbwe!Microsoft.ZuneMusic" />
         </AllowedApps>
       </AllAppsList>
-      <StartLayout>&lt;LayoutModificationTemplate xmlns:defaultlayout="http://schemas.microsoft.com/Start/2014/FullDefaultLayout" Version="1" xmlns:start="http://schemas.microsoft.com/Start/2014/StartLayout" xmlns="http://schemas.microsoft.com/Start/2014/LayoutModification"&gt;   &lt;LayoutOptions StartTileGroupCellWidth="6" /&gt;   &lt;DefaultLayoutOverride&gt;     &lt;StartLayoutCollection&gt;       &lt;defaultlayout:StartLayout GroupCellWidth="6"&gt;         &lt;start:Group Name="App Group"&gt;           &lt;start:Tile Size="2x2" Column="0" Row="0" AppUserModelID="Microsoft.549981C3F5F10_8wekyb3d8bbwe!App" /&gt;         &lt;/start:Group&gt;       &lt;/defaultlayout:StartLayout&gt;     &lt;/StartLayoutCollection&gt;   &lt;/DefaultLayoutOverride&gt; &lt;/LayoutModificationTemplate&gt;</StartLayout>
-      <Taskbar ShowTaskbar="false" />
+      <v2:FileExplorerNamespaceRestrictions>
+        <v2:AllowedNamespace Name="Downloads" />
+      </v2:FileExplorerNamespaceRestrictions>
+      <StartLayout>&lt;LayoutModificationTemplate xmlns:defaultlayout="http://schemas.microsoft.com/Start/2014/FullDefaultLayout" Version="1" xmlns:start="http://schemas.microsoft.com/Start/2014/StartLayout" xmlns="http://schemas.microsoft.com/Start/2014/LayoutModification"&gt;   &lt;LayoutOptions StartTileGroupCellWidth="6" /&gt;   &lt;DefaultLayoutOverride&gt;     &lt;StartLayoutCollection&gt;       &lt;defaultlayout:StartLayout GroupCellWidth="6"&gt;         &lt;start:Group Name="App Group"&gt;           &lt;start:DesktopApplicationTile Size="2x2" Column="0" Row="0" DesktopApplicationLinkPath="C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Windows PowerShell\Windows PowerShell ISE.lnk" /&gt;           &lt;start:Tile Size="2x2" Column="2" Row="0" AppUserModelID="PaloAltoNetworks.GlobalProtect_rn9aeerfb38dg!App" /&gt;           &lt;start:Tile Size="2x2" Column="3" Row="2" AppUserModelID="Microsoft.549981C3F5F10_8wekyb3d8bbwe!App" /&gt;         &lt;/start:Group&gt;       &lt;/defaultlayout:StartLayout&gt;     &lt;/StartLayoutCollection&gt;   &lt;/DefaultLayoutOverride&gt; &lt;/LayoutModificationTemplate&gt;</StartLayout>
+      <Taskbar ShowTaskbar="true" />
     </Profile>
   </Profiles>
   <Configs>
+    <v3:GlobalProfile Id="{85D1EB23-D08B-48B7-8E0A-7E777E99B698}" />
     <Config>
       <Account>test</Account>
-      <DefaultProfile Id="{671F24EB-BE8E-4C2A-9E03-C22EBF0295EE}" />
+      <DefaultProfile Id="{85D1EB23-D08B-48B7-8E0A-7E777E99B698}" />
     </Config>
     <Config>
       <Account>EdgeKiosk</Account>
-      <DefaultProfile Id="{709B5B23-D7BC-4FA4-8707-2EA1D4176CDE}" />
+      <DefaultProfile Id="{7A1D54E2-353E-4A4A-B7F1-79C050EBF242}" />
+    </Config>
+    <Config>
+      <Account>kiosk\ksktest</Account>
+      <DefaultProfile Id="{85D1EB23-D08B-48B7-8E0A-7E777E99B698}" />
+    </Config>
+    <Config>
+      <UserGroup Type="LocalGroup" Name="Guests" />
+      <DefaultProfile Id="{85D1EB23-D08B-48B7-8E0A-7E777E99B698}" />
+    </Config>
+    <Config>
+      <UserGroup Type="ActiveDirectoryGroup" Name="kiosk\assignedaccess" />
+      <DefaultProfile Id="{A19C7721-1A7F-406E-9D04-1AED49B4CBF1}" />
+    </Config>
+    <Config>
+      <UserGroup Type="AzureActiveDirectoryGroup" Name="9134982832-313-12312-4fasdasd123" />
+      <DefaultProfile Id="{A19C7721-1A7F-406E-9D04-1AED49B4CBF1}" />
     </Config>
   </Configs>
 </AssignedAccessConfiguration>

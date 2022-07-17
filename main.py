@@ -19,7 +19,7 @@ with open ('AssignedAccessCsp_Reg.txt', encoding='UTF-16-LE') as f:
 with open ('startapps.txt', encoding='UTF-16-LE') as f:
     startapps = [line.rstrip() for line in f]
 
-with open ('AppxAllUsers.txt', encoding='UTF-16-LE') as f:
+with open ('Get-AppxPackage-AllUsers.txt', encoding='UTF-16-LE') as f:
     appxallusers = [line.rstrip() for line in f]
 
 
@@ -90,8 +90,6 @@ def xmlCheckAndExtract():
         return True
     else:
         return None
-
-xmlCheckAndExtract()
 
 def kioskProfileScan():
     profiles = []
@@ -184,7 +182,7 @@ def problemCheck():
                 accCount += 1
                 if account[0] == "User":
                     for app in apps:
-                        if app[0] not in notInstalled:
+                        if app[0] not in notInstalled and app[1] == "UWP":
                             isInstalledForUser = False
                             packageFamilyName = (app[0].split("!",1))[0]
                             for line in appxallusers:
@@ -204,6 +202,7 @@ def problemCheck():
 
 
 def createReport():
+    xmlCheckAndExtract()
     errors = problemCheck()
     if errors:
         print("\n\nProblems found:\n")
@@ -214,3 +213,4 @@ def createReport():
         print("No problems were found.")
 
 
+createReport()
