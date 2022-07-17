@@ -91,10 +91,12 @@ def xmlCheckAndExtract():
     else:
         return None
 
+
+
 def kioskProfileScan():
     profiles = []
     for line in aaconfig:
-        if "ProfileId" in line and "Default" not in line:
+        if "ProfileId" in line and "DefaultProfileId" not in line and "GlobalProfileId" not in line:
             profileID = line.replace("ProfileId", "").replace("REG_SZ", "").replace(" ", "")
             profileType = aaconfig[aaconfig.index(line) + 2]
             isMultiAppKiosk = False
@@ -118,22 +120,30 @@ def appProfileScan():
     for profile in profiles:
         apps = []
         accounts = []
+        currIndex = 0
         for line in aaconfig:
-            currIndex = aaconfig.index(line)                   
-            if profile[0] in line and "AllowedApps\\" in line:                
+            if profile[0] in line and "AllowedApps\\" in line:
+                currIndex = aaconfig.index(line, currIndex) 
+                print(currIndex)                                
                 appId     = aaconfig[currIndex + 1].replace("AppId", "").replace("REG_SZ", "").replace(" ", "")
                 appType   = "UWP" if aaconfig[currIndex + 4].replace("AppType", "").replace("REG_DWORD", "").replace(" ", "") == "0x1" else "Win32"
                 apps.append([appId, appType])
-            elif profile[0] in line and "DefaultProfileId" in line:
+            elif profile[0] in line and "DefaultProfileId" in line: 
+                currIndex = aaconfig.index(line, currIndex)
+                print(currIndex)
                 if "GroupConfigs\\" in aaconfig[currIndex - 1]:
                     groupName = aaconfig[currIndex + 5].replace("Id", "").replace("REG_SZ", "").replace(" ", "")                    
                     groupType = aaconfig[currIndex + 7].replace("Type", "").replace("REG_DWORD", "").replace(" ", "")
                     accounts.append(["Group", groupName, groupType])
+                    print(groupName)
                 elif "Configs\\" in aaconfig[currIndex - 1]:
                     userId = aaconfig[currIndex + 4].replace("Id", "").replace("REG_SZ", "").replace(" ", "")
                     userName = aaconfig[currIndex + 5].replace("Name", "").replace("REG_SZ", "").replace(" ", "")
                     userType = aaconfig[currIndex + 6].replace("Type", "").replace("REG_DWORD", "").replace(" ", "")
                     accounts.append(["User", userId, userName, userType])
+                    print(userName)
+            elif profile[0] in line and "GlobalProfileId" in line:
+                    accounts.append(["GlobalUser", "Fill"])
 
         configs[profile] = [[apps, accounts]]
 
@@ -196,6 +206,9 @@ def problemCheck():
                             
                             if not isInstalledForUser:
                                 errors.append("App {} not registered/installed for user {} with SID: {}.\n".format(app[0], account[2], account[1]))
+                elif account[0] == "GlobalUser":
+                    print("Global User")
+
                 accCount += 1                     
     return errors
 
@@ -212,5 +225,4 @@ def createReport():
     else:
         print("No problems were found.")
 
-
-createReport()
+appProfileScan()
