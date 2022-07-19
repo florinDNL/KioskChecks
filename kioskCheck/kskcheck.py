@@ -4,9 +4,14 @@ from flask import Flask, flash, request, redirect, render_template
 
 import xml.etree.ElementTree as ET
 
+path = os.getcwd()
+UPLOAD_FOLDER = os.path.join(path, 'uploads')
+
+if not os.path.isdir(UPLOAD_FOLDER):
+    os.mkdir(UPLOAD_FOLDER)
 
 def isServiceDisabled():
-    with open ('uploads\AssignedAccessManagerSvc_Reg.txt', encoding='UTF-16-LE') as f:
+    with open (os.path.join(UPLOAD_FOLDER, 'AssignedAccessManagerSvc_Reg.txt'), encoding='UTF-16-LE') as f:
         aasvc = [line.rstrip() for line in f]
     isDisabled = False
     for line in aasvc:
@@ -19,7 +24,7 @@ def isServiceDisabled():
 
 
 def singleAppCheck():
-    with open ('uploads\Get-AssignedAccess.txt', encoding='UTF-16-LE') as f:
+    with open (os.path.join(UPLOAD_FOLDER, 'Get-AssignedAccess.txt'), encoding='UTF-16-LE') as f:
         singleApp = [line.rstrip() for line in f]
     isSingleApp = False
     if not "does not exist" in singleApp[0]:
@@ -38,7 +43,7 @@ def singleAppCheck():
 
 
 def sLauncherCheck():
-    with open ('uploads\ShellLauncher_Reg.txt', encoding='UTF-16-LE') as f:
+    with open (os.path.join(UPLOAD_FOLDER, 'ShellLauncher_Reg.txt'), encoding='UTF-16-LE') as f:
         slauncher = [line.rstrip() for line in f]
     isShellLauncher = False
     if not "does not exist" in slauncher[0]:
@@ -61,7 +66,7 @@ def sLauncherCheck():
 
 
 def diagCheck():
-    with open ('uploads\ConfigManager_AssignedAccess_Reg.txt', encoding='UTF-16-LE') as f:
+    with open (os.path.join(UPLOAD_FOLDER, 'ConfigManager_AssignedAccess_Reg.txt'), encoding='UTF-16-LE') as f:
         aadiag = [line.rstrip() for line in f]
     err     = None
     tStamp  = None
@@ -73,7 +78,7 @@ def diagCheck():
             tStamp = line.replace("REG_SZ", "")
 
     if err:
-        return "<p>A provisioning error was found - if the time doesn't correspond to the issue or is from too long ago it's likely irrelevant</p><p>{}</p><p>{}</p>".format(tStamp, err)
+        return "<p>- A provisioning error was found - if the time doesn't correspond to the issue or is from too long ago it's likely irrelevant</p><p>{}</p><p>{}</p>".format(tStamp, err)
     else:
         return None
 
@@ -100,7 +105,7 @@ def xmlCheckAndExtract():
     currIndex = None
     nextLine  = None
 
-    with open ('uploads\AssignedAccessCsp_Reg.txt', encoding='UTF-16-LE') as f:
+    with open (os.path.join(UPLOAD_FOLDER, 'AssignedAccessCsp_Reg.txt'), encoding='UTF-16-LE') as f:
         aacsp = [line.rstrip() for line in f]
 
     for line in aacsp:
@@ -130,7 +135,7 @@ def xmlCheckAndExtract():
 
 
 def isAppInStartApps(app):    
-    with open ('uploads\Get-StartApps.txt', encoding='UTF-16-LE') as f:
+    with open (os.path.join(UPLOAD_FOLDER, 'Get-StartApps.txt'), encoding='UTF-16-LE') as f:
         startapps = [line.rstrip() for line in f]
     isAppInStartApps = False
     for line in startapps:
@@ -142,7 +147,7 @@ def isAppInStartApps(app):
 
 
 def isAppInstalledForUser(app, user):        
-    with open ('uploads\Get-AppxPackage-AllUsers.txt', encoding='UTF-16-LE') as f:
+    with open (os.path.join(UPLOAD_FOLDER, 'Get-AppxPackage-AllUsers.txt'), encoding='UTF-16-LE') as f:
         appxallusers = [line.rstrip() for line in f]
     isInstalledForUser = False
     packageFamilyName = (app.split("!",1))[0]
@@ -160,7 +165,7 @@ def isAppInstalledForUser(app, user):
 
 
 def kioskProfileScan():  
-    with open ('uploads\AssignedAccess_Reg.txt', encoding='UTF-16-LE') as f:
+    with open (os.path.join(UPLOAD_FOLDER, 'AssignedAccess_Reg.txt'), encoding='UTF-16-LE') as f:
         aaconfig = [line.rstrip() for line in f]
     profiles = []
     for line in aaconfig:
@@ -180,7 +185,7 @@ def kioskProfileScan():
 
 
 def appProfileScan():   
-    with open ('uploads\AssignedAccess_Reg.txt', encoding='UTF-16-LE') as f:
+    with open (os.path.join(UPLOAD_FOLDER, 'AssignedAccess_Reg.txt'), encoding='UTF-16-LE') as f:
         aaconfig = [line.rstrip() for line in f]
 
     profiles = kioskProfileScan()
@@ -287,7 +292,7 @@ def createReport():
                     isInStartApps = isAppInStartApps(app[0])                
                     if not isInStartApps:
                         notInstalled.append(app[0])
-                        errors.append("Application {} was not found in Get-StartApps output. Check if it is installed or otherwise if the AUMID is correctly spelled\n".format(app[0]))
+                        errors.append("<p>- Application {} was not found in Get-StartApps output. Check if it is installed or otherwise if the AUMID is correctly spelled</p>".format(app[0]))
                     
             profileReport += ("<h3>And is assigned to the following accounts:</h3>")
 
@@ -300,7 +305,7 @@ def createReport():
                         if app[0] not in notInstalled and app[1] == "UWP":
                             isInstalledForUser = isAppInstalledForUser(app[0], account[1])                            
                             if not isInstalledForUser:
-                                errors.append("App {} not registered/installed for user {} with SID: {}.\n".format(app[0], account[2], account[1]))
+                                errors.append("<p>- App {} not registered/installed for user {} with SID: {}.</p>".format(app[0], account[2], account[1]))
                 elif account[0] == "GlobalUser":
                     profileReport += "<p>{}) Global User</p>".format(accCount)
                 accCount += 1
@@ -316,8 +321,8 @@ def showReport():
 
     letters = string.ascii_lowercase
     report_id = ( ''.join(random.choice(letters) for i in range(10)) )
-
-    with open ('templates\\{}.html'.format(report_id), 'w') as writer:
+    print(os.listdir())
+    with open (os.path.join('templates', '{}.html'.format(report_id)), 'w') as writer:        
         writer.writelines("<h1>Report</h1>")
         for profileReport in report:
             writer.writelines("<p>\n{}\n</p>".format(profileReport))
@@ -325,7 +330,7 @@ def showReport():
         if errors:
             writer.writelines("<h1>\n\nProblems found:\n</h1>")
             for error in errors:
-                writer.writelines("<p>- {}</p>".format(error))
+                writer.writelines("{}".format(error))
             writer.writelines("\n")
         else:
             writer.writelines("<h1>No problems were found.</h1>")
@@ -340,13 +345,6 @@ app=Flask(__name__)
 
 app.secret_key = "secret key"
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
-
-path = os.getcwd()
-UPLOAD_FOLDER = os.path.join(path, 'uploads')
-
-if not os.path.isdir(UPLOAD_FOLDER):
-    os.mkdir(UPLOAD_FOLDER)
-
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 ALLOWED_EXTENSIONS = set(['txt'])
