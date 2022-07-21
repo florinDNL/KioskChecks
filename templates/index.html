@@ -2,7 +2,8 @@
 <title>Kiosk Checks</title>
 <h2>Kiosk Log Check</h2>
 <h4>Upload / Drag&Drop TSSv2 Output folder with the following format: LogonLog-yyyy-mm-dd.hhmm.ss</h4>
-
+<p>Note: To collect Kiosk logs use: <strong>.\TSSv2.ps1 -Start -UEX_Logon</strong></p>
+<br/>
 <p>
 	{% with messages = get_flashed_messages() %}
 	  {% if messages %}
@@ -24,8 +25,9 @@
 		    <input type="submit" value="Analyze" name="submit">
 	  </p>
 </form>
-
-<br/><br/><br/><br/>
-
+<br/><br/>
+<p><small><a href="mailto:fldanila@microsoft.com?subject=KioskChecks Issue">Report an issue</a></small></p>
+<hr>
 <h2>Demo</h2>
 <img src="/static/demo.gif" alt="Log Folder">
+<hr>
