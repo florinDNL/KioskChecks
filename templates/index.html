@@ -1,36 +1,34 @@
-<!doctype html>
-<style>
-	body {background-color: #393939; font-family: 'Segoe UI' ; color:#dddddd; text-align: center;}
-	a {color: #70d3d3}
-</style>
-<title>Kiosk Checks</title>
-<img src="/static/banner.png">
-<br/><br/>
-<h4>Upload / Drag&Drop TSSv2 Output folder with the following format: LogonLog-yyyy-mm-dd.hhmm.ss</h4>
-<p><small>Note: To collect Kiosk logs use: <strong>.\TSSv2.ps1 -Start -UEX_Logon</strong></small></p>
-<br/>
-<p>
-	{% with messages = get_flashed_messages() %}
-	  {% if messages %}
-		<ul class=flashes>
-		{% for message in messages %}
-		  <li>{{ message }}</li>
-		{% endfor %}
-		</ul>
-	  {% endif %}
-	{% endwith %}
-</p>
-<form method="post" action="/" enctype="multipart/form-data">
-    <dl>
-      <p>
-        <input type="file" name="files[]" value ="Drag Here" multiple="true" autocomplete="off" webkitdirectory>
-		<input type="submit" value="Analyze" name="submit">
-      </p>
-    </dl>		    
-</form>
-<br/><br/>
-<p><small><a href="mailto:fldanila@microsoft.com?subject=KioskChecks Issue">Report an issue</a></small></p>
-<hr>
-<h2>Demo</h2>
-<img src="/static/demo.gif" alt="Log Folder">
-<hr>
+{% extends "base.html" %}
+{% block title %} Kiosk Checks {% endblock %}
+
+{% block content %}
+	<br/><br/>
+	<h4>Upload / Drag&Drop TSSv2 Output folder with the following format: LogonLog-yyyy-mm-dd.hhmm.ss</h4>
+	<p><small>Note: To collect Kiosk logs use: <strong>.\TSSv2.ps1 -Start -UEX_Logon</strong></small></p>
+	<br/>
+	<p>
+		{% with messages = get_flashed_messages() %}
+		{% if messages %}
+			<ul class=flashes>
+			{% for message in messages %}
+			<li>{{ message }}</li>
+			{% endfor %}
+			</ul>
+		{% endif %}
+		{% endwith %}
+	</p>
+	<form method="post" action="/" enctype="multipart/form-data">
+		<dl>
+		<p>
+			<input type="file" name="files[]" value ="Drag Here" multiple="true" autocomplete="off" webkitdirectory>
+			<input type="submit" value="Analyze" name="submit">
+		</p>
+		</dl>		    
+	</form>
+	<br/><br/>
+	<p><small><a href="mailto:fldanila@microsoft.com?subject=KioskChecks Issue">Report an issue</a></small></p>
+	<hr>
+	<h2>Demo</h2>
+	<img src="/static/demo.gif" alt="Log Folder">
+	<hr>
+{% endblock %}

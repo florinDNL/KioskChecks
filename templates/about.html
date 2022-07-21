@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %} About {% endblock %}
+{% block content %}
+<br/><br/>
+<h5>Kiosk Checks is a log parser for Kiosk Logon or Provisioning issues. It can analyze the logs collected with the help of TSSv2 [.\TSSv2.ps1 -Start -UEX_logon]</h5>
+<br/><br/>
+<p><strong>Applicable scenarios</strong></p>
+<hr>
+<p>- Kiosk user logs on but sees the normal desktop instead of the configured applications</p>
+<p>- Kiosk user gets an assigned access view but has the wrong applications</p>
+<p>- Kiosk user is missing applications despite them being configured</p>
+<p>- Kiosk provisioning package / xml cannot be applied</p>
+<br/>
+<p><strong>What it does</strong></p>
+<hr>
+<p>- Highlights the last provisioning error</p>
+<p>- Checks if UWP Application AUMIDs can be found on the system - this highlights whether they are not installed or misspelled</p>
+<p>- Checks if UWP applications are installed/registered for the users they are assigned to</p>
+<p>- Extracts every Kiosk configuration found in the registry and lists it in a readable form</p>
+<p>- Extracts any Multi-App Kiosk or Shell Launcher XML found in the registry; this can be applied on a test environment</p>
+<br/>
+<p><strong>What it cannot do</strong></p>
+<hr>
+<p>- If the kiosk configuration is a assigned to a group instead of an individual user, it cannot check the installed applications; in this case you'll have to identify the profile in the report and manually look for the apps</p>
+<p>- Find inconsistencies in the xml (e.g. path names / wrong tile placement etc...)</p>
+{% endblock %}
