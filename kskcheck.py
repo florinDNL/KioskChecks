@@ -22,7 +22,7 @@ def singleAppCheck(UPLOAD_FOLDER):
     with open (os.path.join(UPLOAD_FOLDER, 'Get-AssignedAccess.txt'), encoding='UTF-16-LE') as f:
         singleApp = [line.rstrip() for line in f]
     isSingleApp = False
-    if not "does not exist" in singleApp[0]:
+    if singleApp:
         isSingleApp = True
     
     configs = []
@@ -41,12 +41,11 @@ def sLauncherCheck(UPLOAD_FOLDER):
     with open (os.path.join(UPLOAD_FOLDER, 'ShellLauncher_Reg.txt'), encoding='UTF-16-LE') as f:
         slauncher = [line.rstrip() for line in f]
     isShellLauncher = False
-    if not "does not exist" in slauncher[0]:
+    if slauncher and "does not exist" not in slauncher[0]:
         isShellLauncher = True        
-    
+    configs = []
     if isShellLauncher:
-        lastIndex = 0
-        configs = []
+        lastIndex = 0        
         for line in slauncher:
             if "Shell Launcher\\" in line:
                 currIndex = slauncher.index(line, lastIndex)
