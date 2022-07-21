@@ -337,7 +337,7 @@ def showReport(UPLOAD_FOLDER, report_id):
     report, errors = createReport(UPLOAD_FOLDER)
     
     with open (os.path.join('templates', '{}.html'.format(report_id)), 'w') as writer:
-        writer.writelines("<style>\nbody {background-color: #393939; font-family: 'Segoe UI' ; color:#dddddd;}\np {font-family: 'Consolas'; font-size: 14px;}\nh4 {font-family: 'Calibri'; font-size: 20px}\nh5 {font-family: 'Verdana'; font-size: 12px;}\n</style>")
+        writer.writelines('{% extends "base.html" %}\n{% block title %} Report {% endblock %}\n{% block content %}\n')
         if errors:
             writer.writelines("<h4>Problems found</h4>\n<hr>")
             for error in errors:
@@ -367,6 +367,8 @@ def showReport(UPLOAD_FOLDER, report_id):
                 for line in f:
                     writer.writelines(line)
             writer.writelines('</textarea>')  
+        
+        writer.writelines('{% endblock %}')
 
     return "{}.html".format(report_id)
 

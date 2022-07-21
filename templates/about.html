@@ -2,7 +2,7 @@
 {% block title %} About {% endblock %}
 {% block content %}
 <br/><br/>
-<h5>Kiosk Checks is a log parser for Kiosk Logon or Provisioning issues. It can analyze the logs collected with the help of TSSv2 [.\TSSv2.ps1 -Start -UEX_logon]</h5>
+<h4>Kiosk Checks is a log parser for Kiosk Logon or Provisioning issues. It can analyze the logs collected with the help of TSSv2 [.\TSSv2.ps1 -Start -UEX_logon]</h4>
 <br/><br/>
 <p><strong>Applicable scenarios</strong></p>
 <hr>
@@ -13,11 +13,12 @@
 <br/>
 <p><strong>What it does</strong></p>
 <hr>
-<p>- Highlights the last provisioning error</p>
+<p>- Looks for the last provisioning error</p>
+<p>- Checks if the AssignedAccess Manager Service is disabled</p>
 <p>- Checks if UWP Application AUMIDs can be found on the system - this highlights whether they are not installed or misspelled</p>
 <p>- Checks if UWP applications are installed/registered for the users they are assigned to</p>
-<p>- Extracts every Kiosk configuration found in the registry and lists it in a readable form</p>
-<p>- Extracts any Multi-App Kiosk or Shell Launcher XML found in the registry; this can be applied on a test environment</p>
+<p>- Looks for every Kiosk configuration found in the registry and lists it in a readable format</p>
+<p>- Extracts any Multi-App Kiosk or Shell Launcher XML found in the registry; it can then be applied on a test environment</p>
 <br/>
 <p><strong>What it cannot do</strong></p>
 <hr>
