@@ -1,8 +1,13 @@
 <!doctype html>
+<style>
+	body {background-color: #393939; font-family: 'Segoe UI' ; color:#dddddd; text-align: center;}
+	a {color: #70d3d3}
+</style>
 <title>Kiosk Checks</title>
-<h2>Kiosk Log Check</h2>
+<img src="/static/banner.png">
+<br/><br/>
 <h4>Upload / Drag&Drop TSSv2 Output folder with the following format: LogonLog-yyyy-mm-dd.hhmm.ss</h4>
-<p>Note: To collect Kiosk logs use: <strong>.\TSSv2.ps1 -Start -UEX_Logon</strong></p>
+<p><small>Note: To collect Kiosk logs use: <strong>.\TSSv2.ps1 -Start -UEX_Logon</strong></small></p>
 <br/>
 <p>
 	{% with messages = get_flashed_messages() %}
@@ -18,12 +23,10 @@
 <form method="post" action="/" enctype="multipart/form-data">
     <dl>
       <p>
-        <input type="file" name="files[]" value ="Drag Here" multiple="true" autocomplete="off" webkitdirectory mozdirectory>
+        <input type="file" name="files[]" value ="Drag Here" multiple="true" autocomplete="off" webkitdirectory>
+		<input type="submit" value="Analyze" name="submit">
       </p>
-    </dl>
-    <p>
-		    <input type="submit" value="Analyze" name="submit">
-	  </p>
+    </dl>		    
 </form>
 <br/><br/>
 <p><small><a href="mailto:fldanila@microsoft.com?subject=KioskChecks Issue">Report an issue</a></small></p>

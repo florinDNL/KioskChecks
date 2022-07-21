@@ -51,7 +51,7 @@ def sLauncherCheck(UPLOAD_FOLDER):
             if "Shell Launcher\\" in line:
                 currIndex = slauncher.index(line, lastIndex)
                 user = line.split("\\")[5]
-                shell = slauncher[currIndex + 1].replace("Shell", "").replace("REG_SZ", "").replace(" ", "")
+                shell = slauncher[currIndex + 1].replace("Shell", "").replace("REG_SZ", "").rstrip()
                 appType = "Win32" if "0x1" in slauncher[currIndex+2] else "UWP"
                 configs.append([user, shell, appType])
                 lastIndex += currIndex + 1
@@ -270,18 +270,18 @@ def createReport(UPLOAD_FOLDER):
 
     isSingleApp, singleAppProfiles = singleAppCheck(UPLOAD_FOLDER)
     if isSingleApp:
-        singleAppReport = "<h3>Found {} SingleApp Configuration(s):</h3>".format(len(singleAppProfiles))
+        singleAppReport = "<br/><h5>Found {} SingleApp Configuration(s):</h5>".format(len(singleAppProfiles))
         for profile in singleAppProfiles:
-            singleAppReport += "<p>User Name: {}</p>User SID: {}</p>AUMID: {}</p>".format(profile[1], profile[0], profile[2])
+            singleAppReport += "<p>User Name: {}</p><p>User SID: {}</p><p>AUMID: {}</p>".format(profile[1], profile[0], profile[2])
         
         report.append(singleAppReport)
 
 
     isShelllauncher, slauncherProfiles = sLauncherCheck(UPLOAD_FOLDER)
     if isShelllauncher:
-        slauncherReport = "<h3>Found {} ShellLauncher Configuration(s):</h3>".format(len(slauncherProfiles))
+        slauncherReport = "<br/><h5>Found {} ShellLauncher Configuration(s):</h5>".format(len(slauncherProfiles))
         for profile in slauncherProfiles:
-            slauncherReport += "<p>User: {}</p>Shell: {}</p>AppType: {}</p>".format(profile[0], profile[1], profile[2])
+            slauncherReport += "<p>User: {}</p><p>Shell: {}</p><p>AppType: {}</p>".format(profile[0], profile[1], profile[2])
             if profile[2] == "UWP" and profile[1] not in notInstalled:
                 isInStartApps = isAppInStartApps(profile[1], UPLOAD_FOLDER)
                 if not isInStartApps:
@@ -298,7 +298,7 @@ def createReport(UPLOAD_FOLDER):
     configs = appProfileScan(UPLOAD_FOLDER)
     for config in configs:        
         for profile in configs[config]:
-            profileReport = "<h3>Profile {} of type {} has the following allowed apps:</h3>".format(config[0], config[1])
+            profileReport = "<br/><h5>Profile {} of type {} has the following allowed apps:</h5>".format(config[0], config[1])
             apps = profile[0]
             accounts = profile[1]            
             appCount = 1
@@ -312,7 +312,7 @@ def createReport(UPLOAD_FOLDER):
                         notInstalled.append(app[0])
                         errors.append("<p>- Application {} was not found in Get-StartApps output. Check if it is installed or otherwise if the AUMID is correctly spelled</p>".format(app[0]))
                     
-            profileReport += ("<h3>And is assigned to the following accounts:</h3>")
+            profileReport += ("<h5>And is assigned to the following accounts:</h5>")
 
             for account in accounts:
                 if account[0] == "Group":
@@ -338,29 +338,32 @@ def showReport(UPLOAD_FOLDER, report_id):
     report, errors = createReport(UPLOAD_FOLDER)
     
     with open (os.path.join('templates', '{}.html'.format(report_id)), 'w') as writer:
+        writer.writelines("<style>\nbody {background-color: #393939; font-family: 'Segoe UI' ; color:#dddddd;}\np {font-family: 'Consolas'; font-size: 14px;}\nh4 {font-family: 'Calibri'; font-size: 20px}\nh5 {font-family: 'Verdana'; font-size: 12px;}\n</style>")
         if errors:
-            writer.writelines("<h1>\n\nProblems found:\n</h1>")
+            writer.writelines("<h4>Problems found</h4>\n<hr>")
             for error in errors:
                 writer.writelines("{}".format(error))
             writer.writelines("\n")
         else:
-            writer.writelines("<h1>No problems were found.</h1>")
+            writer.writelines("<h5>No problems were found.</h5>\n")
 
-        writer.writelines("<h1>Report</h1>")
+        writer.writelines("<hr><br/><br/><h4>Report</h4>\n<hr>")
         for profileReport in report:
-            writer.writelines("<p>\n{}\n</p>".format(profileReport))
+            writer.writelines("<p>{}</p>\n".format(profileReport))
+
+        writer.writelines("<br/><hr>\n")
 
         if isMultiAppXml:
-            writer.writelines('<h2>Found and Extracted Multi-App Kiosk XML:</h2>')            
-            writer.writelines('<textarea rows="40" cols="150">')
+            writer.writelines('<br/><h5>Found and Extracted Multi-App Kiosk XML:</h5>\n')            
+            writer.writelines('<textarea rows="40" cols="150">\n')
             with open (os.path.join(UPLOAD_FOLDER, 'MultiAppXML.xml'), 'r') as f:
                 for line in f:
                     writer.writelines(line)
             writer.writelines('</textarea>')  
         
         if isShellLauncherXml:
-            writer.writelines('<h2>Found and Extracted Shell Launcher XML:</h2>')            
-            writer.writelines('<textarea rows="40" cols="150">')
+            writer.writelines('<br/><h5>Found and Extracted Shell Launcher XML:</h5>\n')            
+            writer.writelines('<textarea rows="40" cols="150">\n')
             with open (os.path.join(UPLOAD_FOLDER, 'ShellLauncherXML.xml'), 'r') as f:
                 for line in f:
                     writer.writelines(line)
