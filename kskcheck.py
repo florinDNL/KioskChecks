@@ -1,7 +1,6 @@
 from distutils.command.upload import upload
-import os, random, string, glob
 from flask import Flask, flash, request, redirect, render_template
-
+import os, random, string, glob
 import xml.etree.ElementTree as ET
 
 
