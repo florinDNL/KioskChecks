@@ -297,7 +297,7 @@ def createReport(UPLOAD_FOLDER):
     configs = appProfileScan(UPLOAD_FOLDER)
     for config in configs:        
         for profile in configs[config]:
-            profileReport = "<br/><h5>Profile {} of type {} has the following allowed apps:</h5>".format(config[0], config[1])
+            profileReport = "<br/><h5><strong>Profile {} of type {} has the following allowed apps:</strong></h5>".format(config[0], config[1])
             apps = profile[0]
             accounts = profile[1]            
             appCount = 1
@@ -311,7 +311,7 @@ def createReport(UPLOAD_FOLDER):
                         notInstalled.append(app[0])
                         errors.append("<p>- Application {} was not found in Get-StartApps output. Check if it is installed or otherwise if the AUMID is correctly spelled</p>".format(app[0]))
                     
-            profileReport += ("<h5>And is assigned to the following accounts:</h5>")
+            profileReport += ("<h5><strong>And is assigned to the following accounts:</strong></h5>")
 
             for account in accounts:
                 if account[0] == "Group":
@@ -353,7 +353,7 @@ def showReport(UPLOAD_FOLDER, report_id):
         writer.writelines("<br/><hr>\n")
 
         if isMultiAppXml:
-            writer.writelines('<br/><h5>Found and Extracted Multi-App Kiosk XML:</h5>\n')            
+            writer.writelines('<br/><h4>Found and Extracted Multi-App Kiosk XML:</h4>\n')            
             writer.writelines('<textarea rows="40" cols="150">\n')
             with open (os.path.join(UPLOAD_FOLDER, 'MultiAppXML.xml'), 'r') as f:
                 for line in f:
@@ -361,7 +361,7 @@ def showReport(UPLOAD_FOLDER, report_id):
             writer.writelines('</textarea>')  
         
         if isShellLauncherXml:
-            writer.writelines('<br/><h5>Found and Extracted Shell Launcher XML:</h5>\n')            
+            writer.writelines('<br/><h4>Found and Extracted Shell Launcher XML:</strong></h4>\n')            
             writer.writelines('<textarea rows="40" cols="150">\n')
             with open (os.path.join(UPLOAD_FOLDER, 'ShellLauncherXML.xml'), 'r') as f:
                 for line in f:
