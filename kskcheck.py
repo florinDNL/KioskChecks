@@ -268,7 +268,7 @@ def createReport(UPLOAD_FOLDER):
 
     isSingleApp, singleAppProfiles = singleAppCheck(UPLOAD_FOLDER)
     if isSingleApp:
-        singleAppReport = "<br/><h5>Found {} SingleApp Configuration(s):</h5>".format(len(singleAppProfiles))
+        singleAppReport = "<br/><h5><strong>Found {} SingleApp Configuration(s):</strong></h5>".format(len(singleAppProfiles))
         for profile in singleAppProfiles:
             singleAppReport += "<p>User Name: {}</p><p>User SID: {}</p><p>AUMID: {}</p>".format(profile[1], profile[0], profile[2])
         
@@ -277,7 +277,7 @@ def createReport(UPLOAD_FOLDER):
 
     isShelllauncher, slauncherProfiles = sLauncherCheck(UPLOAD_FOLDER)
     if isShelllauncher:
-        slauncherReport = "<br/><h5>Found {} ShellLauncher Configuration(s):</h5>".format(len(slauncherProfiles))
+        slauncherReport = "<br/><h5><strong>Found {} ShellLauncher Configuration(s):</strong></h5>".format(len(slauncherProfiles))
         for profile in slauncherProfiles:
             slauncherReport += "<p>User: {}</p><p>Shell: {}</p><p>AppType: {}</p>".format(profile[0], profile[1], profile[2])
             if profile[2] == "UWP" and profile[1] not in notInstalled:
