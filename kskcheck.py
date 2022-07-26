@@ -395,38 +395,40 @@ def about():
 @app.route('/', methods=['POST'])
 def upload_file():
     if request.method == 'POST':
-        letters = string.ascii_lowercase
-        report_id = ( 'report_' + ''.join(random.choice(letters) for i in range(10)) )
-        path = os.getcwd()
-        UPLOAD_FOLDER = os.path.join(path, 'uploads', report_id)  
-        os.mkdir(UPLOAD_FOLDER)
-        app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
         if 'files[]' not in request.files:
             flash('No file part')
             return redirect(request.url)
 
-        files = request.files.getlist('files[]')       
-        for file in files:           
-            if file and allowed_file(file.filename):            
-                filename = file.filename.rsplit("/")[-1]          
-                for necessaryfile in necessary_files:
-                    if necessaryfile == filename.replace(".txt", ""):                               
-                        if necessaryfile not in uploaded_files:
-                            uploaded_files.append(necessaryfile) 
-                        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))                
+        files = request.files.getlist('files[]')
+        if len(files) > 1:
+            letters = string.ascii_lowercase
+            report_id = ( 'report_' + ''.join(random.choice(letters) for i in range(10)) )
+            path = os.getcwd()
+            UPLOAD_FOLDER = os.path.join(path, 'uploads', report_id)  
+            os.mkdir(UPLOAD_FOLDER)
+            app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+            for file in files:           
+                if file and allowed_file(file.filename):            
+                    filename = file.filename.rsplit("/")[-1]          
+                    for necessaryfile in necessary_files:
+                        if necessaryfile == filename.replace(".txt", ""):                               
+                            if necessaryfile not in uploaded_files:
+                                uploaded_files.append(necessaryfile) 
+                            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))                
 
-        tmpl = showReport(UPLOAD_FOLDER, report_id)
+            tmpl = showReport(UPLOAD_FOLDER, report_id)
 
-        rm_files = glob.glob(os.path.join(UPLOAD_FOLDER, '*'), recursive=True)
-        for f in rm_files:
-            try:
-                os.remove(f)
-            except OSError as e:
-                print("Error: %s : %s" % (f, e.strerror))
-        os.rmdir(UPLOAD_FOLDER)
-
-        return render_template(tmpl)
+            rm_files = glob.glob(os.path.join(UPLOAD_FOLDER, '*'), recursive=True)
+            for f in rm_files:
+                try:
+                    os.remove(f)
+                except OSError as e:
+                    print("Error: %s : %s" % (f, e.strerror))
+            os.rmdir(UPLOAD_FOLDER)
+            return render_template(tmpl)
+        else:
+            flash('No folder selected')
+            return redirect(request.url)
 
 
 
