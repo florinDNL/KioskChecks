@@ -42,7 +42,9 @@ def sLauncherCheck(UPLOAD_FOLDER):
     isShellLauncher = False
     if slauncher and "does not exist" not in slauncher[0]:
         isShellLauncher = True        
+
     configs = []
+    
     if isShellLauncher:
         lastIndex = 0        
         for line in slauncher:
@@ -237,21 +239,36 @@ def appProfileScan(UPLOAD_FOLDER):
                     userName = aaconfig[currIndex + 5].replace("Name", "").replace("REG_SZ", "").replace(" ", "")
                     userType = None
 
-                    if "AzureAD\\" in userName:
-                        userType = "Azure AD"
-                    elif "\\" in userName:
-                        userType = "Domain"
+                    if userName:
+                        if "AzureAD\\" in userName:
+                            userType = "Azure AD"
+                        elif "\\" in userName:
+                            userType = "Domain"
+                        else:
+                            userType = "Local"
                     else:
-                        userType = "Local"                    
+                        userType = "Local"
+                        isAutoLogon = False
+                        with open (os.path.join(UPLOAD_FOLDER, 'Winlogon_Reg.txt'), encoding='UTF-16-LE') as f:
+                            wlogon = [line.rstrip() for line in f]
+                        for line in wlogon:
+                            if "AutoLogonSID" in line and userId in line:
+                                isAutoLogon = True
+                        if isAutoLogon:
+                            userName = "AutoLogon Account"                            
+                        else:
+                            userName = "[Username is blank and the SID was not found in the AutoLogon registry; verify the ID manually]"  
 
                     accounts.append(["User", userId, userName, userType])
                 lastIndex = currIndex + 1
             elif profile[0] in line and "GlobalProfileId" in line:
-                    accounts.append(["GlobalUser", "Fill"])
+                    accounts.append(["GlobalUser"])
 
         configs[profile] = [[apps, accounts]]
 
     return configs
+
+
 
 def createReport(UPLOAD_FOLDER):    
     errors = []
@@ -378,7 +395,7 @@ app.secret_key = "secret key"
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
 ALLOWED_EXTENSIONS = set(['txt'])
-necessary_files = ['AssignedAccess_Reg', 'AssignedAccessCsp_Reg', 'AssignedAccessManagerSvc_Reg', 'ConfigManager_AssignedAccess_Reg', 'Get-AppxPackage-AllUsers', 'Get-AssignedAccess', 'ShellLauncher_Reg', 'Get-StartApps']
+necessary_files = ['AssignedAccess_Reg', 'AssignedAccessCsp_Reg', 'AssignedAccessManagerSvc_Reg', 'ConfigManager_AssignedAccess_Reg', 'Get-AppxPackage-AllUsers', 'Get-AssignedAccess', 'ShellLauncher_Reg', 'Get-StartApps', 'Winlogon_Reg']
 uploaded_files = []
 
 def allowed_file(filename):
