@@ -343,7 +343,7 @@ def showReport(UPLOAD_FOLDER, report_id):
                 writer.writelines("{}".format(error))
             writer.writelines("\n")
         else:
-            writer.writelines("<h5>No problems were found.</h5>\n")
+            writer.writelines("<h4>No problems were found.</h4>\n")
 
         writer.writelines("<hr><br/><br/><h4>Report</h4>\n<hr>")
         for profileReport in report:
