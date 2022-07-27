@@ -257,7 +257,7 @@ def appProfileScan(UPLOAD_FOLDER):
                         if isAutoLogon:
                             userName = "AutoLogon Account"                            
                         else:
-                            userName = "[Username is blank and the SID was not found in the AutoLogon registry; verify the ID manually]"  
+                            userName = "[Username is blank and the SID was not found in the AutoLogon registry; could be a Domain account]"  
 
                     accounts.append(["User", userId, userName, userType])
                 lastIndex = currIndex + 1
@@ -369,23 +369,36 @@ def showReport(UPLOAD_FOLDER, report_id):
         writer.writelines("<br/><hr>\n")
 
         if isMultiAppXml:
-            writer.writelines('<br/><h4>Found and Extracted Multi-App Kiosk XML:</h4>\n')            
-            writer.writelines('<textarea rows="40" cols="150">\n')
+            lineCount = 0
+            longestLine = 0
+            writer.writelines('<br/><h4>Found and Extracted Multi-App Kiosk XML:</h4>\n')  
+            with open (os.path.join(UPLOAD_FOLDER, 'MultiAppXML.xml'), 'r') as f:
+                for line in f:
+                    lineCount += 1
+                    if len(line) > longestLine:
+                        longestLine = len(line)          
+            writer.writelines('<textarea readonly rows="{}" cols="{}">\n'.format(lineCount + 1, longestLine))
             with open (os.path.join(UPLOAD_FOLDER, 'MultiAppXML.xml'), 'r') as f:
                 for line in f:
                     writer.writelines(line)
             writer.writelines('</textarea>')  
         
         if isShellLauncherXml:
-            writer.writelines('<br/><h4>Found and Extracted Shell Launcher XML:</strong></h4>\n')            
-            writer.writelines('<textarea rows="40" cols="150">\n')
+            lineCount = 0
+            longestLine = 0
+            writer.writelines('<br/><h4>Found and Extracted Shell Launcher XML:</strong></h4>\n')
+            with open (os.path.join(UPLOAD_FOLDER, 'ShellLauncherXML.xml'), 'r') as f:
+                for line in f:
+                    lineCount += 1
+                    if len(line) > longestLine:
+                        longestLine = len(line)           
+            writer.writelines('<textarea readonly rows="{}" cols="{}">\n'.format(lineCount, longestLine))            
             with open (os.path.join(UPLOAD_FOLDER, 'ShellLauncherXML.xml'), 'r') as f:
                 for line in f:
                     writer.writelines(line)
-            writer.writelines('</textarea>')  
-        
-        writer.writelines('{% endblock %}')
+            writer.writelines('</textarea>')    
 
+        writer.writelines('{% endblock %}')
     return "{}.html".format(report_id)
 
 
@@ -393,13 +406,6 @@ app=Flask(__name__)
 
 app.secret_key = "secret key"
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
-
-ALLOWED_EXTENSIONS = set(['txt'])
-necessary_files = ['AssignedAccess_Reg', 'AssignedAccessCsp_Reg', 'AssignedAccessManagerSvc_Reg', 'ConfigManager_AssignedAccess_Reg', 'Get-AppxPackage-AllUsers', 'Get-AssignedAccess', 'ShellLauncher_Reg', 'Get-StartApps', 'Winlogon_Reg']
-uploaded_files = []
-
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
 @app.route('/')
 def upload_form():
@@ -415,23 +421,30 @@ def upload_file():
         if 'files[]' not in request.files:
             flash('No file part')
             return redirect(request.url)
-
+        necessary_files = ['AssignedAccess_Reg', 'AssignedAccessCsp_Reg', 'AssignedAccessManagerSvc_Reg', 'ConfigManager_AssignedAccess_Reg', 'Get-AppxPackage-AllUsers', 'Get-AssignedAccess', 'ShellLauncher_Reg', 'Get-StartApps', 'Winlogon_Reg']
         files = request.files.getlist('files[]')
         if len(files) > 1:
+            for file in files:           
+                filename = file.filename.rsplit("/")[-1]          
+                for necessaryfile in necessary_files:
+                    if necessaryfile == filename.replace(".txt", ""):                               
+                        necessary_files.remove(necessaryfile)                                                                   
+            print(necessary_files)
+            if necessary_files:
+                flash("Not all necessary files were selected. Make sure the following file(s) exist in the folder:\n")
+                for file in necessary_files:
+                    flash(file + ".txt\n")
+                return redirect(request.url)
+
             letters = string.ascii_lowercase
             report_id = ( 'report_' + ''.join(random.choice(letters) for i in range(10)) )
             path = os.getcwd()
             UPLOAD_FOLDER = os.path.join(path, 'uploads', report_id)  
             os.mkdir(UPLOAD_FOLDER)
             app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-            for file in files:           
-                if file and allowed_file(file.filename):            
-                    filename = file.filename.rsplit("/")[-1]          
-                    for necessaryfile in necessary_files:
-                        if necessaryfile == filename.replace(".txt", ""):                               
-                            if necessaryfile not in uploaded_files:
-                                uploaded_files.append(necessaryfile) 
-                            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))                
+
+            for file in files:
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename.rsplit("/")[-1] ))
 
             tmpl = showReport(UPLOAD_FOLDER, report_id)
 
@@ -450,4 +463,5 @@ def upload_file():
 
 
 if __name__ == "__main__":
-    app.run(host='127.0.0.1',port=5000,debug=False,threaded=True)
+    app.run(host='127.0.0.1',port=5000,debug=True,threaded=True)
+    
