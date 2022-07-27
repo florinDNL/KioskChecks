@@ -9,9 +9,8 @@ def isServiceDisabled(UPLOAD_FOLDER):
         aasvc = [line.rstrip() for line in f]
     isDisabled = False
     for line in aasvc:
-        if "Start" in line:
-            if "0x4" in line:
-                isDisabled = True
+        if "Start" in line and "0x4" in line:
+            isDisabled = True
     
     return isDisabled
 
