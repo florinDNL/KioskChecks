@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <style>
-  body      {background-color: #dddddd; font-family: 'Segoe UI' ; color:#343a40;}
-  a         {color: #07638b;}
+  body      {background-color: #343a40; font-family: 'Segoe UI' ; color:#dddddd;}
+  a         {color: #29a2d6;}
   p         {font-family: 'Consolas';  font-size: 14px;}
   h4        {font-family:  'Calibri';  font-size: 20px;}
   h5        {font-family:  'Verdana';  font-size: 14px;}
   h6        {font-family: 'Consolas';  font-size: 14px; color: red}
   textarea  {font-family: 'Consolas';  font-size: 12px; background-color: #ebe8e8; color: #343a40; grid-auto-columns: max-content;}
-  hr        {border-top: 1px dotted #343a40;}
+  hr        {border-top: 1px solid #dddddd;}
 </style>
 <title>{% block title %}{% endblock %}</title>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -27,6 +27,7 @@
     </ul>
   </div>
 </nav>
+<hr>
 {% block content %}
 {% endblock %}
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
