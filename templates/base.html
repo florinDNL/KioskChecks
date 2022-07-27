@@ -9,7 +9,8 @@
   h6        {font-family: 'Consolas';  font-size: 14px; color: red}
   h7        {font-family:  'Calibri';  font-size: 20px; color: greenyellow}
   textarea  {font-family: 'Consolas';  font-size: 12px; background-color: #ebe8e8; color: #343a40; grid-auto-columns: max-content;}
-  hr        {border-top: 1px solid #dddddd;}
+  hr        {border-top: 1px solid  #dddddd;}
+  hr.top    {border-top: 1px dashed #acacac;}
 </style>
 <title>{% block title %}{% endblock %}</title>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -28,7 +29,7 @@
     </ul>
   </div>
 </nav>
-<hr>
+<hr class="top">
 {% block content %}
 {% endblock %}
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
