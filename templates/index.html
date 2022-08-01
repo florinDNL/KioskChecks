@@ -21,13 +21,20 @@
 	<form method="post" action="/" enctype="multipart/form-data">
 		<dl>
 			<p>
+				<input type="text" class="text-line" placeholder="Case or AR Number (Optional)" name="caseno" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"/>
+				<br/><br/>
 				<input type="file" name="files[]" value ="Drag Here" multiple="true" autocomplete="off" webkitdirectory>
 				<input type="submit" value="Analyze" name="submit">
 			</p>
 		</dl>		    
 	</form>
 	<br/><br/>
-	<p><small><a href="mailto:fldanila@microsoft.com?subject=KioskChecks Issue">Report an issue</a></small></p>
+	<p>
+		<small>Report an Issue</small>
+		<br/>	
+		<a href="mailto:fldanila@microsoft.com?subject=KioskChecks Issue"><img src="/static/mailico.png" /></a>
+		<a href="sip:fldanila@microsoft.com"><img src="/static/imico.png" /></a>
+	</p>
 	<hr>
 	<h2>Demo</h2>
 	<img src="/static/demo.gif" alt="Log Folder">
