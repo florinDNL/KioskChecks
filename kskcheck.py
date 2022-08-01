@@ -1,5 +1,6 @@
-from distutils.command.upload import upload
 from flask import Flask, flash, request, redirect, render_template
+from distutils.command.upload import upload
+from datetime import datetime
 import os, random, string, glob
 import xml.etree.ElementTree as ET
 
@@ -417,9 +418,11 @@ def about():
 @app.route('/', methods=['POST'])
 def upload_file():
     if request.method == 'POST':
-        if 'files[]' not in request.files:
-            flash('No file part')
+        caseNo = request.form['caseno']
+        if caseNo and (len(caseNo) != 8 and len(caseNo) != 16):
+            flash('Invalid case number')
             return redirect(request.url)
+
         necessary_files = ['AssignedAccess_Reg', 'AssignedAccessCsp_Reg', 'AssignedAccessManagerSvc_Reg', 'ConfigManager_AssignedAccess_Reg', 'Get-AppxPackage-AllUsers', 'Get-AssignedAccess', 'ShellLauncher_Reg', 'Get-StartApps', 'Winlogon_Reg']
         files = request.files.getlist('files[]')
         if len(files) > 1:
@@ -454,6 +457,14 @@ def upload_file():
                 except OSError as e:
                     print("Error: %s : %s" % (f, e.strerror))
             os.rmdir(UPLOAD_FOLDER)
+
+            now = datetime.now()
+            dt_string = now.strftime("%d/%m/%Y_%H:%M:%S")
+            print(dt_string)
+
+            with open('report_history.txt', 'a') as f:
+                f.write("{} - {}\n".format(dt_string, caseNo))
+
             return render_template(tmpl)
         else:
             flash('No folder selected')
@@ -462,4 +473,4 @@ def upload_file():
 
 
 if __name__ == "__main__":
-    app.run(host='127.0.0.1',port=5000,debug=False,threaded=True)
+    app.run(host='127.0.0.1',port=5000,debug=True,threaded=True)
