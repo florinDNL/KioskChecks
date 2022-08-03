@@ -73,7 +73,7 @@ def diagCheck(UPLOAD_FOLDER):
             tStamp = line.replace("REG_SZ", "")
 
     if err:
-        return "<p>- A provisioning error was found - if the time doesn't correspond to the issue or is from too long ago it's likely irrelevant</p><p>{}</p><p>{}</p>".format(tStamp, err)
+        return '<p>- A provisioning error was found - if the time doesn\'t correspond to the issue or is from too long ago it\'s likely irrelevant:</p><p class="indent">{}</p><p class="indent">{}</p>'.format(tStamp, err)
     else:
         return None
 
