@@ -21,7 +21,7 @@
 	<form method="post" action="/" enctype="multipart/form-data">
 		<dl>
 			<p>
-				<input type="text" class="text-line" placeholder="Case or AR Number (Optional)" name="caseno" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"/>
+				<input size="26" type="text" class="text-line" placeholder="Case or AR Number (Optional)" name="caseno" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"/>
 				<br/><br/>
 				<input type="file" name="files[]" value ="Drag Here" multiple="true" autocomplete="off" webkitdirectory>
 				<input type="submit" value="Analyze" name="submit">
