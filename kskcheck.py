@@ -433,9 +433,11 @@ def upload_file():
                         necessary_files.remove(necessaryfile)                                                                   
             print(necessary_files)
             if necessary_files:
+                mfCount = 0
                 flash("Not all necessary files were selected. Make sure the following file(s) exist in the folder:\n")
                 for file in necessary_files:
-                    flash(file + ".txt\n")
+                    mfCount += 1
+                    flash(f"{mfCount}) {file}.txt\n")
                 return redirect(request.url)
 
             letters = string.ascii_lowercase
