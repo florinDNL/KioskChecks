@@ -113,7 +113,9 @@ def xmlCheckAndExtract(UPLOAD_FOLDER):
             nextLine  = aacsp[currIndex + 1]
             maXmlLines.append(firstLine)
             while nextLine:
-                maXmlLines.append(nextLine)
+                maXmlLines.append(nextLine)                
+                if "/AssignedAccessConfiguration" in nextLine:
+                    break
                 currIndex += 1
                 nextLine = aacsp[currIndex + 1] 
         elif "ShellLauncherXml" in line:            
@@ -123,6 +125,8 @@ def xmlCheckAndExtract(UPLOAD_FOLDER):
             slXmlLines.append(firstLine)  
             while nextLine:
                 slXmlLines.append(nextLine)
+                if '/ShellLauncherConfiguration' in nextLine:
+                    break
                 currIndex += 1
                 nextLine = aacsp[currIndex + 1]           
     
@@ -461,7 +465,7 @@ def upload_file():
             os.rmdir(UPLOAD_FOLDER)
 
             now = datetime.now()
-            dt_string = now.strftime("%d/%m/%Y_%H:%M:%S")
+            dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
             print(dt_string)
 
             with open('report_history.txt', 'a') as f:
@@ -475,5 +479,5 @@ def upload_file():
 
 
 if __name__ == "__main__":
-    app.run(host='127.0.0.1',port=5000,debug=True,threaded=True)
+    app.run(host='127.0.0.1',port=5000,debug=False,threaded=True)
     
