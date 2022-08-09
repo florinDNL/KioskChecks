@@ -428,6 +428,10 @@ def documentation():
 def download():
     return send_from_directory(DIRECTORY_TO_SERVE_PATH, 'kioskAssistant.zip')
 
+@app.route('/kioskmdm')
+def kioskmdm():
+    return render_template('kioskmdm.html')
+
 @app.route('/', methods=['POST'])
 def upload_file():
     if request.method == 'POST':
