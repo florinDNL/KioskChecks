@@ -1,5 +1,4 @@
 from flask import Flask, flash, request, redirect, render_template, send_from_directory
-from distutils.command.upload import upload
 from datetime import datetime
 import os, random, string, glob
 import xml.etree.ElementTree as ET
