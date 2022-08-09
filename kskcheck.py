@@ -1,4 +1,4 @@
-from flask import Flask, flash, request, redirect, render_template
+from flask import Flask, flash, request, redirect, render_template, send_from_directory
 from distutils.command.upload import upload
 from datetime import datetime
 import os, random, string, glob
@@ -410,6 +410,7 @@ app=Flask(__name__)
 
 app.secret_key = "secret key"
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+DIRECTORY_TO_SERVE_PATH = './kaDownload'
 
 @app.route('/')
 def upload_form():
@@ -425,7 +426,7 @@ def documentation():
 
 @app.route('/download')
 def download():
-    return app.send_static_file('kioskAssistant.zip')
+    return send_from_directory(DIRECTORY_TO_SERVE_PATH, 'kioskAssistant.zip')
 
 @app.route('/', methods=['POST'])
 def upload_file():
