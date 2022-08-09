@@ -13,6 +13,8 @@
   .indent   {text-indent: 5%; color: rgb(66, 197, 197)}
   .top      {border-top: 1px dashed #acacac;}
   .center   {margin:auto}
+  .dropdown-menu {background-color: #3f454c;}
+  .dropdown-item {color:#dddddd;}
   .text-line {
     background-color: transparent;
     color: #eeeeee;
@@ -23,7 +25,7 @@
     border-right: none;
     border-bottom: solid #eeeeee 1px;
     padding: 3px 10px;
-  }
+  }  
 </style>
 <title>{% block title %}{% endblock %}</title>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -39,8 +41,14 @@
       <li class="nav-item">
         <a class="nav-link" href="/about">About</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/download">Download KioskAssistant</a>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="Kiosk" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Kiosk Assistant
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="/documentation">Documentation</a>
+          <a class="dropdown-item" href="/download">Download</a>
+        </div>
       </li>
     </ul>
   </div>
