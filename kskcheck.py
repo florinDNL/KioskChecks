@@ -419,6 +419,10 @@ def upload_form():
 def about():
     return render_template('about.html')
 
+@app.route('/documentation')
+def documentation():
+    return render_template('kadoc.html')
+
 @app.route('/download')
 def download():
     return app.send_static_file('kioskAssistant.zip')
@@ -483,5 +487,5 @@ def upload_file():
 
 
 if __name__ == "__main__":
-    app.run(host='127.0.0.1',port=5000,debug=False,threaded=True)
+    app.run(host='127.0.0.1',port=5000,debug=True,threaded=True)
     
