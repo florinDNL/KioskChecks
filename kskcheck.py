@@ -419,6 +419,10 @@ def upload_form():
 def about():
     return render_template('about.html')
 
+@app.route('/download')
+def download():
+    return app.send_static_file('kioskAssistant.zip')
+
 @app.route('/', methods=['POST'])
 def upload_file():
     if request.method == 'POST':
