@@ -1,0 +1,200 @@
+{% extends "base.html" %}
+{% block title %} KioskMDM {% endblock %}
+
+{% block content %}
+<h1 id="kioskmdm">kioskMDM</h1>
+<p>Powershell cmdlets for applying/extracting Multi-App Kiosk and Shell Launcher configurations</p>
+</br>
+<p class="nospace">kioskmdm.ps1</p>
+<textarea class="psScript" readonly rows="25" cols="139">
+function PrintCfg
+{
+
+    Get-CimInstance -Namespace "root\cimv2\mdm\dmmap" -ClassName "MDM_AssignedAccess"
+    
+}
+
+
+function ApplyCfg
+{
+
+    $aacsp  = Get-CimInstance -Namespace "root\cimv2\mdm\dmmap" -ClassName "MDM_AssignedAccess"
+    Write-Host "`n1) Multi App`n2) Shell Launcher"
+    $type   = $Host.Ui.ReadLine()
+    
+    if ($type -ne 1 -and $type -ne 2)
+    {
+    
+        Write-Host "Invalid Input"        
+        ApplyCfg
+        
+    }
+    else
+    {
+
+        try
+        {        
+        
+            $escXML = Get-XML
+            
+        }
+        catch
+        {
+        
+            Write-Host "`n"$_ -ForeGroundColor DarkRed
+            break
+            
+        }
+
+        if     ($type -eq 1)
+        {
+        
+            $aacsp.Configuration = $escXML
+            
+        }
+        elseif ($type -eq 2)
+        {
+        
+            $prodname = (Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion").ProductName
+            if ($prodname -like "*Enterprise*" -or $prodname -like "*Education*")
+            {
+            
+                $aacsp.ShellLauncher = $escXML     
+                
+            }
+            else
+            {         
+            
+                Write-Host "Only Windows 10 Enterprise or Education are licensed to use Shell Launcher. You are currently using " $prodname -ForegroundColor DarkRed
+                break
+                
+            }
+            
+        }        
+        
+        Set-CimInstance -CimInstance $aacsp
+            
+        Write-Host "`nThe current configuration is:"
+        PrintCfg
+    }    
+    
+}
+
+
+function ClearCfg
+{
+
+    $count = 0
+    $aacsp  = Get-CimInstance -Namespace "root\cimv2\mdm\dmmap" -ClassName "MDM_AssignedAccess"
+    if ($aacsp.Configuration)
+    {       
+    
+        $aacsp.Configuration = $NULL 
+        Set-CimInstance -CimInstance $aacsp
+        Write-Host "Multi-App Kiosk Configuration cleared"
+        $count++
+        
+    }
+    if ($aacsp.ShellLauncher)
+    {
+    
+        $aacsp.ShellLauncher = $NULL
+        Set-CimInstance -CimInstance $aacsp
+        Write-Host "Shell Launcher Configuration cleared"
+        $count++
+        
+    }
+    if ($count -eq 0)
+    {
+    
+        Write-Host "No Multi-App or Shell Launcher Configuration found on present machine"
+        
+    }
+
+}
+
+
+function ExtractCfg
+{
+
+    $count = 0
+    $aacsp  = Get-CimInstance -Namespace "root\cimv2\mdm\dmmap" -ClassName "MDM_AssignedAccess"
+    
+    if ($aacsp.Configuration)
+    {
+    
+        $XML = [xml]($aacsp.Configuration)
+        Format-XML $XML -indent 4 >> .\extractedMultiApp.xml
+        Write-Host "Found Multi-App Kiosk, saving configuration as extractedMultiApp.xml"
+        $count++    
+        
+    }
+    
+    if ($aacsp.ShellLauncher)
+    {
+    
+        $XML = [xml]($aacsp.ShellLauncher)
+        Format-XML $XML -indent 4 >> .\extractedShellLauncher.xml  
+        Write-Host "Found Shell Launcher, saving configuration as extractedShellLauncher.xml"
+        $count++     
+        
+    }
+    
+    if ($count -eq 0)
+    {
+    
+        Write-Host "No Multi-App or Shell Launcher Configuration found on present machine"
+        
+    }
+    
+}
+
+
+function Get-XML
+{
+
+    $Path   = Read-Host "Enter the path to XML File"
+    $XML    = Get-Content -Path $Path -ErrorAction Stop
+    $escXML = [System.Security.SecurityElement]::Escape($XML) 
+
+    return $escXML
+    
+}
+
+
+function Format-XML ([xml]$xml, $indent=2) #from https://devblogs.microsoft.com/powershell/format-xml/
+{
+
+    $StringWriter = New-Object System.IO.StringWriter
+    $XmlWriter = New-Object System.XMl.XmlTextWriter $StringWriter
+    $xmlWriter.Formatting = “indented”
+    $xmlWriter.Indentation = $Indent
+    $xml.WriteContentTo($XmlWriter)
+    $XmlWriter.Flush()
+    $StringWriter.Flush()
+    return $StringWriter.ToString()
+    
+}
+</textarea>
+<p>How To:</p>
+<ol>
+<li>Download PSExec: <a href="https://docs.microsoft.com/en-us/sysinternals/downloads/psexec">https://docs.microsoft.com/en-us/sysinternals/downloads/psexec</a></li>
+<li>Run powershell as SYSTEM using psexec in an elevated CMD: <strong>psexec -s -i powershell</strong></li>
+<li>Import the script: <strong>. .\kioskMDM.ps1</strong></li>
+</ol>
+<p>Available Functions:</p>
+<ul>
+<li><p><strong>printcfg</strong>    - Shows current configuration</p>
+<p>   <img src="https://user-images.githubusercontent.com/79944491/160303609-5683b48a-d976-458d-b6ed-86adcb01f185.png" alt="image"></p>
+</li>
+<li><p><strong>applycfg</strong>    - Applies a Multi-App Kiosk or ShellLauncher XML</p>
+<p>   <img src="https://user-images.githubusercontent.com/79944491/160303637-600fa903-9719-4939-a32d-0233473b029e.png" alt="image"></p>
+</li>
+<li><p><strong>clearcfg</strong>    - Clears any configuration found on the system</p>
+<p>   <img src="https://user-images.githubusercontent.com/79944491/160303670-c01a7e25-2f3b-4b7a-9cf8-a31c3edfda9f.png" alt="image"></p>
+</li>
+<li><p><strong>extractcfg</strong>  - Scans for Multi-App Kiosk / Shell Launcher configurations then formats and extracts them to an XML file</p>
+<p>   <img src="https://user-images.githubusercontent.com/79944491/160303662-781f0387-c9ad-4226-a442-16ac4c0aac3d.png" alt="image"></p>
+</li>
+</ul>
+{% endblock %}
