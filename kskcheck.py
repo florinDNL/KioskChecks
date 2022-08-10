@@ -39,8 +39,10 @@ def sLauncherCheck(UPLOAD_FOLDER):
     with open (os.path.join(UPLOAD_FOLDER, 'ShellLauncher_Reg.txt'), encoding='UTF-16-LE') as f:
         slauncher = [line.rstrip() for line in f]
     isShellLauncher = False
-    if slauncher and "does not exist" not in slauncher[0]:
-        isShellLauncher = True        
+    for line in slauncher:
+        if "Shell" in line and "REG_SZ" in line:
+            isShellLauncher = True
+            break      
 
     configs = []
     
