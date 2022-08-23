@@ -368,8 +368,12 @@ def showReport(UPLOAD_FOLDER, report_id):
             writer.writelines("<h7>No problems were found.</h7>\n")
 
         writer.writelines("<hr><br/><br/><h4>Report</h4>\n<hr>")
-        for profileReport in report:
-            writer.writelines("<p>{}</p>\n".format(profileReport))
+        if report:
+            for profileReport in report:
+                writer.writelines("<p>{}</p>\n".format(profileReport))
+        else:
+            writer.writelines("<p>No Kiosk profile found on the system.</p>\n")
+            
 
         writer.writelines("<br/><hr>\n")
 
