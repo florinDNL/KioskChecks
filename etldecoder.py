@@ -6,7 +6,7 @@ def decodeEtlTrace(folder, etl_trace):
     commandline = "{} {} -nosummary -o tmftrace.txt".format(tracefmt, os.path.join(folder, etl_trace))
     subprocess.run(commandline)
 
-def parseTrace(folder, etl_trace, verbose):
+def parseTrace(folder, etl_trace):
     decodeEtlTrace(folder, etl_trace)
     etl_report = []
     with open ("tmftrace.txt", 'r+') as t:

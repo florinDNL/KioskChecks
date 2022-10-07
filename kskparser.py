@@ -374,7 +374,7 @@ def showReport(UPLOAD_FOLDER, report_id, etl_trace):
         writer.writelines("\n")
 
         if etl_trace:
-            etl_report = etldecoder.parseTrace(UPLOAD_FOLDER, etl_trace, False)
+            etl_report = etldecoder.parseTrace(UPLOAD_FOLDER, etl_trace)
             writer.writelines(f'{double_line}\nETL Trace Analysis\n{double_line}\n\n')
             for item in etl_report:
                 writer.writelines(f"{item}\n")
