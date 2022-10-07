@@ -9,13 +9,13 @@
 	<br/>
 	<p>
 		{% with messages = get_flashed_messages() %}
-		{% if messages %}
-			<ul class=flashes>
-			{% for message in messages %}
-			<h6>{{ message }}</h6>
-			{% endfor %}
-			</ul>
-		{% endif %}
+			{% if messages %}
+				<ul class=flashes>
+					{% for message in messages %}
+						<h6>{{ message }}</h6>
+					{% endfor %}
+				</ul>
+			{% endif %}
 		{% endwith %}
 	</p>
 	<form method="post" action="/" enctype="multipart/form-data">
