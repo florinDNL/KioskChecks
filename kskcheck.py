@@ -1,7 +1,8 @@
 from flask import Flask, flash, request, redirect, render_template, send_from_directory, url_for, send_file
 from datetime import datetime
-from parser import showReport
+from kskparser import showReport
 import os, glob
+
 
 app=Flask(__name__)
 
