@@ -1,5 +1,4 @@
 import os, etldecoder
-import xml.etree.ElementTree as ET
 
 def isServiceDisabled(UPLOAD_FOLDER):
     with open (os.path.join(UPLOAD_FOLDER, 'AssignedAccessManagerSvc_Reg.txt'), encoding='UTF-16-LE') as f:
@@ -76,82 +75,43 @@ def diagCheck(UPLOAD_FOLDER):
         return None
 
 
-
-def unescapeXML(xml):
-    lastindex = 0
-    with open (xml, 'r', encoding='utf-8') as reader:
-        unescapedXML = reader.readlines()    
-
-    for line in unescapedXML:
-        if "<StartLayout>" in line:
-            currIndex = unescapedXML.index(line, lastindex)
-            unescapedXML[currIndex] = line.strip().replace("&lt;", "<").replace("&gt;", ">")
-            lastindex = currIndex + 1
-    
-    with open (xml, 'w', encoding='utf-8') as writer:
-        writer.writelines(unescapedXML)
-
-
-
 def xmlCheckAndExtract(UPLOAD_FOLDER):
-    maXmlLines = []
-    slXmlLines = []
+    maXmlLines = ''
+    slXmlLines = ''
     currIndex = None
     nextLine  = None
-    isMultiAppXML = False
-    isShellLauncherXML = False
 
     with open (os.path.join(UPLOAD_FOLDER, 'AssignedAccessCsp_Reg.txt'), encoding='UTF-16-LE') as f:
         aacsp = [line.rstrip() for line in f]
 
     for line in aacsp:
         if "MultiAppXml" in line:
-            firstLine = line.replace("MultiAppXml", "").replace("REG_SZ", "").strip().rstrip()
+            firstLine = line.replace("MultiAppXml", "").replace("REG_SZ", "").replace(">", ">\n").strip().rstrip()
             currIndex = aacsp.index(line)
             nextLine  = aacsp[currIndex + 1]
-            maXmlLines.append(firstLine)
+            maXmlLines += firstLine
             while nextLine:
-                maXmlLines.append(nextLine)                
+                nextLine.replace(">", ">\n")
+                maXmlLines += nextLine               
                 if "/AssignedAccessConfiguration" in nextLine:
                     break
                 currIndex += 1
                 nextLine = aacsp[currIndex + 1] 
         elif "ShellLauncherXml" in line:            
-            firstLine = line.replace("ShellLauncherXml", "").replace("REG_SZ", "").strip().rstrip()
+            firstLine = line.replace("ShellLauncherXml", "").replace("REG_SZ", "").replace(">", ">\n").strip().rstrip()
             currIndex = aacsp.index(line)
             nextLine  = aacsp[currIndex + 1]
-            slXmlLines.append(firstLine)  
+            slXmlLines += firstLine  
             while nextLine:
-                slXmlLines.append(nextLine)
+                nextLine.replace(">", ">\n")
+                slXmlLines += nextLine
                 if '/ShellLauncherConfiguration' in nextLine:
                     break
                 currIndex += 1
-                nextLine = aacsp[currIndex + 1]           
-    
-    if maXmlLines:
-        maxml = "".join(maXmlLines)        
-        ET.register_namespace("v2", 'http://schemas.microsoft.com/AssignedAccess/201810/config')
-        ET.register_namespace("v3", 'http://schemas.microsoft.com/AssignedAccess/2020/config')
-        ET.register_namespace("", "http://schemas.microsoft.com/AssignedAccess/2017/config")
-        root = ET.fromstring(maxml)
-        tree = ET.ElementTree(root)
-        ET.indent(tree, '  ')
-        tree.write(os.path.join(UPLOAD_FOLDER, "MultiAppXML.xml"), encoding="utf-8", xml_declaration=True)
-        unescapeXML(os.path.join(UPLOAD_FOLDER, "MultiAppXML.xml"))
-        isMultiAppXML = True
-    if slXmlLines:
-        slxml = "".join(slXmlLines)        
-        ET.register_namespace("v2", 'http://schemas.microsoft.com/ShellLauncher/2019/Configuration')
-        ET.register_namespace("", "http://schemas.microsoft.com/ShellLauncher/2018/Configuration")
-        root = ET.fromstring(slxml)
-        tree = ET.ElementTree(root)
-        ET.indent(tree, '  ')
-        tree.write(os.path.join(UPLOAD_FOLDER, "ShellLauncherXML.xml"), encoding="utf-8", xml_declaration=True)
-        unescapeXML(os.path.join(UPLOAD_FOLDER, "ShellLauncherXML.xml"))
-        isShellLauncherXML = True
-    
-    return isMultiAppXML, isShellLauncherXML
+                nextLine = aacsp[currIndex + 1]  
 
+    
+    return maXmlLines, slXmlLines 
 
 
 def isAppInStartApps(app, UPLOAD_FOLDER):    
@@ -353,14 +313,14 @@ def createReport(UPLOAD_FOLDER):
 def showReport(UPLOAD_FOLDER, report_id, etl_trace):
     report_file = "{}.txt".format(report_id)
 
-    isMultiAppXml, isShellLauncherXml = xmlCheckAndExtract(UPLOAD_FOLDER)
+    MultiAppXml, ShellLauncherXml = xmlCheckAndExtract(UPLOAD_FOLDER)
     report, errors = createReport(UPLOAD_FOLDER)
     double_line = '======================================================'
     single_line = '------------------------------------------------------'
     with open (os.path.join('reports', report_file), 'w') as writer:
         writer.writelines(f'{double_line}\nR E P O R T\n{double_line}\n\n')
         if errors:
-            writer.writelines(f"Problems found\n{single_line}")
+            writer.writelines(f"Problems found\n{single_line}\n")
             for error in errors:
                 writer.writelines("{}".format(error))
             writer.writelines("\n")
@@ -380,32 +340,13 @@ def showReport(UPLOAD_FOLDER, report_id, etl_trace):
                 writer.writelines(f"{item}\n")
             writer.writelines("\n")
 
-        if isMultiAppXml:
-            lineCount = 0
-            longestLine = 0
-            writer.writelines(f'{double_line}\nFound and Extracted Multi-App Kiosk XML\n{double_line}\n')  
-            with open (os.path.join(UPLOAD_FOLDER, 'MultiAppXML.xml'), 'r') as f:
-                for line in f:
-                    lineCount += 1
-                    if len(line) > longestLine:
-                        longestLine = len(line)          
-            writer.writelines('{}{}\n'.format(lineCount + 1, longestLine))
-            with open (os.path.join(UPLOAD_FOLDER, 'MultiAppXML.xml'), 'r') as f:
-                for line in f:
-                    writer.writelines(line)                
-        
-        if isShellLauncherXml:
-            lineCount = 0
-            longestLine = 0
-            writer.writelines(f'Found and Extracted Shell Launcher XML:\n{double_line}')
-            with open (os.path.join(UPLOAD_FOLDER, 'ShellLauncherXML.xml'), 'r') as f:
-                for line in f:
-                    lineCount += 1
-                    if len(line) > longestLine:
-                        longestLine = len(line)           
-            writer.writelines('{}{}\n'.format(lineCount, longestLine))            
-            with open (os.path.join(UPLOAD_FOLDER, 'ShellLauncherXML.xml'), 'r') as f:
-                for line in f:
-                    writer.writelines(line) 
+        if MultiAppXml:
+            writer.writelines(f'{double_line}\nFound and Extracted Multi-App Kiosk XML\n{double_line}\n')              
+            for line in MultiAppXml:        
+                writer.writelines(line) 
+        if ShellLauncherXml:           
+            writer.writelines(f'{double_line}Found and Extracted Shell Launcher XML:\n{double_line}\n')           
+            for line in ShellLauncherXml:         
+                writer.writelines(line) 
 
         return report_file
