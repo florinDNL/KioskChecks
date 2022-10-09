@@ -86,7 +86,7 @@ def xmlCheckAndExtract(UPLOAD_FOLDER):
 
     for line in aacsp:
         if "MultiAppXml" in line:
-            firstLine = line.replace("MultiAppXml", "").replace("REG_SZ", "").replace(">", ">\n").strip().rstrip()
+            firstLine = line.replace("MultiAppXml", "").replace("REG_SZ", "").replace(">", ">\n")
             currIndex = aacsp.index(line)
             nextLine  = aacsp[currIndex + 1]
             maXmlLines += firstLine
@@ -98,7 +98,7 @@ def xmlCheckAndExtract(UPLOAD_FOLDER):
                 currIndex += 1
                 nextLine = aacsp[currIndex + 1] 
         elif "ShellLauncherXml" in line:            
-            firstLine = line.replace("ShellLauncherXml", "").replace("REG_SZ", "").replace(">", ">\n").strip().rstrip()
+            firstLine = line.replace("ShellLauncherXml", "").replace("REG_SZ", "").replace(">", ">\n")
             currIndex = aacsp.index(line)
             nextLine  = aacsp[currIndex + 1]
             slXmlLines += firstLine  
@@ -110,7 +110,6 @@ def xmlCheckAndExtract(UPLOAD_FOLDER):
                 currIndex += 1
                 nextLine = aacsp[currIndex + 1]  
 
-    
     return maXmlLines, slXmlLines 
 
 
