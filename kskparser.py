@@ -86,29 +86,35 @@ def xmlCheckAndExtract(UPLOAD_FOLDER):
 
     for line in aacsp:
         if "MultiAppXml" in line:
-            firstLine = line.replace("MultiAppXml", "").replace("REG_SZ", "").replace(">", ">\n")
+            firstLine = line.replace("MultiAppXml", "").replace("REG_SZ", "").strip()
             currIndex = aacsp.index(line)
             nextLine  = aacsp[currIndex + 1]
             maXmlLines += firstLine
-            while nextLine:
-                nextLine.replace(">", ">\n")
-                maXmlLines += nextLine               
+            while nextLine:         
+                maXmlLines += nextLine.rstrip()              
                 if "/AssignedAccessConfiguration" in nextLine:
                     break
                 currIndex += 1
                 nextLine = aacsp[currIndex + 1] 
         elif "ShellLauncherXml" in line:            
-            firstLine = line.replace("ShellLauncherXml", "").replace("REG_SZ", "").replace(">", ">\n")
+            firstLine = line.replace("ShellLauncherXml", "").replace("REG_SZ", "").strip()
             currIndex = aacsp.index(line)
             nextLine  = aacsp[currIndex + 1]
             slXmlLines += firstLine  
             while nextLine:
-                nextLine.replace(">", ">\n")
+                nextLine.rstrip()
                 slXmlLines += nextLine
                 if '/ShellLauncherConfiguration' in nextLine:
                     break
                 currIndex += 1
                 nextLine = aacsp[currIndex + 1]  
+
+    if maXmlLines:
+        maXmlLines = maXmlLines.replace(">", ">\n")
+    
+    if slXmlLines:
+        slXmlLines = slXmlLines.split(">", ">\n")       
+
 
     return maXmlLines, slXmlLines 
 
@@ -341,11 +347,9 @@ def showReport(UPLOAD_FOLDER, report_id, etl_trace):
 
         if MultiAppXml:
             writer.writelines(f'{double_line}\nFound and Extracted Multi-App Kiosk XML\n{double_line}\n')              
-            for line in MultiAppXml:        
-                writer.writelines(line) 
+            writer.writelines(MultiAppXml)
         if ShellLauncherXml:           
             writer.writelines(f'{double_line}Found and Extracted Shell Launcher XML:\n{double_line}\n')           
-            for line in ShellLauncherXml:         
-                writer.writelines(line) 
+            writer.writelines(ShellLauncherXml)
 
         return report_file
