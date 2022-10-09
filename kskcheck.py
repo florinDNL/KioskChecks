@@ -84,10 +84,7 @@ def upload_file():
 
             rm_files = glob.glob(os.path.join(UPLOAD_FOLDER, '*'), recursive=True)
             for f in rm_files:
-                try:
-                    os.remove(f)
-                except OSError as e:
-                    print("Error: %s : %s" % (f, e.strerror))
+                os.remove(f)
             os.rmdir(UPLOAD_FOLDER)            
             
             with open('report_history.txt', 'a') as f:
