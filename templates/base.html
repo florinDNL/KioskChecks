@@ -3,20 +3,46 @@
 <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 <style>
   body      {background-color: #343a40; font-family: 'Segoe UI' ; color:#dddddd;}
+
   a         {color: #29a2d6;}
+
   p         {font-family: 'Consolas';  font-size: 14px;}
+
   h4        {font-family:  'Calibri';  font-size: 20px;}
+
   h5        {font-family:  'Verdana';  font-size: 14px;}
+
   h6        {font-family: 'Consolas';  font-size: 14px; color: red}
+
   textarea  {font-family: 'Consolas';  font-size: 12px; background-color: #ebe8e8; color: #343a40; grid-auto-columns: max-content;}
+
   hr        {border-top: 1px solid  #dddddd;}
+
+  input[type=submit] {
+    background-color: #63bd9c;
+    border: none;
+    color: #343a40;
+    font-weight: bold;
+  }
+
+  input[type=button] {
+    border: none;
+  }
+
   .nospace  {margin-bottom: 0; color: greenyellow}
+
   .indent   {text-indent: 5%; color: rgb(66, 197, 197)}
+
   .top      {border-top: 1px dashed #acacac;}
+
   .center   {margin:auto}
+
   .dropdown-menu {background-color: #3f454c;}
+
   .dropdown-item {color:#dddddd;}
+
   .psScript { background-color: #012456; color:#dddddd}
+  
   .text-line {
     background-color: transparent;
     color: #eeeeee;
@@ -27,7 +53,7 @@
     border-right: none;
     border-bottom: solid #eeeeee 1px;
     padding: 3px 10px;
-  }  
+  }
 </style>
 <title>{% block title %}{% endblock %}</title>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
