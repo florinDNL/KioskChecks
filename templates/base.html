@@ -19,7 +19,7 @@
   hr        {border-top: 1px solid  #dddddd;}
 
   input[type=submit] {
-    background-color: #63bd9c;
+    background-color: #54b44b;
     border: none;
     color: #343a40;
     font-weight: bold;
@@ -35,7 +35,11 @@
 
   .top      {border-top: 1px dashed #acacac;}
 
-  .center   {margin:auto}
+  .center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;    
+  }
 
   .dropdown-menu {background-color: #3f454c;}
 
@@ -54,10 +58,22 @@
     border-bottom: solid #eeeeee 1px;
     padding: 3px 10px;
   }
+
+  .navbar .navbar-nav {    
+    float: none;
+    vertical-align: top;
+    margin:0 auto;
+  }
+
+  .navbar .navbar-collapse {
+    text-align: center;
+}
+
 </style>
 <title>{% block title %}{% endblock %}</title>
+<img class="center" src="/static/banner.png">
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand"><img src="/static/banner.png"></a>
+  <!--a class="navbar-brand"><img src="/static/banner.png"></a-->
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>  
