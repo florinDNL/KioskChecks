@@ -7,97 +7,6 @@
 		body {
 			text-align: center;
 		}
-
-		.accordion > input[type="checkbox"] {
-			position: absolute;
-			left: -100vw;
-		}
-
-		.accordion .content {
-			overflow-y: hidden;
-			height: 0;
-			transition: height 0.3s ease;
-		}
-
-		.accordion > input[type="checkbox"]:checked ~ .content {
-			height: auto;
-			width: auto;
-			overflow: visible;
-		}
-
-		.accordion label {
-			display: block;
-		}
-
-		.accordion {
-			margin-bottom: 1em;
-		}
-
-		.accordion > input[type="checkbox"]:checked ~ .content {
-			padding: 15px;
-			border: 1px solid #e8e8e8;
-			border-top: 0;
-		}
-
-		.accordion .handle {
-			margin: 0;
-			font-size: 1.125em;
-			line-height: 1.2em;
-		}
-
-		.accordion label {
-			color: rgb(255, 255, 255);
-			cursor: pointer;
-			font-weight: normal;
-			padding: 15px;
-			background: #343a40;
-		}
-
-		.accordion label:hover,
-		.accordion label:focus {
-			background: #242424;
-		}
-
-		.accordion .handle label:before {
-			font-family: 'fontawesome';
-			content: "\f054";
-			display: inline-block;
-			margin-right: 10px;
-			font-size: .58em;
-			line-height: 1.556em;
-			vertical-align: middle;
-		}
-
-		.accordion > input[type="checkbox"]:checked ~ .handle label:before {
-			content: "\f078";
-		}
-		*,*:before,*:after {
-			box-sizing: border-box;
-		}
-
-
-		a {
-			color: #06c;
-		}
-
-		p {
-			margin: 0 0 1em;
-		}
-
-		h1 {
-			margin: 0 0 1.5em;
-			font-weight: 600;
-			font-size: 1.5em;
-		}
-
-		.accordion {
-			margin: 0 auto;
-			max-width: 65em;
-		}
-
-		.accordion p:last-child {
-			margin-bottom: 0;
-		}	
 	</style>	
 	<p>
 		{% with messages = get_flashed_messages() %}
@@ -113,14 +22,14 @@
 	<form method="post" action="/" enctype="multipart/form-data">
 		<dl>
 			<p>
-				<input size="26" type="text" class="text-line" placeholder="Case or AR Number (Optional)" name="caseno" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"/>
+				<input style="text-align:center" size="26" type="text" class="text-line" placeholder="Case or AR Number (Optional)" name="caseno" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"/>
 				<br/><br/>
 				<input type="button" id="loadLogFolder" value="Upload LogonLog Folder" onclick="document.getElementById('logfolder').click();" />
 				<input type="file" style="display:none;" id="logfolder" name="files[]" value ="Drag Here" multiple="true" autocomplete="off" webkitdirectory>
 				<input type="button" id="loadLogFolder" value="Upload ETL Trace" onclick="document.getElementById('etltrace').click();" />
 				<input type="file" style="display:none;" accept=".etl" id="etltrace" name="file" value ="Drag Here" multiple="true" autocomplete="off">
 				<br/><br/>
-				<input type="submit" value="Analyze" name="submit">
+				<input size="250" type="submit" value="A N A L Y Z E" name="submit">
 			</p>
 		</dl>		    
 	</form>
@@ -134,7 +43,7 @@
 		</p>
 	</div>
 	</br>
-	<a href="https://learn.microsoft.com/en-us/troubleshoot/windows-client/windows-troubleshooters/introduction-to-troubleshootingscript-toolset-tssv2"> Download TSSv2</a>
+	<a href="https://learn.microsoft.com/en-us/troubleshoot/windows-client/windows-troubleshooters/introduction-to-troubleshootingscript-toolset-tssv2" target="_blank"> Download TSSv2</a>
 	<hr>
 	<section class="accordion">
 		<input type="checkbox" name="collapse" id="handle1">
@@ -143,11 +52,11 @@
 			</h2>
 			<div class="content">
 				<p>1. After collecting logs using ".\TSSv2.ps1 -Start -UEX_Logon", the output should look like this:</p><br/>
-				<img src="..\static\howto1.png"><br/><br/>
+				<img src="..\static\howto1.PNG"><br/><br/>
 				<p>2. Upload the LogonLog-yyyy-mm-dd folder using the first button</p><br/>
-				<img src="..\static\howto2.png"/><br/><br/>
+				<img src="..\static\howto2.PNG"/><br/><br/>
 				<p>3. Upload the .etl file with the second button (if applicable/needed)</p><br/>
-				<img src="..\static\howto3.png"/><br/><br/>
+				<img src="..\static\howto3.PNG"/><br/><br/>
 				<p>4. Click analyze to parse the files and download the report.</p>
 			</div>
 	</section>
