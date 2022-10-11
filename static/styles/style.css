@@ -37,16 +37,16 @@ hr        {
 }
 
 input[type=submit] {
-    background-color: #56903c;
+    background-color: #376a4c;
     border: none;
     color: #ffffff;
     font-weight: bold;
-    width: 250px;
-    height: 50px;
+    width: 200px;
+    height: 30px;
 }
 
 input[type=submit]:hover {
-    background: #426d2e
+    background: #2e533d;
 }
 
 input[type='text']:focus ~ input[type='submit']{
@@ -139,6 +139,7 @@ input[type=button] {
 
 .accordion label {
     display: block;
+    margin-bottom: 0em;
 }
 
 .accordion {
@@ -148,7 +149,7 @@ input[type=button] {
 .accordion > input[type="checkbox"]:checked ~ .content {
     padding: 15px;
     border: 1px solid #e8e8e8;
-    border-top: 0;
+    border-color: #376a4c;
 }
 
 .accordion .handle {
@@ -162,12 +163,12 @@ input[type=button] {
     cursor: pointer;
     font-weight: normal;
     padding: 15px;
-    background: #6b6b6b;
+    background: #376a4c;
 }
 
 .accordion label:hover,
 .accordion label:focus {
-    background: #585858;
+    background: #2e533d;
 }
 
 .accordion .handle label:before {
@@ -190,9 +191,5 @@ input[type=button] {
 
 .accordion {
     margin: 0 auto;
-    max-width: 65em;
-}
-
-.accordion p:last-child {
-    margin-bottom: 0;
+    max-width: 40em;
 }
