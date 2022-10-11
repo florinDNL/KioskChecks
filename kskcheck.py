@@ -51,6 +51,7 @@ def upload_file():
 
         necessary_files = ['AssignedAccess_Reg', 'AssignedAccessCsp_Reg', 'AssignedAccessManagerSvc_Reg', 'ConfigManager_AssignedAccess_Reg', 'Get-AppxPackage-AllUsers', 'Get-AssignedAccess', 'ShellLauncher_Reg', 'Get-StartApps', 'Winlogon_Reg']
         files = request.files.getlist('files[]')
+        files.append(request.files.get('file'))
         if len(files) > 1:
             for file in files:
                 fn = file.filename.rsplit("/")[-1]

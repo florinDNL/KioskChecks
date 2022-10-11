@@ -346,10 +346,10 @@ def showReport(UPLOAD_FOLDER, report_id, etl_trace):
             writer.writelines("\n")
 
         if MultiAppXml:
-            writer.writelines(f'{double_line}\nFound and Extracted Multi-App Kiosk XML\n{double_line}\n')              
+            writer.writelines(f'\n{double_line}\nFound and Extracted Multi-App Kiosk XML\n{double_line}\n')              
             writer.writelines(MultiAppXml)
         if ShellLauncherXml:           
-            writer.writelines(f'{double_line}Found and Extracted Shell Launcher XML:\n{double_line}\n')           
+            writer.writelines(f'\n{double_line}\nFound and Extracted Shell Launcher XML:\n{double_line}\n')           
             writer.writelines(ShellLauncherXml)
 
         return report_file
