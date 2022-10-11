@@ -7,9 +7,38 @@ def decodeEtlTrace(folder, etl_trace):
     subprocess.run(commandline)
     
 def parseLine(line):
-    separator1 = "::"
-    time = line.split(separator1, 1)
-    return time
+    separators = [" ", "{", "}", "wilActivity", "'", '"']
+    for separator in separators:
+        line = line.replace(separator, "")
+
+    line = line.split(",", -1)
+    time, tid, hr, pid, activity, event = '', '', '', '', '', ''
+
+    for item in line:
+        data = item.split(":", 1)
+        if not data[0]:
+            data.remove(data[0])
+        if data[0] == "time":
+            time = data[1].replace("T", " ")
+        elif data[0] == "tid":
+            tid = data[1]
+        elif data[0] == "pid":
+            pid = data[1]
+        elif data[0] == "activity":
+            activity = data[1]
+        elif data[0] == "event":
+            event = data[1]
+        elif data[0] == "hresult":
+            hr = data[1]
+
+        
+    if hr and hr != "0":
+        fString = f"!!ERROR!! HRESULT: {hr} | {time} | Thread ID: {tid} | Process ID: {pid} | Activity: {activity} | Event: {event}"
+    else:
+        fString = f"SUCCESS | {time} | Thread ID: {tid} | Process ID: {pid} | Activity: {activity} | Event: {event}"
+
+    return fString
+
 
 def parseTrace(folder, etl_trace):
     decodeEtlTrace(folder, etl_trace)
@@ -17,15 +46,9 @@ def parseTrace(folder, etl_trace):
     with open ("tmftrace.txt", 'r+') as t:
         trace = [line.rstrip() for line in t]      
         for line in trace:
-            if  "AssignedAccess" in line and "hresult" in line and '"hresult":0' not in line:
-                etl_report.append(line) 
-
-        if not t.readlines():
-            etl_report.append("Non-zero HRESULT events not found. Dumping all AssignedAccess events, error might not be among them.\n\n")
-            for line in trace:
-                if "AssignedAccess" in line:
-                    line = parseLine(line)
-                    etl_report.append(line)
+            if "AssignedAccess" in line:
+                line = parseLine(line)
+                etl_report.append(line)
 
     os.remove("tmftrace.txt")
     return etl_report
