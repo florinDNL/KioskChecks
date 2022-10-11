@@ -39,6 +39,7 @@ hr        {
 input[type=submit] {
     background-color: #376a4c;
     border: none;
+    border-radius: 10px;
     color: #ffffff;
     font-weight: bold;
     width: 200px;
@@ -50,12 +51,12 @@ input[type=submit]:hover {
 }
 
 input[type='text']:focus ~ input[type='submit']{
-    box-shadow: 0 0 2px 2px #555;
-    background: #012456
+    box-shadow: 0 0 2px 2px #376a4c;
 }
 
 input[type=button] {
     border: none;
+    border-radius: 10px;
     background-color: #6b6b6b;
     color: #ffffff;
     width: 175px;
@@ -148,8 +149,7 @@ input[type=button] {
 
 .accordion > input[type="checkbox"]:checked ~ .content {
     padding: 15px;
-    border: 1px solid #e8e8e8;
-    border-color: #376a4c;
+    border: 1px solid #376a4c;
 }
 
 .accordion .handle {
