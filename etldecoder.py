@@ -7,6 +7,7 @@ def decodeEtlTrace(folder, etl_trace):
     subprocess.run(commandline)
     
 def parseLine(line):
+    isError = False
     separators = [" ", "{", "}", "wilActivity", "'", '"']
     for separator in separators:
         line = line.replace(separator, "")
@@ -34,21 +35,25 @@ def parseLine(line):
         
     if hr and hr != "0":
         fString = f"!!ERROR!! HRESULT: {hr} | {time} | Thread ID: {tid} | Process ID: {pid} | Activity: {activity} | Event: {event}"
+        isError = True
     else:
         fString = f"SUCCESS | {time} | Thread ID: {tid} | Process ID: {pid} | Activity: {activity} | Event: {event}"
 
-    return fString
+    return  isError, fString
 
 
 def parseTrace(folder, etl_trace):
     decodeEtlTrace(folder, etl_trace)
     etl_report = []
+    errors     = []
     with open ("tmftrace.txt", 'r+') as t:
         trace = [line.rstrip() for line in t]      
         for line in trace:
             if "AssignedAccess" in line:
-                line = parseLine(line)
+                isError, line = parseLine(line)
                 etl_report.append(line)
+                if isError:
+                    errors.append(line)
 
     os.remove("tmftrace.txt")
-    return etl_report
+    return etl_report, errors

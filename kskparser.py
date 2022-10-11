@@ -70,7 +70,7 @@ def diagCheck(UPLOAD_FOLDER):
             tStamp = line.replace("REG_SZ", "")
 
     if err:
-        return '- A provisioning error was found - if the time doesn\'t correspond to the issue or is from too long ago it\'s likely irrelevant:\n\n{}\n{}\n'.format(tStamp, err)
+        return '- Provisioning error found - if the time doesn\'t correspond to the issue or is from too long ago it\'s likely irrelevant:\n\n{}\n{}\n\n'.format(tStamp, err)
     else:
         return None
 
@@ -339,8 +339,15 @@ def showReport(UPLOAD_FOLDER, report_id, etl_trace):
         writer.writelines("\n")
 
         if etl_trace:
-            etl_report = etldecoder.parseTrace(UPLOAD_FOLDER, etl_trace)
+            etl_report, errors = etldecoder.parseTrace(UPLOAD_FOLDER, etl_trace)
             writer.writelines(f'{double_line}\nETL Trace Analysis\n{double_line}\n\n')
+            if errors:
+                writer.writelines(f'Errors were found:\n{single_line}\n')
+                for error in errors:
+                    writer.writelines(f'{error}\n')
+                writer.writelines(f'\n{single_line}\nAll Assigned Access Events:\n\n')
+            else:
+                writer.writelines(f'No errors found. Dumping all AssignedAccess Events:\n\n')
             for item in etl_report:
                 writer.writelines(f"{item}\n")
             writer.writelines("\n")
@@ -353,4 +360,3 @@ def showReport(UPLOAD_FOLDER, report_id, etl_trace):
             writer.writelines(ShellLauncherXml)
 
         return report_file
-        
