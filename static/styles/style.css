@@ -1,91 +1,129 @@
-body      {background-color: #2c2f31; font-family: 'Segoe UI' ; color:#dddddd;}
+body      {
+    background-color: #2c2f31; 
+    font-family: 'Segoe UI' ; 
+    color:#dddddd;
+}
 
-a         { color: #2e8db3; }
+a         { 
+    color: #2e8db3; 
+}
 
-p         {font-family: 'Consolas';  font-size: 14px;}
+p         {
+    font-family: 'Consolas';  
+    font-size: 14px;}
 
-h4        {font-family:  'Calibri';  font-size: 20px;}
+h4        {
+    font-family:  'Calibri';  
+    font-size: 20px;}
 
-h5        {font-family:  'Verdana';  font-size: 14px;}
+h5        {
+    font-family:  'Verdana';  
+    font-size: 14px;}
 
-h6        {font-family: 'Consolas';  font-size: 14px; color: rgb(209, 79, 79)}
+h6        {
+    font-family: 'Consolas';  
+    font-size: 14px; 
+    color: rgb(209, 79, 79)}
 
-textarea  {font-family: 'Consolas';  font-size: 12px; background-color: #ebe8e8; color: #343a40; grid-auto-columns: max-content;}
+textarea  {
+    font-family: 'Consolas';  
+    font-size: 12px; 
+    background-color: #ebe8e8; 
+    color: #343a40; 
+    grid-auto-columns: max-content;}
 
-hr        {border-top: 1px solid  #dddddd;}
+hr        {
+    border-top: 1px solid  #dddddd;
+}
 
 input[type=submit] {
-background-color: #56903c;
-border: none;
-color: #ffffff;
-font-weight: bold;
-width: 250px;
-height: 50px;
+    background-color: #56903c;
+    border: none;
+    color: #ffffff;
+    font-weight: bold;
+    width: 250px;
+    height: 50px;
 }
 
 input[type=submit]:hover {
-background: #426d2e
+    background: #426d2e
 }
 
 input[type='text']:focus ~ input[type='submit']{
-box-shadow: 0 0 2px 2px #555;
-background: #012456
+    box-shadow: 0 0 2px 2px #555;
+    background: #012456
 }
 
 input[type=button] {
-border: none;
-background-color: #6b6b6b;
-color: #ffffff;
-width: 175px;
+    border: none;
+    background-color: #6b6b6b;
+    color: #ffffff;
+    width: 175px;
 }
 
-.nospace  {margin-bottom: 0; color: greenyellow}
+.nospace  {
+    margin-bottom: 0; 
+    color: greenyellow
+}
 
-.indent   {text-indent: 5%; color: rgb(66, 197, 197)}
 
-.top      {border-top: 1px dashed #acacac;}
+.indent   {
+    text-indent: 5%; 
+    color: rgb(66, 197, 197)
+}
+
+.top      {
+    border-top: 1px dashed #acacac;
+}
 
 .center {
-display: block;
-margin-left: auto;
-margin-right: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.dropdown-menu {background-color: #3f454c;}
+.dropdown-menu {
+    background-color: #3f454c;
+}
 
-.dropdown-item {color:#dddddd;}
+.dropdown-item {
+    color:#dddddd;
+}
 
-.psScript { background-color: #012456; color:#dddddd}
+.psScript { 
+    background-color: #012456; 
+    color:#dddddd
+}
 
 .text-line {
-background-color: transparent;
-color: #eeeeee;
-outline: none;
-outline-style: none;
-border-top: none;
-border-left: none;
-border-right: none;
-border-bottom: solid #eeeeee 1px;
-padding: 3px 10px;
+    background-color: transparent;
+    color: #eeeeee;
+    outline: none;
+    outline-style: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: solid #eeeeee 1px;
+    padding: 3px 10px;
 }
 
 .navbar .navbar-nav {
-float: none;
-vertical-align: top;
-margin:0 auto;
-background-color: #2c2f31;
+    float: none;
+    vertical-align: top;
+    margin:0 auto;
+    background-color: #2c2f31;
 }
 
 .navbar .navbar-collapse {
-text-align: center;
-background-color: #2c2f31;
+    text-align: center;
+    background-color: #2c2f31;
 }
 
 
 .accordion > input[type="checkbox"] {
-        position: absolute;
-        left: -100vw;
-    }
+    position: absolute;
+    left: -100vw;
+}
 
 .accordion .content {
     overflow-y: hidden;
