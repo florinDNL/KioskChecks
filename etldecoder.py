@@ -17,6 +17,7 @@ def parseLine(line):
 
     for item in line:
         data = item.split(":", 1)
+        
         if not data[0]:
             data.remove(data[0])
         if data[0] == "time":
@@ -29,15 +30,18 @@ def parseLine(line):
             activity = data[1]
         elif data[0] == "event":
             event = data[1]
-        elif data[0] == "hresult":
-            hr = data[1]
+        elif "hresult" in data[0]:
+            hr = (data[0].split(":"))[1]
 
         
-    if hr and hr != "0":
-        fString = f"!!ERROR!! HRESULT: {hr} | {time} | Thread ID: {tid} | Process ID: {pid} | Activity: {activity} | Event: {event}"
-        isError = True
+    if hr:
+        if hr != "0":
+            fString = f"!!ERROR!! HRESULT: {hr} | {time} | Thread ID: {tid} | Process ID: {pid} | Activity: {activity} | Event: {event}"
+            isError = True
+        else:
+            fString = f"SUCCESS | {time} | Thread ID: {tid} | Process ID: {pid} | Activity: {activity} | Event: {event}"
     else:
-        fString = f"SUCCESS | {time} | Thread ID: {tid} | Process ID: {pid} | Activity: {activity} | Event: {event}"
+        fString = False
 
     return  isError, fString
 
@@ -51,9 +55,10 @@ def parseTrace(folder, etl_trace):
         for line in trace:
             if "AssignedAccess" in line:
                 isError, line = parseLine(line)
-                etl_report.append(line)
-                if isError:
-                    errors.append(line)
+                if line:
+                    etl_report.append(line)
+                    if isError:
+                        errors.append(line)
 
     os.remove("tmftrace.txt")
     return etl_report, errors
