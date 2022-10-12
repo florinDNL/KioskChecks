@@ -50,10 +50,6 @@ input[type=submit]:hover {
     background: #2e533d;
 }
 
-input[type='text']:focus ~ input[type='submit']{
-    box-shadow: 0 0 2px 2px #376a4c;
-}
-
 input[type=button] {
     border: none;
     border-radius: 10px;
@@ -62,15 +58,19 @@ input[type=button] {
     width: 185px;
 }
 
+input[type=button]:hover {
+    background: #444444;
+}
+
 .nospace  {
     margin-bottom: 0; 
-    color: greenyellow
+    color: greenyellow;
 }
 
 
 .indent   {
     text-indent: 5%; 
-    color: rgb(66, 197, 197)
+    color: rgb(66, 197, 197);
 }
 
 .top      {
