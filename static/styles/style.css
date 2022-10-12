@@ -84,7 +84,8 @@ input[type=button]:hover {
 }
 
 .dropdown-menu {
-    background-color: #3f454c;
+    background-color: #2c2f31;
+    border-color: #376a4c
 }
 
 .dropdown-item {
