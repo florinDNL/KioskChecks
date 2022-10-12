@@ -5,7 +5,27 @@ def decodeEtlTrace(folder, etl_trace):
     tracefmt = "C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.19041.0\\x64\\tracefmt.exe"    
     commandline = "{} {} -nosummary -o tmftrace.txt".format(tracefmt, os.path.join(folder, etl_trace))
     subprocess.run(commandline)
-    
+
+def translateError(hr):
+    err =  "C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.19041.0\\x64\\err.exe"  
+    commandline = "{} {}".format(err, hr)
+    result = (subprocess.run(commandline, capture_output=True, text=True)).stdout
+    errs = []
+
+    if "No results found" not in result:		
+        result = result.split("\n", -1)
+        for line in result:
+            if "for hex" in line or "for decimal" in line:
+                currIndex = result.index(line)
+                errText   = (result[currIndex + 1].split(' ', -1))[2]
+                errs.append(errText)
+
+    text = ''
+    for i in range(len(errs)):
+        text += '{} ||  '.format(errs[i])
+
+    return text
+
 def parseLine(line):
     isError = False
     separators = [" ", "{", "}", "wilActivity", "'", '"']
@@ -20,6 +40,7 @@ def parseLine(line):
         
         if not data[0]:
             data.remove(data[0])
+
         if data[0] == "time":
             time = data[1].replace("T", " ")
         elif data[0] == "tid":
@@ -36,7 +57,10 @@ def parseLine(line):
         
     if hr:
         if hr != "0":
-            fString = f"!!ERROR!! HRESULT: {hr} | {time} | Thread ID: {tid} | Process ID: {pid} | Activity: {activity} | Event: {event}"
+            errs   = translateError(hr)
+            if not errs:
+                errs = "Unknown Error"
+            fString = f"ERROR {hr}: {errs} | {time} | Thread ID: {tid} | Process ID: {pid} | Activity: {activity} | Event: {event}"
             isError = True
         else:
             fString = f"SUCCESS | {time} | Thread ID: {tid} | Process ID: {pid} | Activity: {activity} | Event: {event}"
