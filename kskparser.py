@@ -341,16 +341,19 @@ def showReport(UPLOAD_FOLDER, report_id, etl_trace):
         if etl_trace:
             etl_report, errors = etldecoder.parseTrace(UPLOAD_FOLDER, etl_trace)
             writer.writelines(f'{double_line}\nETL Trace Analysis\n{double_line}\n\n')
-            if errors:
-                writer.writelines(f'Errors were found:\n{single_line}\n')
-                for error in errors:
-                    writer.writelines(f'{error}\n')
-                writer.writelines(f'\n{single_line}\nAll Assigned Access Events:\n\n')
+            if etl_report:
+                if errors:
+                    writer.writelines(f'Errors were found:\n{single_line}\n')
+                    for error in errors:
+                        writer.writelines(f'{error}\n')
+                    writer.writelines(f'\n{single_line}\nAll Assigned Access Events:\n\n')
+                else:
+                    writer.writelines(f'No errors found. Dumping all AssignedAccess Events:\n\n')
+                for item in etl_report:
+                    writer.writelines(f"{item}\n")
+                writer.writelines("\n")
             else:
-                writer.writelines(f'No errors found. Dumping all AssignedAccess Events:\n\n')
-            for item in etl_report:
-                writer.writelines(f"{item}\n")
-            writer.writelines("\n")
+                writer.writelines("No AssignedAccess events found in the trace.\n\n")
 
         if MultiAppXml:
             writer.writelines(f'\n{double_line}\nFound and Extracted Multi-App Kiosk XML\n{double_line}\n')              
