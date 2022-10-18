@@ -7,27 +7,25 @@ def decodeEtlTrace(folder, etl_trace):
     subprocess.run(commandline)
 
 def translateError(hr):
-    err =  "C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.19041.0\\x64\\err.exe"  
+    err =  '"C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.19041.0\\x64\\err.exe"'  
     commandline = "{} {}".format(err, hr)
     result = (subprocess.run(commandline, capture_output=True, text=True)).stdout
-    errs = []
+    errs = []  
 
-    if "No results found" not in result:		
+    if '.h' in result:		
         result = result.split("\n", -1)
         for line in result:
-            if "for hex" in line or "for decimal" in line:
-                currIndex = result.index(line)
-                errText   = (result[currIndex + 1].split(' ', -1))[2]
-                errs.append(errText)
-
-    text = ''
-    for i in range(len(errs)):
-        text += '{} ||  '.format(errs[i])
-
-    return text
+            if ".h" in line:
+                line = line.rstrip()
+                while line[-1] != ' ':
+                    line = line.rstrip(line[-1])
+                line = line.strip()
+                errs.append(line)
+ 
+    return errs
 
 def parseLine(line):
-    isError = False
+    isError =''    
     separators = [" ", "{", "}", "wilActivity", "'", '"']
     for separator in separators:
         line = line.replace(separator, "")
@@ -40,6 +38,8 @@ def parseLine(line):
         
         if not data[0]:
             data.remove(data[0])
+        else:
+            data[0] = str(data[0]).lower()
 
         if data[0] == "time":
             time = data[1].replace("T", " ")
@@ -54,14 +54,19 @@ def parseLine(line):
         elif "hresult" in data[0]:
             hr = (data[0].split(":"))[1]
 
-        
     if hr:
+        errorTranslation = ''
         if hr != "0":
             errs   = translateError(hr)
             if not errs:
-                errs = "Unknown Error"
-            fString = f"ERROR {hr}: {errs} | {time} | Thread ID: {tid} | Process ID: {pid} | Activity: {activity} | Event: {event}"
-            isError = True
+                errorTranslation = "Unknown Error"
+            else:
+                for err in errs:
+                    errorTranslation += ' {} |'.format(err)
+                    
+
+            fString = f"ERROR {hr} | {time} | Thread ID: {tid} | Process ID: {pid} | Activity: {activity} | Event: {event}"
+            isError = '{} : {}'.format(hr, errorTranslation)
         else:
             fString = f"SUCCESS | {time} | Thread ID: {tid} | Process ID: {pid} | Activity: {activity} | Event: {event}"
     else:
@@ -82,7 +87,7 @@ def parseTrace(folder, etl_trace):
                 if line:
                     etl_report.append(line)
                     if isError:
-                        errors.append(line)
+                        errors.append(isError)
 
     os.remove("tmftrace.txt")
     return etl_report, errors
