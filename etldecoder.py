@@ -6,6 +6,7 @@ def decodeEtlTrace(folder, etl_trace):
     commandline = "{} {} -nosummary -o tmftrace.txt".format(tracefmt, os.path.join(folder, etl_trace))
     subprocess.run(commandline)
 
+
 def translateError(hr):
     err =  '"C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.19041.0\\x64\\err.exe"'  
     commandline = "{} {}".format(err, hr)
@@ -24,14 +25,14 @@ def translateError(hr):
  
     return errs
 
-def parseLine(line):
-    isError =''    
+
+def parseLine(line):       
     separators = [" ", "{", "}", "wilActivity", "'", '"']
+    fString, isError, time, tid, hr, pid, activity, event = '', '', '', '', '', '', '', ''
     for separator in separators:
         line = line.replace(separator, "")
 
-    line = line.split(",", -1)
-    time, tid, hr, pid, activity, event = '', '', '', '', '', ''
+    line = line.split(",", -1)    
 
     for item in line:
         data = item.split(":", 1)
@@ -39,20 +40,20 @@ def parseLine(line):
         if not data[0]:
             data.remove(data[0])
         else:
-            data[0] = str(data[0]).lower()
+            data_string = str(data[0]).lower()
 
-        if data[0] == "time":
+        if data_string == "time":
             time = data[1].replace("T", " ")
-        elif data[0] == "tid":
+        elif data_string == "tid":
             tid = data[1]
-        elif data[0] == "pid":
+        elif data_string == "pid":
             pid = data[1]
-        elif data[0] == "activity":
+        elif data_string == "activity":
             activity = data[1]
-        elif data[0] == "event":
+        elif data_string == "event":
             event = data[1]
-        elif "hresult" in data[0]:
-            hr = (data[0].split(":"))[1]
+        elif "hresult" in data_string:
+            hr = (data_string.split(":"))[1]
 
     if hr:
         errorTranslation = ''
@@ -64,13 +65,10 @@ def parseLine(line):
                 for err in errs:
                     errorTranslation += ' {} |'.format(err)
                     
-
             fString = f"ERROR {hr} | {time} | Thread ID: {tid} | Process ID: {pid} | Activity: {activity} | Event: {event}"
             isError = '{} : {}'.format(hr, errorTranslation)
         else:
             fString = f"SUCCESS | {time} | Thread ID: {tid} | Process ID: {pid} | Activity: {activity} | Event: {event}"
-    else:
-        fString = False
 
     return  isError, fString
 
