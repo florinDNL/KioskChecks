@@ -4,10 +4,10 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/python
 
 trigger:
-- main
+- none
 
 pool:
-  name: sv2019_OnPrem_IIS
+  name: win10_vm
 strategy:
   matrix:
     Python310:
@@ -26,5 +26,5 @@ steps:
 
 - task: PublishPipelineArtifact@1
   inputs:
-    targetPath: $(System.DefaultWorkingDirectory)
+    targetPath: $(System.DefaultWorkingDirectory)/webapp
     artifactName: KioskChecks_WebFiles
