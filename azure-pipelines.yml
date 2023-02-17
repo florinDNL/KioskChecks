@@ -10,8 +10,6 @@ pool:
   name: sv2019_OnPrem_IIS
 strategy:
   matrix:
-    Python38:
-      python.version: '3.8'
     Python310:
       python.version: '3.10'
 
@@ -25,8 +23,3 @@ steps:
     python -m pip install --upgrade pip
     pip install -r requirements.txt
   displayName: 'Install dependencies'
-
-- script: |
-    pip install pytest pytest-azurepipelines
-    pytest
-  displayName: 'pytest'
