@@ -1,3 +1,5 @@
 azure-pipelines.yml
-report_history.yml
+report_history.txt
 requirements.txt
+.git
+.artifactignore
