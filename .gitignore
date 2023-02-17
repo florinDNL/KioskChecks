@@ -1,0 +1,7 @@
+.artifactignore
+.git
+__pycache__
+webapp\report_history.txt
+webapp\kaDownload
+webapp\reports
+webapp\__pycache__
