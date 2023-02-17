@@ -1,6 +1,5 @@
 import subprocess, os
 
-
 def decodeEtlTrace(folder, etl_trace):
     tracefmt = "C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.19041.0\\x64\\tracefmt.exe"    
     commandline = "{} {} -nosummary -o tmftrace.txt".format(tracefmt, os.path.join(folder, etl_trace))
