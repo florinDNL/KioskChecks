@@ -1,7 +1,8 @@
 .artifactignore
 .git
 __pycache__
-webapp\report_history.txt
-webapp\kaDownload
-webapp\reports
+report_history.txt
+kaDownload
+reports
+upload
 webapp\__pycache__

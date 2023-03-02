@@ -1,13 +1,16 @@
 import subprocess, os
+from dirs import UTIL_DIR, UPLOAD_FOLDER
 
-def decodeEtlTrace(folder, etl_trace):
-    tracefmt = "C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.19041.0\\x64\\tracefmt.exe"    
-    commandline = "{} {} -nosummary -o tmftrace.txt".format(tracefmt, os.path.join(folder, etl_trace))
+
+def decodeEtlTrace(etl_trace):
+    tracefmt = os.path.join(UTIL_DIR, 'tracefmt.exe')
+    output   = os.path.join(UPLOAD_FOLDER, 'fmttrace.txt')   
+    commandline = '"{}" "{}" -nosummary -o "{}"'.format(tracefmt, os.path.join(UPLOAD_FOLDER, etl_trace), output)
     subprocess.run(commandline)
 
 
 def translateError(hr):
-    err =  '"C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.19041.0\\x64\\err.exe"'  
+    err =  os.path.join(UTIL_DIR, 'err.exe')  
     commandline = "{} {}".format(err, hr)
     result = (subprocess.run(commandline, capture_output=True, text=True)).stdout
     errs = []  
@@ -72,11 +75,12 @@ def parseLine(line):
     return  isError, fString
 
 
-def parseTrace(folder, etl_trace):
-    decodeEtlTrace(folder, etl_trace)
+def parseTrace(etl_trace):
+    decodeEtlTrace(etl_trace)
     etl_report = []
     errors     = []
-    with open ("tmftrace.txt", 'r+') as t:
+    output = os.path.join(UPLOAD_FOLDER, 'fmttrace.txt')
+    with open (output, 'r+') as t:
         trace = [line.rstrip() for line in t]      
         for line in trace:
             if "AssignedAccess" in line:
@@ -86,5 +90,4 @@ def parseTrace(folder, etl_trace):
                     if isError:
                         errors.append(isError)
 
-    os.remove("tmftrace.txt")
     return etl_report, errors

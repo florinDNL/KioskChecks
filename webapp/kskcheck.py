@@ -1,6 +1,7 @@
 from flask import Flask, flash, request, redirect, render_template, send_from_directory, url_for, send_file
 from datetime import datetime
 from kskparser import showReport
+from dirs import *
 import os, glob
 
 
@@ -8,8 +9,7 @@ app=Flask(__name__)
 
 app.secret_key = "secret key"
 app.config['MAX_CONTENT_LENGTH'] = 512 * 1024 * 1024
-DIRECTORY_TO_SERVE_PATH = './kaDownload'
-REPORT_DIR = './reports'
+
 
 @app.route('/')
 def upload_form():
@@ -73,22 +73,22 @@ def upload_file():
                 return redirect(request.url)
 
             report_id = ( 'report_' + dt_string )
-            path = os.getcwd()
-            UPLOAD_FOLDER = os.path.join(path, 'uploads', report_id)  
-            os.mkdir(UPLOAD_FOLDER)
+            
+            if not os.path.exists(UPLOAD_FOLDER):
+                os.mkdir(UPLOAD_FOLDER)
             app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
             for file in files_to_save:
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename.rsplit("/")[-1] ))
 
-            report_file = showReport(UPLOAD_FOLDER, report_id, etl_trace)
+            report_file = showReport(report_id, etl_trace)
 
             rm_files = glob.glob(os.path.join(UPLOAD_FOLDER, '*'), recursive=True)
             for f in rm_files:
                 os.remove(f)
             os.rmdir(UPLOAD_FOLDER)            
             
-            with open('report_history.txt', 'a') as f:
+            with open(REPORT_HISTORY, 'a') as f:
                 f.write("{} - {}\n".format(dt_string, caseNo))
 
             return redirect(url_for('download_report', report_file=report_file))
@@ -97,6 +97,6 @@ def upload_file():
             return redirect(request.url)
 
 
-
-if __name__ == "__main__":
-    app.run(host='127.0.0.1',port=5000,debug=False,threaded=True)    
+if __name__ == "__main__":    
+    dirCheck()
+    app.run(host='127.0.0.1',port=5000,debug=False,threaded=True)     
