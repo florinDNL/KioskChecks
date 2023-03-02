@@ -68,11 +68,13 @@ def diagCheck():
     for line in aadiag:
         if "Error" in line:
             err = line.replace("REG_DWORD", "")
+            code = err.replace("Error", "").strip()
+            translation = etldecoder.translateError(code)
         if "Time" in line:
             tStamp = line.replace("REG_SZ", "")
 
     if err:
-        return '- Provisioning error found - if the time doesn\'t correspond to the issue or is from too long ago it\'s likely irrelevant:\n\n{}\n{}\n\n'.format(tStamp, err)
+        return '- Provisioning error found - if the time doesn\'t correspond to the issue or is from too long ago it\'s likely irrelevant:\n\n{}\n{} | Error Text(s): {}\n'.format(tStamp, err, translation)
     else:
         return None
 
