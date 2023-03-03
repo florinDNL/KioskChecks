@@ -12,6 +12,7 @@ def decodeEtlTrace(etl_trace):
 def translateError(hr):
     err =  os.path.join(UTIL_DIR, 'err.exe')  
     commandline = "{} {}".format(err, hr)
+    print(commandline)
     result = (subprocess.run(commandline, capture_output=True, text=True)).stdout
     errs = []  
 

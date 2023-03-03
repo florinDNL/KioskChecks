@@ -117,7 +117,7 @@ def xmlCheckAndExtract():
         maXmlLines = maXmlLines.replace(">", ">\n")
     
     if slXmlLines:
-        slXmlLines = slXmlLines.split(">", ">\n")       
+        slXmlLines = slXmlLines.replace(">", ">\n")       
 
 
     return maXmlLines, slXmlLines 
