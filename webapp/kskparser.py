@@ -1,9 +1,10 @@
 import os, etldecoder
 from dirs import *
+from string_const import *
 
 
 def isServiceDisabled():
-    with open (os.path.join(UPLOAD_FOLDER, 'AssignedAccessManagerSvc_Reg.txt'), encoding='UTF-16-LE') as f:
+    with open (AASVC_REG, encoding='UTF-16-LE') as f:
         aasvc = [line.rstrip() for line in f]
     isDisabled = False
     for line in aasvc:
@@ -15,7 +16,7 @@ def isServiceDisabled():
 
 
 def singleAppCheck():
-    with open (os.path.join(UPLOAD_FOLDER, 'Get-AssignedAccess.txt'), encoding='UTF-16-LE') as f:
+    with open (GETAA_PS, encoding='UTF-16-LE') as f:
         singleApp = [line.rstrip() for line in f]
     isSingleApp = False
     if singleApp:
@@ -34,7 +35,7 @@ def singleAppCheck():
 
 
 def sLauncherCheck():
-    with open (os.path.join(UPLOAD_FOLDER, 'ShellLauncher_Reg.txt'), encoding='UTF-16-LE') as f:
+    with open (SL_REG, encoding='UTF-16-LE') as f:
         slauncher = [line.rstrip() for line in f]
     isShellLauncher = False
     for line in slauncher:
@@ -60,7 +61,7 @@ def sLauncherCheck():
 
 
 def diagCheck():
-    with open (os.path.join(UPLOAD_FOLDER, 'ConfigManager_AssignedAccess_Reg.txt'), encoding='UTF-16-LE') as f:
+    with open (CFGMGR_REG, encoding='UTF-16-LE') as f:
         aadiag = [line.rstrip() for line in f]
     err     = None
     tStamp  = None
@@ -74,7 +75,7 @@ def diagCheck():
             tStamp = line.replace("REG_SZ", "")
 
     if err:
-        return '- Provisioning error found - if the time doesn\'t correspond to the issue or is from too long ago it\'s likely irrelevant:\n\n{}\n{} | Error Text(s): {}\n'.format(tStamp, err, translation)
+        return MSG_PROV.format(tStamp, err, translation)
     else:
         return None
 
@@ -85,7 +86,7 @@ def xmlCheckAndExtract():
     currIndex = None
     nextLine  = None
 
-    with open (os.path.join(UPLOAD_FOLDER, 'AssignedAccessCsp_Reg.txt'), encoding='UTF-16-LE') as f:
+    with open (AACSP_REG, encoding='UTF-16-LE') as f:
         aacsp = [line.rstrip() for line in f]
 
     for line in aacsp:
@@ -130,7 +131,7 @@ def xmlCheckAndExtract():
 
 
 def isAppInStartApps(app):    
-    with open (os.path.join(UPLOAD_FOLDER, 'Get-StartApps.txt'), encoding='UTF-16-LE') as f:
+    with open (GETSA_PS, encoding='UTF-16-LE') as f:
         startapps = [line.rstrip() for line in f]
     isAppInStartApps = False
     for line in startapps:
@@ -142,7 +143,7 @@ def isAppInStartApps(app):
 
 
 def isAppInstalledForUser(app, user):        
-    with open (os.path.join(UPLOAD_FOLDER, 'Get-AppxPackage-AllUsers.txt'), encoding='UTF-16-LE') as f:
+    with open (GETAP_PS, encoding='UTF-16-LE') as f:
         appxallusers = [line.rstrip() for line in f]
     isInstalledForUser = False
     packageFamilyName = (app.split("!",1))[0]
@@ -160,7 +161,7 @@ def isAppInstalledForUser(app, user):
 
 
 def kioskProfileScan():  
-    with open (os.path.join(UPLOAD_FOLDER, 'AssignedAccess_Reg.txt'), encoding='UTF-16-LE') as f:
+    with open (AA_REG, encoding='UTF-16-LE') as f:
         aaconfig = [line.rstrip() for line in f]
     profiles = []
     for line in aaconfig:
@@ -180,7 +181,7 @@ def kioskProfileScan():
 
 
 def appProfileScan():   
-    with open (os.path.join(UPLOAD_FOLDER, 'AssignedAccess_Reg.txt'), encoding='UTF-16-LE') as f:
+    with open (AA_REG, encoding='UTF-16-LE') as f:
         aaconfig = [line.rstrip() for line in f]
 
     profiles = kioskProfileScan()
@@ -226,7 +227,7 @@ def appProfileScan():
                     else:
                         userType = "Local"
                         isAutoLogon = False
-                        with open (os.path.join(UPLOAD_FOLDER, 'Winlogon_Reg.txt'), encoding='UTF-16-LE') as f:
+                        with open (LOGON_REG, encoding='UTF-16-LE') as f:
                             wlogon = [line.rstrip() for line in f]
                         for line in wlogon:
                             if "AutoLogonSID" in line and userId in line:
@@ -234,7 +235,7 @@ def appProfileScan():
                         if isAutoLogon:
                             userName = "AutoLogon Account"                            
                         else:
-                            userName = "[Username is blank and the SID was not found in the AutoLogon registry; could be a Domain account]"  
+                            userName = MSG_BLANKUSER  
 
                     accounts.append(["User", userId, userName, userType])
                 lastIndex = currIndex + 1
@@ -253,7 +254,7 @@ def createReport():
     notInstalled = []
    
     if isServiceDisabled():
-        errors.append("The AssignedAccessManager Service is Disabled.\n")
+        errors.append(MSG_SVCDISABLED)
 
     provisioningError = diagCheck()
     if provisioningError:
@@ -262,27 +263,27 @@ def createReport():
 
     isSingleApp, singleAppProfiles = singleAppCheck()
     if isSingleApp:
-        singleAppReport = "Found {} SingleApp Configuration(s):".format(len(singleAppProfiles))
+        singleAppReport = MSG_SAFOUND.format(len(singleAppProfiles))
         for profile in singleAppProfiles:
-            singleAppReport += "User Name: {}\nUser SID: {}\nAUMID: {}\n".format(profile[1], profile[0], profile[2])
+            singleAppReport += MSG_SACONF.format(profile[1], profile[0], profile[2])
         
         report.append(singleAppReport)
 
 
     isShelllauncher, slauncherProfiles = sLauncherCheck()
     if isShelllauncher:
-        slauncherReport = "Found {} ShellLauncher Configuration(s):\n".format(len(slauncherProfiles))
+        slauncherReport = MSG_SLFOUND.format(len(slauncherProfiles))
         for profile in slauncherProfiles:
-            slauncherReport += "User: {}\nShell: {}\nAppType: {}\n".format(profile[0], profile[1], profile[2])
+            slauncherReport += MSG_SLCONF.format(profile[0], profile[1], profile[2])
             if profile[2] == "UWP" and profile[1] not in notInstalled:
                 isInStartApps = isAppInStartApps(profile[1])
                 if not isInStartApps:
                     notInstalled.append(profile[1])
-                    errors.append("Application {} was not found in Get-StartApps output. Check if it is installed or otherwise if the AUMID is correctly spelled\n".format(profile[1]))
+                    errors.append(MSG_STARTAPPNOTFOUND.format(profile[1]))
                 else:
                     isInstalledForUser = isAppInstalledForUser(profile[1], profile[0])
                     if not isInstalledForUser:
-                        errors.append("App {} not registered/installed for user {}.\n".format(profile[0]))
+                        errors.append(MSG_APPNOTREGISTERED.format(profile[0]))
         
         report.append(slauncherReport)
 
@@ -290,34 +291,34 @@ def createReport():
     configs = appProfileScan()
     for config in configs:        
         for profile in configs[config]:
-            profileReport = "\n\nProfile {} of type {} has the following allowed apps:\n\n".format(config[0], config[1])
+            profileReport = MSG_PROFILEREPORT.format(config[0], config[1])
             apps = profile[0]
             accounts = profile[1]            
             appCount = 1
             accCount = 1            
             for app in apps:               
-                profileReport += "{}) {} | {} App\n".format(appCount, app[0], app[1])
+                profileReport += MSG_PROFILEAPP.format(appCount, app[0], app[1])
                 appCount += 1
                 if app[1] == "UWP" and app[0] not in notInstalled:
                     isInStartApps = isAppInStartApps(app[0])                
                     if not isInStartApps:
                         notInstalled.append(app[0])
-                        errors.append("- Application {} was not found in Get-StartApps output. Check if it is installed or otherwise if the AUMID is correctly spelled\n".format(app[0]))
+                        errors.append(MSG_STARTAPPNOTFOUND.format(app[0]))
                     
-            profileReport += ("\nAnd is assigned to the following accounts:\n\n")
+            profileReport += (MSG_PROFILEASSIGNMENT)
 
             for account in accounts:
                 if account[0] == "Group":
-                    profileReport += "{}) {} Group: {}\n".format(accCount, account[2], account [1])
+                    profileReport += MSG_GROUP.format(accCount, account[2], account [1])
                 elif account[0] == "User":
-                    profileReport += ("{}) {} User: {} with ID {}\n".format(accCount, account[3], account[2], account [1]))  
+                    profileReport += MSG_USER.format(accCount, account[3], account[2], account [1]) 
                     for app in apps:
                         if app[0] not in notInstalled and app[1] == "UWP":
                             isInstalledForUser = isAppInstalledForUser(app[0], account[1])                            
                             if not isInstalledForUser:
-                                errors.append("- App {} not registered/installed for user {} with SID: {}.\n".format(app[0], account[2], account[1]))
+                                errors.append(MSG_APPNOTREGISTERED2.format(app[0], account[2], account[1]))
                 elif account[0] == "GlobalUser":
-                    profileReport += "{}) Global User".format(accCount)
+                    profileReport += MSG_GLOBALUSER.format(accCount)
                 accCount += 1
             report.append(profileReport) 
 
@@ -327,53 +328,50 @@ def createReport():
 
 def showReport(report_id, etl_trace):
     report_file = "{}.txt".format(report_id)
-
     MultiAppXml, ShellLauncherXml = xmlCheckAndExtract()
     report, errors = createReport()
-    double_line = '======================================================'
-    single_line = '------------------------------------------------------'
     with open (os.path.join(REPORT_DIR, report_file), 'w') as writer:
-        writer.writelines(f'{double_line}\nR E P O R T\n{double_line}\n\n')
+        writer.writelines(f'{DOUBLE_LINE}\nR E P O R T\n{DOUBLE_LINE}\n\n')
         if errors:
-            writer.writelines(f"Problems found\n{single_line}\n")
+            writer.writelines(MSG_PROBLEMSFOUND)
             for error in errors:
                 writer.writelines("{}".format(error))
             writer.writelines("\n")
         else:
-            writer.writelines("No problems were found.\n\n")
+            writer.writelines(MSG_NOPROBLEMSFOUND)
 
-        writer.writelines(f"{double_line}\nDetails\n{double_line}\n")
+        writer.writelines(MSG_DETAILS)
         if report:
             for profileReport in report:
                 writer.writelines("{}\n".format(profileReport))
         else:
-            writer.writelines("No applied Kiosk Profile found on this machine.")
+            writer.writelines(MSG_NOPROFILEFOUND)
 
         writer.writelines("\n\n")
 
         if etl_trace:
             etl_report, errors = etldecoder.parseTrace(etl_trace)
-            writer.writelines(f'{double_line}\nETL Trace Analysis\n{double_line}\n\n')
+            writer.writelines(MSG_ETL_ANALYSIS)
             if errors:
-                writer.writelines(f'Errors found. Code translation:\n{single_line}\n')
+                writer.writelines(MSG_ETL_ERRFOUND )
                 for error in errors:
                     writer.writelines(f'{error}\n')
-                writer.writelines(f'\n\nAll Assigned Access Events:\n{single_line}\n')
+                writer.writelines(MSG_ETL_ALLEVENTS  )
             else:
                 if etl_report:
-                    writer.writelines(f'No errors found. Dumping all AssignedAccess Events:\n\n')                
+                    writer.writelines(MSG_ETL_NOERRS )                
                     for item in etl_report:
                         writer.writelines(f"{item}\n")
                 else:
-                    writer.writelines(f'No AssignedAccess events found.')
+                    writer.writelines(MSG_ETL_NOEVENTS)
             writer.writelines("\n")
 
         if MultiAppXml:
-            writer.writelines(f'\n{double_line}\nFound and Extracted Multi-App Kiosk XML\n{double_line}\n')              
+            writer.writelines(MSG_MULTIAPPXML)              
             writer.writelines(MultiAppXml)
             writer.writelines('\n\n')
         if ShellLauncherXml:           
-            writer.writelines(f'\n{double_line}\nFound and Extracted Shell Launcher XML:\n{double_line}\n')           
+            writer.writelines(MSG_SINGLEAPPXML)           
             writer.writelines(ShellLauncherXml)
 
         return report_file

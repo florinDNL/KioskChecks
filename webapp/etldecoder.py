@@ -1,18 +1,15 @@
 import subprocess, os
-from dirs import UTIL_DIR, UPLOAD_FOLDER
+from dirs import UPLOAD_FOLDER, TRACEFMT, TMFOUTPUT, ERR
+from string_const import *
 
 
-def decodeEtlTrace(etl_trace):
-    tracefmt = os.path.join(UTIL_DIR, 'tracefmt.exe')
-    output   = os.path.join(UPLOAD_FOLDER, 'fmttrace.txt')   
-    commandline = '"{}" "{}" -nosummary -o "{}"'.format(tracefmt, os.path.join(UPLOAD_FOLDER, etl_trace), output)
+def decodeEtlTrace(etl_trace): 
+    commandline = '"{}" "{}" -nosummary -o "{}"'.format(TRACEFMT, os.path.join(UPLOAD_FOLDER, etl_trace), TMFOUTPUT)
     subprocess.run(commandline)
 
 
 def translateError(hr):
-    err =  os.path.join(UTIL_DIR, 'err.exe')  
-    commandline = "{} {}".format(err, hr)
-    print(commandline)
+    commandline = "{} {}".format(ERR, hr)
     result = (subprocess.run(commandline, capture_output=True, text=True)).stdout
     errs = []  
 
@@ -63,15 +60,15 @@ def parseLine(line):
         if hr != "0":
             errs   = translateError(hr)
             if not errs:
-                errorTranslation = "Unknown Error"
+                errorTranslation = MSG_UNKNOWNERR
             else:
                 for err in errs:
                     errorTranslation += ' {} |'.format(err)
                     
-            fString = f"ERROR {hr} | {time} | Thread ID: {tid} | Process ID: {pid} | Activity: {activity} | Event: {event}"
+            fString = MSG_ERRORSTRING.format(hr, time, tid, pid, activity, event)
             isError = '{} : {}'.format(hr, errorTranslation)
         else:
-            fString = f"SUCCESS | {time} | Thread ID: {tid} | Process ID: {pid} | Activity: {activity} | Event: {event}"
+            fString = MSG_SUCCESSSTRING.format(time, tid, pid, activity, event)
 
     return  isError, fString
 
@@ -80,8 +77,7 @@ def parseTrace(etl_trace):
     decodeEtlTrace(etl_trace)
     etl_report = []
     errors     = []
-    output = os.path.join(UPLOAD_FOLDER, 'fmttrace.txt')
-    with open (output, 'r+') as t:
+    with open (TMFOUTPUT, 'r+') as t:
         trace = [line.rstrip() for line in t]      
         for line in trace:
             if "AssignedAccess" in line:
