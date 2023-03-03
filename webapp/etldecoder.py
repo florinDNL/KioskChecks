@@ -1,10 +1,10 @@
-import subprocess, os
-from dirs import UPLOAD_FOLDER, TRACEFMT, TMFOUTPUT, ERR
+import subprocess
+from dirs import TRACEFMT, TMFOUTPUT, ERR
 from string_const import *
 
 
 def decodeEtlTrace(etl_trace): 
-    commandline = '"{}" "{}" -nosummary -o "{}"'.format(TRACEFMT, os.path.join(UPLOAD_FOLDER, etl_trace), TMFOUTPUT)
+    commandline = '"{}" "{}" -nosummary -o "{}"'.format(TRACEFMT, etl_trace, TMFOUTPUT)
     subprocess.run(commandline)
 
 
