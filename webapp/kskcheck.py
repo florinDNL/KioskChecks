@@ -81,6 +81,7 @@ def upload_file():
             for file in files_to_save:
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename.rsplit("/")[-1] ))
 
+            etl_trace   = os.path.join(UPLOAD_FOLDER, etl_trace)
             report_file = showReport(report_id, etl_trace)
 
             rm_files = glob.glob(os.path.join(UPLOAD_FOLDER, '*'), recursive=True)
