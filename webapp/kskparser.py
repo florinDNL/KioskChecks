@@ -91,27 +91,33 @@ def xmlCheckAndExtract():
     for line in aacsp:
         if "MultiAppXml" in line:
             firstLine = line.replace("MultiAppXml", "").replace("REG_SZ", "").strip()
-            currIndex = aacsp.index(line)
-            nextLine  = aacsp[currIndex + 1]
+            currIndex = aacsp.index(line)            
             maXmlLines += firstLine
-            while nextLine:         
-                maXmlLines += nextLine.rstrip()              
-                if "/AssignedAccessConfiguration" in nextLine:
-                    break
-                currIndex += 1
-                nextLine = aacsp[currIndex + 1] 
+            if '/AssignedAccessConfiguration' in firstLine:
+                continue
+            else:
+                nextLine  = aacsp[currIndex + 1]
+                while nextLine:         
+                    maXmlLines += nextLine.rstrip()              
+                    if "/AssignedAccessConfiguration" in nextLine:
+                        break
+                    currIndex += 1
+                    nextLine = aacsp[currIndex + 1] 
         elif "ShellLauncherXml" in line:            
             firstLine = line.replace("ShellLauncherXml", "").replace("REG_SZ", "").strip()
             currIndex = aacsp.index(line)
-            nextLine  = aacsp[currIndex + 1]
-            slXmlLines += firstLine  
-            while nextLine:
-                nextLine.rstrip()
-                slXmlLines += nextLine
-                if '/ShellLauncherConfiguration' in nextLine:
-                    break
-                currIndex += 1
-                nextLine = aacsp[currIndex + 1]  
+            slXmlLines += firstLine
+            if '/ShellLauncherConfiguration' in firstLine:
+                continue
+            else:
+                nextLine  = aacsp[currIndex + 1]                  
+                while nextLine:
+                    nextLine.rstrip()
+                    slXmlLines += nextLine
+                    if '/ShellLauncherConfiguration' in nextLine:
+                        break
+                    currIndex += 1
+                    nextLine = aacsp[currIndex + 1]  
 
     if maXmlLines:
         maXmlLines = maXmlLines.replace(">", ">\n")
