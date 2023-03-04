@@ -1,0 +1,11 @@
+.artifactignore
+.gitignore
+.git
+__pycache__
+report_history.txt
+kaDownload
+reports
+upload
+webapp\__pycache__
+test_datasets
+azure-pipelines.yml

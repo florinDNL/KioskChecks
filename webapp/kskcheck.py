@@ -1,5 +1,5 @@
 from flask import Flask, flash, request, redirect, render_template, send_from_directory, url_for, send_file
-from kskparser import showReport
+from kskparser import writeReport
 from dirs import *
 from upload import *
 import os
@@ -58,7 +58,7 @@ def upload_file():
                 flash(FLASH_INVALIDCASENO, 'error')
                 return redirect(request.url)
             
-            report_file = showReport(report_id, etl_trace)                             
+            report_file = writeReport(report_id, etl_trace)                             
             with open(REPORT_HISTORY, 'a') as f:
                 f.write("{} - {}\n".format(report_id, caseNo))
                 
@@ -67,4 +67,4 @@ def upload_file():
 
 if __name__ == "__main__":    
     dirCheck()
-    app.run(host='127.0.0.1',port=5000,debug=False,threaded=True)     
+    app.run(host='0.0.0.0',port=5000,debug=False,threaded=True)     
