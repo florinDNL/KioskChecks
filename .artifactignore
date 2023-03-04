@@ -1,5 +1,2 @@
-azure-pipelines.yml
-report_history.txt
-requirements.txt
-.git
-.artifactignore
+__pycache__
+webapp/__pycache__

@@ -326,7 +326,7 @@ def createReport():
 
 
 
-def showReport(report_id, etl_trace):
+def writeReport(report_id, etl_trace):
     report_file = "{}.txt".format(report_id)
     MultiAppXml, ShellLauncherXml = xmlCheckAndExtract()
     report, errors = createReport()

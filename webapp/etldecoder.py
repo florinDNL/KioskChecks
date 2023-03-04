@@ -5,12 +5,12 @@ from string_const import *
 
 def decodeEtlTrace(etl_trace): 
     commandline = '"{}" "{}" -nosummary -o "{}"'.format(TRACEFMT, etl_trace, TMFOUTPUT)
-    subprocess.run(commandline)
+    subprocess.run(commandline, shell=True)
 
 
 def translateError(hr):
     commandline = "{} {}".format(ERR, hr)
-    result = (subprocess.run(commandline, capture_output=True, text=True)).stdout
+    result = (subprocess.run(commandline, capture_output=True, text=True, shell=True)).stdout
     errs = []  
 
     if '.h' in result:		
