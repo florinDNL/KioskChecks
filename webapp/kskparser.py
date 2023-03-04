@@ -350,7 +350,6 @@ def showReport(report_id, etl_trace):
         writer.writelines("\n\n")
 
         if etl_trace:
-            print(etl_trace)
             etl_report, errors = etldecoder.parseTrace(etl_trace)
             writer.writelines(MSG_ETL_ANALYSIS)
             if errors:
