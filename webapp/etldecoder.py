@@ -55,7 +55,6 @@ def parseLine(line):
             event = data[1]
         elif "hresult" in data_string:
             hr = (data_string.split(":"))[1]
-            print(hr)
 
     if hr:
         errorTranslation = ''
