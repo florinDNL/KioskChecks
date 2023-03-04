@@ -199,3 +199,11 @@ input[type=button]:hover {
     margin: 0 auto;
     max-width: 40em;
 }
+
+.error {
+    color: red
+}
+
+.success {
+    color:green
+}

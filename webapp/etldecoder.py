@@ -30,17 +30,18 @@ def parseLine(line):
     separators = [" ", "{", "}", "wilActivity", "'", '"']
     fString, isError, time, tid, hr, pid, activity, event = '', '', '', '', '', '', '', ''
     for separator in separators:
-        line = line.replace(separator, "")
+        line = line.replace(separator, "")        
 
-    line = line.split(",", -1)    
+    line = line.split(",", -1)       
 
     for item in line:
         data = item.split(":", 1)
         
+        
         if not data[0]:
             data.remove(data[0])
-        else:
-            data_string = str(data[0]).lower()
+       
+        data_string = str(data[0]).lower()
 
         if data_string == "time":
             time = data[1].replace("T", " ")
@@ -54,6 +55,7 @@ def parseLine(line):
             event = data[1]
         elif "hresult" in data_string:
             hr = (data_string.split(":"))[1]
+            print(hr)
 
     if hr:
         errorTranslation = ''
@@ -80,7 +82,7 @@ def parseTrace(etl_trace):
     with open (TMFOUTPUT, 'r+') as t:
         trace = [line.rstrip() for line in t]      
         for line in trace:
-            if "AssignedAccess" in line:
+            if "AssignedAccess" in line or "Logon" in line:
                 isError, line = parseLine(line)
                 if line:
                     etl_report.append(line)

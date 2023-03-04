@@ -25,10 +25,16 @@ MSG_DETAILS             = f"{DOUBLE_LINE}\nDetails\n{DOUBLE_LINE}\n"
 MSG_ETL_ANALYSIS        = f"{DOUBLE_LINE}\nETL Trace Analysis\n{DOUBLE_LINE}\n\n"
 MSG_ETL_ERRFOUND        = f'Errors found. Code translation:\n{SINGLE_LINE}\n'
 MSG_ETL_ALLEVENTS       = f'\n\nAll Assigned Access Events:\n{SINGLE_LINE}\n'
-MSG_ETL_NOERRS          = f'No errors found. Dumping all AssignedAccess Events:\n\n'
+MSG_ETL_NOERRS          = f'No errors found. Dumping all AssignedAccess and Logon Events:\n\n'
 MSG_ETL_NOEVENTS        = 'No AssignedAccess events found.'
 MSG_MULTIAPPXML         = f'\n{DOUBLE_LINE}\nFound and Extracted Multi-App Kiosk XML\n{DOUBLE_LINE}\n'
 MSG_SINGLEAPPXML        = f'\n{DOUBLE_LINE}\nFound and Extracted Shell Launcher XML:\n{DOUBLE_LINE}\n'
 MSG_UNKNOWNERR          = "Unknown Error"
 MSG_ERRORSTRING         = "ERROR {} | {} | Thread ID: {} | Process ID: {} | Activity: {} | Event: {}"
 MSG_SUCCESSSTRING       = "SUCCESS | {} | Thread ID: {} | Process ID: {} | Activity: {} | Event: {}"
+
+FLASH_MISSINGFILES      = "You are missing the following files in the LogonLog folder: "
+FLASH_NOFOLDER          = "No folder selected"
+FLASH_INVALIDCASENO     = "Invalid case number"
+FLASH_PROCESSING        = "Your files are being analyzed, please wait"
+FLASH_MISSINGFILESLIST  = "{}.txt, "

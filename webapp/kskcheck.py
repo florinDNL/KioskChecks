@@ -1,8 +1,8 @@
 from flask import Flask, flash, request, redirect, render_template, send_from_directory, url_for, send_file
-from datetime import datetime
 from kskparser import showReport
 from dirs import *
-import os, glob
+from upload import *
+import os
 
 
 app=Flask(__name__)
@@ -36,67 +36,34 @@ def kioskmdm():
     return render_template('kioskmdm.html')
 
 @app.route('/', methods=['POST'])
-def upload_file():
-    if request.method == 'POST':
-        dt_string = datetime.now().strftime("%Y.%m.%d__%H.%M.%S.%f")
-        caseNo = request.form['caseno']
-        if caseNo and (len(caseNo) != 8 and len(caseNo) != 16):
-            flash('Invalid case number')
+def upload_file():    
+    if request.method == 'POST':        
+        uploadDirCheck()
+        app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+        validationResult = fileValidation()
+
+        if len(validationResult) == 1:
+            flash(validationResult[0], 'error')
             return redirect(request.url)
-        elif not caseNo:
-            caseNo = "Case No. not specified"
-
-        files_to_save = []
-        etl_trace     = ""
-
-        necessary_files = ['AssignedAccess_Reg', 'AssignedAccessCsp_Reg', 'AssignedAccessManagerSvc_Reg', 'ConfigManager_AssignedAccess_Reg', 'Get-AppxPackage-AllUsers', 'Get-AssignedAccess', 'ShellLauncher_Reg', 'Get-StartApps', 'Winlogon_Reg']
-        files = request.files.getlist('files[]')
-        files.append(request.files.get('file'))
-        if len(files) > 1:
-            for file in files:
-                fn = file.filename.rsplit("/")[-1]
-                if '.etl' in fn:
-                    etl_trace = fn
-                    files_to_save.append(file)
-                else:
-                    for necessary_file in necessary_files:
-                        if necessary_file + '.txt' == fn:
-                            necessary_files.remove(necessary_file)
-                            files_to_save.append(file)
-
-            if necessary_files:
-                mfCount = 0
-                flash("Not all necessary files were selected. Make sure the following file(s) exist in the folder:\n")
-                for file in necessary_files:
-                    mfCount += 1
-                    flash(f"{mfCount}) {file}.txt\n")
-                return redirect(request.url)
-
-            report_id = ( 'report_' + dt_string )
-            
-            if not os.path.exists(UPLOAD_FOLDER):
-                os.mkdir(UPLOAD_FOLDER)
-            app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
+        else:
+            files_to_save, etl_trace = validationResult
             for file in files_to_save:
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename.rsplit("/")[-1] ))
 
-            etl_trace   = os.path.join(UPLOAD_FOLDER, etl_trace)
-            report_file = showReport(report_id, etl_trace)
+            report_id   = reportIdCreate()
+            caseNo      = caseNumberValidation()
 
-            rm_files = glob.glob(os.path.join(UPLOAD_FOLDER, '*'), recursive=True)
-            for f in rm_files:
-                os.remove(f)
-            os.rmdir(UPLOAD_FOLDER)            
+            if not caseNo:
+                flash(FLASH_INVALIDCASENO, 'error')
+                return redirect(request.url)
             
+            report_file = showReport(report_id, etl_trace)                             
             with open(REPORT_HISTORY, 'a') as f:
-                f.write("{} - {}\n".format(dt_string, caseNo))
-
+                f.write("{} - {}\n".format(report_id, caseNo))
+                
+            uploadCleanup()            
             return redirect(url_for('download_report', report_file=report_file))
-        else:
-            flash('No folder selected')
-            return redirect(request.url)
-
 
 if __name__ == "__main__":    
     dirCheck()

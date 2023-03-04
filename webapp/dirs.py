@@ -1,4 +1,5 @@
-import os
+import os, glob
+from string_const import FLASH_MISSINGFILES
 
 PARENT_DIR                  = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
 DIRECTORY_TO_SERVE_PATH     = os.path.join(PARENT_DIR, 'kaDownload')
@@ -22,6 +23,23 @@ ERR         = os.path.join(UTIL_DIR, 'err.exe')
 TMFOUTPUT   = os.path.join(UPLOAD_FOLDER, 'tmf_trace.txt')
 
 
+def fileList():
+    necessary_files = [
+
+            'AssignedAccess_Reg', 
+            'AssignedAccessCsp_Reg',
+            'AssignedAccessManagerSvc_Reg',
+            'ConfigManager_AssignedAccess_Reg',
+            'Get-AppxPackage-AllUsers', 
+            'Get-AssignedAccess', 
+            'ShellLauncher_Reg', 
+            'Get-StartApps', 
+            'Winlogon_Reg'
+
+        ]    
+    return necessary_files
+
+
 def dirCheck():
     if not os.path.exists(DIRECTORY_TO_SERVE_PATH):
         os.mkdir(DIRECTORY_TO_SERVE_PATH)
@@ -29,4 +47,14 @@ def dirCheck():
         os.mkdir(REPORT_DIR)
     if not os.path.exists(REPORT_HISTORY):
         open(REPORT_HISTORY, 'a').close()
+
+def uploadDirCheck():
+    if not os.path.exists(UPLOAD_FOLDER):
+                os.mkdir(UPLOAD_FOLDER)
+
+def uploadCleanup():
+    rm_files = glob.glob(os.path.join(UPLOAD_FOLDER, '*'), recursive=True)
+    for f in rm_files:
+        os.remove(f)
+    os.rmdir(UPLOAD_FOLDER) 
     
