@@ -1,15 +1,12 @@
-from flask import request
 from datetime import datetime
 import os
 from dirs import *
 from string_const import *
 
-def fileValidation():  
+def fileValidation(files, etl_tracefile):  
     necessary_files = fileList()
     files_to_save = []
-    result = []
-    files = request.files.getlist('files[]')    
-    etl_tracefile = request.files.get('file')
+    result = []    
     etl_trace = ""
   
     if etl_tracefile:
@@ -39,8 +36,7 @@ def fileValidation():
     return result
 
 
-def caseNumberValidation():    
-    caseNo = request.form['caseno']
+def caseNumberValidation(caseNo):
     if caseNo and (len(caseNo) != 8 and len(caseNo) != 16):        
         caseNo = False
     elif not caseNo:

@@ -37,33 +37,34 @@ def kioskmdm():
 
 @app.route('/', methods=['POST'])
 def upload_file():    
-    if request.method == 'POST':        
-        uploadDirCheck()
-        app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+    if request.method == 'POST':
 
-        validationResult = fileValidation()
-
+        caseNo = caseNumberValidation(request.form['caseno'])
+        if not caseNo:
+            flash(FLASH_INVALIDCASENO, 'error')
+            return redirect(request.url)        
+        
+        validationResult = fileValidation(request.files.getlist('files[]'), request.files.get('file'))
         if len(validationResult) == 1:
             flash(validationResult[0], 'error')
             return redirect(request.url)
-        else:
-            files_to_save, etl_trace = validationResult
-            for file in files_to_save:
-                file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename.rsplit("/")[-1] ))
 
-            report_id   = reportIdCreate()
-            caseNo      = caseNumberValidation()
+        uploadDirCheck()
+        app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER        
+    
+        files_to_save, etl_trace = validationResult
+        for file in files_to_save:
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename.rsplit("/")[-1] ))
 
-            if not caseNo:
-                flash(FLASH_INVALIDCASENO, 'error')
-                return redirect(request.url)
+        report_id   = reportIdCreate()
+        report_file = writeReport(report_id, etl_trace)                             
+        with open(REPORT_HISTORY, 'a') as f:
+            f.write("{} - {}\n".format(report_id, caseNo))
             
-            report_file = writeReport(report_id, etl_trace)                             
-            with open(REPORT_HISTORY, 'a') as f:
-                f.write("{} - {}\n".format(report_id, caseNo))
-                
-            uploadCleanup()            
-            return redirect(url_for('download_report', report_file=report_file))
+        uploadCleanup()           
+
+        return redirect(url_for('download_report', report_file=report_file))
+
 
 if __name__ == "__main__":    
     dirCheck()
