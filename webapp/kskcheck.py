@@ -25,7 +25,7 @@ def documentation():
 
 @app.route('/download')
 def download():
-    return send_from_directory(DIRECTORY_TO_SERVE_PATH, 'kioskAssistant.zip')
+    return redirect(KA_BLOB_URL)
 
 @app.route('/download_report/<report_file>')
 def download_report(report_file):
