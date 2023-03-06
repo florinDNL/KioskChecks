@@ -1,4 +1,4 @@
-from flask import Flask, flash, request, redirect, render_template, send_from_directory, url_for, send_file
+from flask import Flask, flash, request, redirect, render_template, url_for, send_file
 from kskparser import writeReport
 from dirs import *
 from upload import *
