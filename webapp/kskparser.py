@@ -68,7 +68,7 @@ def diagCheck():
 
     for line in aadiag:
         if "Error" in line:
-            err = line.replace("REG_DWORD", "")
+            err = line.replace("REG_DWORD", "").replace(" ", "", 1)
             code = err.replace("Error", "").strip()
             translation = etldecoder.translateError(code)
         if "Time" in line:

@@ -10,9 +10,9 @@ def decodeEtlTrace(etl_trace):
 
 def translateError(hr):
     commandline = "{} {}".format(ERR, hr)
-    result = (subprocess.run(commandline, capture_output=True, text=True, shell=True)).stdout
+    result = (subprocess.run(commandline, capture_output=True, text=True)).stdout
     errs = []  
-
+    
     if '.h' in result:		
         result = result.split("\n", -1)
         for line in result:
