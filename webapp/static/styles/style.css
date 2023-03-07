@@ -206,7 +206,7 @@ input[type=button]:hover {
 }
 
 .error {
-    color: red
+    color: rgb(206, 73, 73)
 }
 
 .success {
