@@ -4,15 +4,6 @@
 {% block content %}
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.css">
 	<style> body { text-align: center; } </style>	
-	<p>
-		{% with messages = get_flashed_messages(with_categories=true) %}
-			{% if messages %}				
-				{% for category, message in messages %}
-					<ul class="{{ category }}">{{ message }}</ul>
-				{% endfor %}				
-			{% endif %}
-		{% endwith %}
-	</p>
 	<form method="post" action="/" enctype="multipart/form-data">
 		<dl>
 			<p>
@@ -27,6 +18,15 @@
 			</p>
 		</dl>		    
 	</form>
+	<p>
+		{% with messages = get_flashed_messages(with_categories=true) %}
+			{% if messages %}				
+				{% for category, message in messages %}
+					<p class="{{ category }}">{{ message }}</p>
+				{% endfor %}				
+			{% endif %}
+		{% endwith %}
+	</p>
 	<br/><br/>
 	<div class="center" style="width:100px;height:60px;border:1px solid #376a4c;">
 		<p>
