@@ -57,7 +57,13 @@ def upload_file():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename.rsplit("/")[-1] ))
 
         report_id   = reportIdCreate()
-        report_file = writeReport(report_id, etl_trace)                             
+
+        try:
+            report_file = writeReport(report_id, etl_trace)
+        except:
+               flash(FLASH_INTERNALERR, 'error')    
+               return redirect(request.url)      
+                       
         with open(REPORT_HISTORY, 'a') as f:
             f.write("{} - {}\n".format(report_id, caseNo))
             
