@@ -1,5 +1,5 @@
 from flask import Flask, flash, request, redirect, render_template, url_for, send_file
-from kskparser import writeReport
+from regparser import writeReport
 from dirs import *
 from upload import *
 import os
