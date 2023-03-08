@@ -22,6 +22,7 @@ TMFOUTPUT       = os.path.join(UPLOAD_FOLDER, 'tmf_trace.txt')
 
 KA_BLOB_URL     = 'https://kioskassistantstoracc.blob.core.windows.net/kioskassistantblob/KioskAssistant.zip'
 
+
 def fileList():
     necessary_files = [
             'AssignedAccess_Reg', 
