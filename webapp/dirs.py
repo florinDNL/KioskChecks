@@ -35,7 +35,6 @@ def fileList():
             'Get-StartApps', 
             'Winlogon_Reg'
         ]    
-    
     return necessary_files
 
 
