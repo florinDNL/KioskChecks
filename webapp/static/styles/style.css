@@ -155,7 +155,8 @@ input[type=button]:hover {
 
 .accordion > input[type="checkbox"]:checked ~ .content {
     padding: 15px;
-    border: 1px solid #376a4c;
+    border: 2px solid #376a4c;
+
 }
 
 .accordion .handle {
@@ -221,15 +222,14 @@ input[type=button]:hover {
     height: auto;
     word-wrap: break-word;
     position: absolute;
-    top:30%;    
+    top: auto;    
     left: 0;
     right: 0;    
     margin: auto;
     border-left: 5px solid #376a4c;
     padding: 20px;
-    background-color: #2c2c2c;
+    background-color: #292b2e;
 }
-
 
 .altp     {
     font-family: 'Consolas';  
