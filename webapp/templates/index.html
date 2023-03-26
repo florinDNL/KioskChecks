@@ -6,7 +6,7 @@
 	<style> body { text-align: center; } </style>	
 	<form method="post" action="/" enctype="multipart/form-data">
 		<dl>
-			<p>
+			<p class="altp">
 				<input style="text-align:center" size="26" type="text" class="text-line" placeholder="Case or AR Number (Optional)" name="caseno" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"/>
 				<br/><br/>
 				<input type="button" id="loadLogFolder" value="Upload LogonLog Folder" onclick="document.getElementById('logfolder').click();" />
@@ -18,7 +18,7 @@
 			</p>
 		</dl>		    
 	</form>
-	<p>
+	<p class="altp">
 		{% with messages = get_flashed_messages(with_categories=true) %}
 			{% if messages %}				
 				{% for category, message in messages %}
@@ -29,7 +29,7 @@
 	</p>
 	<br/><br/>
 	<div class="center" style="width:100px;height:60px;border:1px solid #376a4c;">
-		<p>
+		<p class="altp">
 			<small>Report an Issue</small>
 			<br/>	
 			<a href="mailto:fldanila@microsoft.com?subject=KioskChecks Issue"><img src="/static/mailico.png" /></a>
@@ -44,20 +44,20 @@
 				<label for="handle1">How To</label>
 			</h2>
 			<div class="content">
-				<p>The parser works with the output of TSSv2 -Start -UEX_Logon. To collect the data:</p>
+				<p class="altp">The parser works with the output of TSSv2 -Start -UEX_Logon. To collect the data:</p>
 				<p class="inst">1) Download TSS to the affected machine</p>
 				<p class="inst">2) Log in as administrator and open Powershell</p>
 				<p class="inst">3) Run: <b>.\TSSv2.ps1 -Start -UEX_Logon</b></p>
 				<p class="inst">4) Log in with the affected Kiosk account and reproduce the issue</p>
 				<p class="inst">5) Switch back to the Admin account and stop the trace</p>
 				<br/>
-				<p>When the log collection is done, the output should look like this:</p><br/>
+				<p class="altp">When the log collection is done, the output should look like this:</p><br/>
 				<img src="..\static\howto1.PNG"><br/><br/>
-				<p>1. Upload the LogonLog-yyyy-mm-dd folder using the first button</p><br/>
+				<p class="altp">1. Upload the LogonLog-yyyy-mm-dd folder using the first button</p><br/>
 				<img src="..\static\howto2.PNG"/><br/><br/>
-				<p>2. Upload the .etl file with the second button (if applicable/needed)</p><br/>
+				<p class="altp">2. Upload the .etl file with the second button (if applicable/needed)</p><br/>
 				<img src="..\static\howto3.PNG"/><br/><br/>
-				<p>3. Click analyze to parse the files and download the report.</p>
+				<p class="altp">3. Click analyze to parse the files and download the report.</p>
 			</div>
 	</section>
 {% endblock %}
