@@ -217,7 +217,7 @@ input[type=button]:hover {
 }
 
 .docdiv {        
-    width : 50%;
+    width : 900px;
     height: auto;
     word-wrap: break-word;
     position: absolute;
