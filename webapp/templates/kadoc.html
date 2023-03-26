@@ -1,138 +1,134 @@
 {% extends "base.html" %}
 {% block title %} Kiosk Assistant Documentation {% endblock %}
 {% block content %}
-<div style="direction:ltr;border-width:100%">
-    <div>
-        <div>
-            <p data-darkreader-inline-color="" style="margin: 0in; line-height: 36pt; font-size: 10pt; color: red; --darkreader-inline-color:#ff1a1a;"><span style='font-family:"Segoe UI Semibold"'>Note:</span><span style='font-family:
-"Segoe UI"'> Kiosk Assistant is an </span><span style='font-weight:bold;
-text-decoration:underline;font-family:"Segoe UI"'>INTERNAL ONLY</span><span style='font-family:"Segoe UI"'> tool. It is developed by a Support Escalation Engineer in Windows Commercial Support, and is not authorized for distribution to anyone outside of Windows Commercial Support.</span></p>
-            <p data-darkreader-inline-color="" style='margin: 0in; line-height: 38pt; font-family: "Segoe UI"; font-size: 10pt; color: red; --darkreader-inline-color:#ff1a1a;'></p><hr>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt"><a href="/download"><img src="/static/dlBt.png"/></a></p>  
-            </br>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">KioskAssistant is a UI tool that facilitates the creation Multi-App Kiosk environments. Its purpose is to speed up the configuration of XML files as well as prevent any mistakes by employing thorough checks and automatic XML Formatting. This is ideal for setting up test environments. </p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">To use, extract the files and make sure you have .NET Desktop Runtime 7 installed: <a href="https://dotnet.microsoft.com/en-us/download/dotnet/7.0">Download .NET 7.0 (Linux, macOS, and Windows) (microsoft.com)</a></p>
-            </br>            
-            <p style="margin:0in;font-family:Calibri;font-size:14.0pt"><span style="text-decoration:underline">Usage</span></p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">&nbsp;</p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">The main window is split into the<span data-darkreader-inline-color="" style="color: red; --darkreader-inline-color:#ff1a1a;"> Accounts View</span> and the <span data-darkreader-inline-bgcolor="" data-darkreader-inline-bgimage="" data-darkreader-inline-color="" style="color: yellow; background: silver; --darkreader-inline-color:#ffff1a; --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor:#3c4143;">Application Profiles</span> view &ndash; to generate an XML you need to have at least one of each, then associate them with each-other</p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">&nbsp;</p>
-            <p style="margin:0in"><img src="/static/ka1.png"></p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">&nbsp;</p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">An account can be a Local User/Group, AD User/Group, AAD User/Group, Global Profile or AutoLogonAccount. Each account will need to have one application profile associated with it (it can be the same application profile for one or more accounts). </p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">&nbsp;</p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">To add an account, use the buttons on the left view. Click &quot;Add Application Profile&quot; to begin configuring the Kiosk profiles.</p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">&nbsp;</p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">&nbsp;</p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">The Application Profile Window is split as follows:</p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">&nbsp;</p>
-            <p style="margin:0in"><img src="/static/ka2.png"></p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">&nbsp;</p>
-            <p data-darkreader-inline-color="" style="margin: 0in; font-family: Calibri; font-size: 11pt; color: rgb(0, 176, 80); --darkreader-inline-color:#51ffa0;">- UWP Application List</p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">- <span data-darkreader-inline-color="" style="color: rgb(222, 235, 246); --darkreader-inline-color:#c0daee;">Win32 Application Panel</span></p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">- <span data-darkreader-inline-color="" style="color: rgb(75, 172, 198); --darkreader-inline-color:#5ab3cb;">Link file Panel</span></p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">- <span data-darkreader-inline-color="" style="color: rgb(128, 100, 162); --darkreader-inline-color:#8c73ab;">Group Configuration</span></p>
-            <p data-darkreader-inline-color="" style="margin: 0in; font-family: Calibri; font-size: 11pt; color: rgb(112, 48, 160); --darkreader-inline-color:#a468d2;">&nbsp;</p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">An application profile needs at least an App Group (Start Menu Group). To create a group, you need to select at least 1 Application to allow. </p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">&nbsp;</p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">To allow an <span data-darkreader-inline-color="" style="color: rgb(0, 176, 80); --darkreader-inline-color:#51ffa0;">UWP Application</span>, simply tick the box corresponding to it.</p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">To allow a <span data-darkreader-inline-color="" style="color: rgb(222, 235, 246); --darkreader-inline-color:#c0daee;">Win32 Application</span>, click the Add button above the pannel and select an executable (.exe file)</p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">To add an <span data-darkreader-inline-color="" style="color: rgb(222, 235, 246); --darkreader-inline-color:#c0daee;">Win32 Application</span> application to a start menu group, it needs to be associated with a <span data-darkreader-inline-color="" style="color: rgb(75, 172, 198); --darkreader-inline-color:#5ab3cb;">Link (.lnk) file. </span>To add a <span data-darkreader-inline-color="" style="color: rgb(75, 172, 198); --darkreader-inline-color:#5ab3cb;">Link (.lnk) file</span> click the Add button above its panel.</p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">&nbsp;</p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">Note: The .lnk file needs to point back to an .exe that was already added to the Win32 panel. If no corresponding .exe can be found, the app will notify you and the link won&apos;t be added.</p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">&nbsp;</p>
-            <p style="margin:0in"><img src="/static/ka3.png"></p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">&nbsp;</p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">&nbsp;</p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">Once you have selected your applications, you can organize them in App Groups. Click the <span data-darkreader-inline-color="" style="color: rgb(128, 100, 162); --darkreader-inline-color:#8c73ab;">Add and Configure App Group </span>button. </p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">&nbsp;</p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">Multi-App Groups work the same as start menu groups &ndash; they can have a maximum of 24 Cells (6x4). The App Group Window will contain a preview that shows you the placement of each tile you add according to its size and column/row:</p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">&nbsp;</p>
-            <p style="margin:0in"><img src="/static/ka4.png"></p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">&nbsp;</p>
-            <p style="margin:0in"><img src="/static/ka5.png"></p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">&nbsp;</p>
-            <p style="margin:0in"><img src="/static/ka6.png"></p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">&nbsp;</p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">Trying to place a tile at an invalid position is not possible and you will be notified to adjust.</p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">&nbsp;</p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">After you&apos;ve finished the group, click &quot;Finish&quot; to go back to the App Profile screen. You will now see the group in the list. Leftover applications will remain allowed and they can be added to a different group. Applications that are not added to any group will still be allowed but will not be shown on the start menu.</p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">&nbsp;</p>
-            <p style="margin:0in"><img src="/static/ka7.png"></p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">&nbsp;</p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">Once you have your groups settled you can configure additional settings via the tickboxes in the upper middle or an auto-launch app with arguments [optional]. </p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">&nbsp;</p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">The Profile can then be saved with an automatically generated GUID (visible in the upper left) and will be displayed on the main screen.</p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">&nbsp;</p>
-            <p style="margin:0in"><img src="/static/ka8.png"></p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">&nbsp;</p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">The App Profile now needs to be associated with a user account (or more). Here I am creating a Global Profile and also adding an AD Group CONTOSO\AssignedAccess.</p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">&nbsp;</p>
-            <p style="margin:0in"><img src="/static/ka9.png"></p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">&nbsp;</p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">To save the XML, all accounts need to be assigned an Application Profile. To assign, select the account(s) and the application profile, and click the &lt; &gt; button:</p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">&nbsp;</p>
-            <p style="margin:0in"><img src="/static/ka10.png"></p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">&nbsp;</p>
-            <p style="margin:0in"><img src="/static/ka11.png"></p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">&nbsp;</p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">&nbsp;</p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">Now you can Generate the XML. Here is the XML Generated from the configuration above:</p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">&nbsp;</p>
-            <textarea readonly rows="51" cols="220">
-                <?xml version="1.0" encoding="utf-8"?>
-                <AssignedAccessConfiguration xmlns:v2="http://schemas.microsoft.com/AssignedAccess/201810/config" xmlns:v3="http://schemas.microsoft.com/AssignedAccess/2020/config" xmlns="http://schemas.microsoft.com/AssignedAccess/2017/config">
-                <Profiles>
-                    <Profile Id="{BB9573B1-7237-482C-B485-EDCA5A035BBE}">
-                    <AllAppsList>
-                        <AllowedApps>
-                        <App AppUserModelId="Microsoft.GetHelp_8wekyb3d8bbwe!App" />
-                        <App AppUserModelId="Microsoft.WindowsAlarms_8wekyb3d8bbwe!App" />
-                        <App AppUserModelId="microsoft.windowscommunicationsapps_8wekyb3d8bbwe!microsoft.windowslive.mail" />
-                        <App AppUserModelId="Microsoft.WindowsMaps_8wekyb3d8bbwe!App" />
-                        <App DesktopAppPath="C:\Program Files\Git\cmd\git-gui.exe" />
-                        <App AppUserModelId="onesupport.crm.dynamics.com-14B462C0_3g24qzzjcvnft!App" />
-                        <App AppUserModelId="Microsoft.MicrosoftEdge_8wekyb3d8bbwe!MicrosoftEdge" />
-                        <App AppUserModelId="Microsoft.WindowsCamera_8wekyb3d8bbwe!App" />
-                        </AllowedApps>
-                    </AllAppsList>
-                    <StartLayout><![CDATA[<LayoutModificationTemplate xmlns:defaultlayout="http://schemas.microsoft.com/Start/2014/FullDefaultLayout" Version="1" xmlns:start="http://schemas.microsoft.com/Start/2014/StartLayout" xmlns="http://schemas.microsoft.com/Start/2014/LayoutModification">
-                        <LayoutOptions StartTileGroupCellWidth="6" />
-                        <DefaultLayoutOverride>
-                            <StartLayoutCollection>
-                            <defaultlayout:StartLayout GroupCellWidth="6">
-                                <start:Group Name="My Group #1">
-                                <start:Tile Size="4x2" Column="2" Row="2" AppUserModelID="Microsoft.GetHelp_8wekyb3d8bbwe!App" />
-                                <start:Tile Size="4x2" Column="2" Row="0" AppUserModelID="Microsoft.WindowsAlarms_8wekyb3d8bbwe!App" />
-                                <start:Tile Size="1x1" Column="0" Row="0" AppUserModelID="microsoft.windowscommunicationsapps_8wekyb3d8bbwe!microsoft.windowslive.mail" />
-                                <start:Tile Size="1x1" Column="1" Row="0" AppUserModelID="Microsoft.WindowsMaps_8wekyb3d8bbwe!App" />
-                                </start:Group>
-                                <start:Group Name="App Group">
-                                <start:DesktopApplicationTile Size="2x2" Column="0" Row="0" DesktopApplicationLinkPath="C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Git\Git GUI.lnk" />
-                                <start:Tile Size="2x2" Column="2" Row="0" AppUserModelID="onesupport.crm.dynamics.com-14B462C0_3g24qzzjcvnft!App" />
-                                <start:Tile Size="2x2" Column="0" Row="2" AppUserModelID="Microsoft.MicrosoftEdge_8wekyb3d8bbwe!MicrosoftEdge" />
-                                </start:Group>
-                            </defaultlayout:StartLayout>
-                            </StartLayoutCollection>
-                        </DefaultLayoutOverride>
-                        </LayoutModificationTemplate>
-                    ]]>
-                    </StartLayout>
-                    <Taskbar ShowTaskbar="false" />
-                    </Profile>
-                </Profiles>
-                <Configs>
-                    <v3:GlobalProfile Id="{BB9573B1-7237-482C-B485-EDCA5A035BBE}" />
-                    <Config>
-                    <UserGroup Type="ActiveDirectoryGroup" Name="CONTOSO\AssignedAccess" />
-                    <DefaultProfile Id="{BB9573B1-7237-482C-B485-EDCA5A035BBE}" />
-                    </Config>
-                </Configs>
-                </AssignedAccessConfiguration>
-            </textarea>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">&nbsp;</p>
-            <p style="margin:0in;font-family:Calibri;font-size:11.0pt">The XML can then be applied using the <a href="/kioskmdm">KioskMDM</a> script</p>
-        </div>
-    </div>
+<style> 
+    p         {
+        font-family: default; 
+        font-size: default;
+    }
+</style>
+<div class="docdiv">
+    <md-block>
+        # Kiosk Assistant
+        [Download KioskAssistant.zip (16MB)](https://kioskassistantstoracc.blob.core.windows.net/kioskassistantblob/KioskAssistant.zip)
+
+        KioskAssistant is a UI tool that facilitates the creation Kiosk environments. Its purpose is to speed up the configuration of XML files by providing a graphical interface as well as prevent any mistakes by employing thorough checks and automatic XML Formatting.
+
+        ## Requirements
+
+        - [.NET Desktop Runtime 7](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-7.0.4-windows-x64-installer)
+
+        ## Capabilities
+
+        - Create Multi-App XML configurations
+        - Create SingleApp Kiosk XML configuration (KioskModeApp / ShellLauncher)
+        - Create Edge Browser kiosks using pre-defined templates
+
+        ## How to use
+
+        The interfaces for MultiApp/KioskModeApp and ShellLauncher are similar and can mainly be broken down in two parts:
+
+        1. The profile panel - this contains a list of users/groups that a kiosk profile can be assigned to.
+            
+            ![maProfilePanel](../static/doc/ma1.png)
+
+        2. The application profile / custom shell panel - this contains the actual kiosk profile configurations that define the allowed app(s), icons, start menu layout, etc...
+
+            ![maAppProfilePanel](../static/doc/ma2.png)
+
+
+        To generate an XML configuration, you need:
+
+        - At least 1 user/group
+        - At least 1 application profile
+        - All added users/groups need to have an application profile assigned to them. This can be done by selecting the user/group and the application profile and using the <> button:
+
+            ![maAppAssign](../static/doc/ma3.png)
+
+        Once all conditions are met, the "Generate XML Button" will be available.
+
+        ![mAppComplete](../static/doc/ma4.png)
+
+        ### Multi-App Kiosk Profile
+
+        The multi-app profile window contains several views and options. They can be mainly split into:
+
+        #### UWP Aplications
+
+        ![uwpView](../static/doc/maProfile1.png)
+
+        <p> A checkbox list comprised of all the modern apps found on the system where KioskAssistant runs. They can be added to the AllowedApps node of the XML simply by being checked. </p>
+        <p> If a required app is not found on the system, the AUMID can be manually typed in using the respective button.
+
+        #### Win32 Applications
+
+        ![win32View](../static/doc/maProfile2.png)
+
+        <p>Classic applications can be added to the AllowedApps node by pointing to an executable file. This can either be selected from a File Dialog directly from the local system, or be typed in manually using the button.</p>
+        <p>Unlike UWP Applications, Win32 application require a .lnk file (shortcut) in order to be displayed on the Start Menu. Link files are optional, but not providing them will only add the app to the AllowedApps list without showing it on the Start Menu.</p>
+        <p>In the case of .exe and .lnk files added from the File Dialog, the application is very strict - it will verify whether the shortcut corresponds to any of the added executable files and will not add any stray links. This is to ensure the resulting Kiosk display does not contain any missing entries. </p>
+
+        #### Start Groups
+
+        The profile can only be saved once at least one Start Group has been defined. This can be done using the "Add and Configure App Group" button, which will open a new view:
+
+        ![appGroup](../static/doc/appGrpBt.png)
+
+        The panel on the left will contain a list of all the applications that have been added so far (checked UWP apps and added .EXE + .LNK pairs)
+
+        ![appGroupPanel](../static/doc/appGrp1.png)
+
+        The size and position of each tile can be managed with the controls above. Once an entry has been selected and added, the Preview pane on the right will show its position and sizing inside the Start Menu group.
+
+        ![appGroupPreview](../static/doc/appGrpPrev.png)
+
+        This will give you an overview of how the Group will look. 
+
+        ![appGroupPreview2](../static/doc/appGrpPrev2.png)
+
+        The application will not allow any tiles to be placed out of bounds or on already occupied space. Any misplacement will result in an error.
+
+        ##### Remarks
+
+        - You cannot undo a single tile placement, but you can clear the whole board and start over with the "Clear" button
+        - Not all apps in the list have to be added to a single group - you can create multiple Start Menu groups (names cannot be duplicate) or just leave applications groupless (they will not be displayed in the start menu)
+        - Once a group has been created, the added apps will be removed from the lists and can be viewed in the lower panel. Groups cannot be modified, but they can be deleted, which will restore all included apps to their original lists.
+        ![remGrp](../static/doc/remGrpBt.png)
+
+        #### Auto-Launch Application
+        ![autoLaunch](../static/doc/autoLaunchBt.png)
+
+        A single application can optionally be configured for auto-launch in a multi-app profile. This can be selected from a list of all applications added so far (whether they are in start groups or not). Removing the application from the AllowedApps will automatically remove it from the Auto-Launch config.
+
+        Other settings, as well as the target OS can be configured from the upper display of the profile. You can configure a single profile for both Win10 and Win11 simultaneously, but the Start Groups will be handled differently.
+
+        ### Kiosk Mode App
+
+        <p>A single application Kiosk Profile that can be configured and assigned from the same window as a multi app kiosk. An XML Configuration can contain both multi-app and kiosk mode app profiles, as long as they are assigned to different users/groups.</p>
+        <p>There are 3 templates for Kiosk Mode App:</p>
+
+        - Edge (most common use case): This will pre-set the executable path and allow for the configuration of the URL, idle timeout and signage mode
+        - UWP: Will provide a list of locally installed modern apps for selection - the AUMID can also be manually typed in
+        - Win32 (unstable): Allows for the selection or manually input of an executable file and additional arguments; not guaranteed to work. 
+
+        ### Shell Launcher
+
+        <p>A single application Kiosk Profile similar to Kiosk Mode App. It cannot be configured in the same XML as a multi-app kiosk and therefore has its own menu.</p>
+        <p>App types are identical to Kiosk Mode App, however ShellLauncher differs in the accounts it can be assigned to. These can be either Names or SIDs of local or AD users and groups, or an Auto Logon Account.</p>
+
+        ![shellLauncher](../static/doc/sl1.png)
+
+        <p>To add a profile, enter the name or sid in the text box and click the corresponding button - adding a name and clicking the Add SID button and vice-versa will result in a misconfiguration</p>
+
+
+        ### Profile assignment
+
+        <p>Both Multi-App/KioskModeApp and ShellLauncher profiles will have a random, unique GUID. An XML Can have mutlipe profiles and assignments that can be configured from the main view.</p>
+        <p>You can assign a profile to multiple users at once by selecting the users on the left, the profile on the right, and clicking the <> button</p>
+
+        ![assign1](../static/doc/assign1.png)
+
+        <p>Profiles already assigned to a user/group can be overwritten by another profile if needed.</p>
+    </md-block>
 </div>
 {% endblock %}
