@@ -356,7 +356,6 @@ def writeReport(report_id, etl_trace):
                 writer.writelines(MSG_ETL_ERRFOUND )
                 for error in errors:
                     writer.writelines(f'{error}\n')
-                writer.writelines(MSG_ETL_ALLEVENTS  )
             else:
                 if etl_report:
                     writer.writelines(MSG_ETL_NOERRS )                
