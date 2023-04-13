@@ -3,7 +3,7 @@
 
 Flask WebApp that works as a parser / analyzer for AssignedAccess logs and traces
 
-![homepage](https://gcdnb.pbrd.co/images/PFzGm8vnaoh3.png?o=1)
+![homepage](https://user-images.githubusercontent.com/79944491/231856867-9962d342-6575-496f-b7a0-ba57ce538b3e.png)
 
 ### Uses:
 
