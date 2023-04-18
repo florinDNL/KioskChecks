@@ -1,5 +1,5 @@
 # Kiosk Checks
-[![Build Status](https://dev.azure.com/florinDNL/KioskChecks/_apis/build/status%2FflorinDNL.KioskChecks?branchName=main)](https://dev.azure.com/florinDNL/KioskChecks/_build/latest?definitionId=2&branchName=main) ![Deployment Status](https://vsrm.dev.azure.com/florinDNL/_apis/public/Release/badge/78192487-463e-4ef1-b969-d679993dd5c5/1/1)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Build Status](https://dev.azure.com/florinDNL/KioskChecks/_apis/build/status%2FflorinDNL.KioskChecks?branchName=main)](https://dev.azure.com/florinDNL/KioskChecks/_build/latest?definitionId=2&branchName=main) ![Deployment Status](https://vsrm.dev.azure.com/florinDNL/_apis/public/Release/badge/78192487-463e-4ef1-b969-d679993dd5c5/1/1)
 
 Flask WebApp that works as a parser / analyzer for AssignedAccess logs and traces
 
