@@ -25,7 +25,7 @@ def documentation():
 
 @app.route('/download')
 def download():
-    return redirect(KA_BLOB_URL)
+    return redirect(KA_REL_URL)
 
 @app.route('/download_report/<report_file>')
 def download_report(report_file):

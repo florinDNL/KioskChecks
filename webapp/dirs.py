@@ -20,7 +20,7 @@ TRACEFMT        = os.path.join(UTIL_DIR, 'tracefmt.exe')
 ERR             = os.path.join(UTIL_DIR, 'err.exe')  
 TMFOUTPUT       = os.path.join(UPLOAD_FOLDER, 'tmf_trace.txt')
 
-KA_BLOB_URL     = 'https://kioskassistantstoracc.blob.core.windows.net/kioskassistantblob/KioskAssistant.zip'
+KA_REL_URL      = "https://github.com/florinDNL/KioskAssistant/releases/latest/download/KioskAssistant.zip"
 
 
 def fileList():

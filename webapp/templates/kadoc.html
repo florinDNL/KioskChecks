@@ -4,10 +4,10 @@
 
 <md-block>
     # Kiosk Assistant
-    [Download KioskAssistant.zip (16MB)](https://kioskassistantstoracc.blob.core.windows.net/kioskassistantblob/KioskAssistant.zip)
-    <br/>
+    [Download KioskAssistant.zip (16MB)](https://github.com/florinDNL/KioskAssistant/releases/latest/download/KioskAssistant.zip)
+    <br />
     <b>!!!INTERNAL USE ONLY!!! Do not send the tool to customers</b>
-    </br><br/>
+    </br /><br />
     KioskAssistant is a UI tool that facilitates the creation Kiosk environments. Its purpose is to speed up the configuration of XML files by providing a graphical interface as well as prevent any mistakes by employing thorough checks and automatic XML Formatting.
 
     ## Requirements
@@ -25,12 +25,12 @@
     The interfaces for MultiApp/KioskModeApp and ShellLauncher are similar and can mainly be broken down in two parts:
 
     1. The profile panel - this contains a list of users/groups that a kiosk profile can be assigned to.
-        
-        ![maProfilePanel](../static/doc/ma1.png)
+
+    ![maProfilePanel](../static/doc/ma1.png)
 
     2. The application profile / custom shell panel - this contains the actual kiosk profile configurations that define the allowed app(s), icons, start menu layout, etc...
 
-        ![maAppProfilePanel](../static/doc/ma2.png)
+    ![maAppProfilePanel](../static/doc/ma2.png)
 
 
     To generate an XML configuration, you need:
@@ -39,7 +39,7 @@
     - At least 1 application profile
     - All added users/groups need to have an application profile assigned to them. This can be done by selecting the user/group and the application profile and using the <> button:
 
-        ![maAppAssign](../static/doc/ma3.png)
+    ![maAppAssign](../static/doc/ma3.png)
 
     Once all conditions are met, the "Generate XML Button" will be available.
 
@@ -54,11 +54,12 @@
     ![uwpView](../static/doc/maProfile1.png)
 
     <p> A checkbox list comprised of all the modern apps found on the system where KioskAssistant runs. They can be added to the AllowedApps node of the XML simply by being checked. </p>
-    <p> If a required app is not found on the system, the AUMID can be manually typed in using the respective button.
+    <p>
+        If a required app is not found on the system, the AUMID can be manually typed in using the respective button.
 
-    #### Win32 Applications
+        #### Win32 Applications
 
-    ![win32View](../static/doc/maProfile2.png)
+        ![win32View](../static/doc/maProfile2.png)
 
     <p>Classic applications can be added to the AllowedApps node by pointing to an executable file. This can either be selected from a File Dialog directly from the local system, or be typed in manually using the button.</p>
     <p>Unlike UWP Applications, Win32 application require a .lnk file (shortcut) in order to be displayed on the Start Menu. Link files are optional, but not providing them will only add the app to the AllowedApps list without showing it on the Start Menu.</p>
@@ -78,7 +79,7 @@
 
     ![appGroupPreview](../static/doc/appGrpPrev.png)
 
-    This will give you an overview of how the Group will look. 
+    This will give you an overview of how the Group will look.
 
     ![appGroupPreview2](../static/doc/appGrpPrev2.png)
 
@@ -105,7 +106,7 @@
 
     - Edge (most common use case): This will pre-set the executable path and allow for the configuration of the URL, idle timeout and signage mode
     - UWP: Will provide a list of locally installed modern apps for selection - the AUMID can also be manually typed in
-    - Win32 (unstable): Allows for the selection or manually input of an executable file and additional arguments; not guaranteed to work. 
+    - Win32 (unstable): Allows for the selection or manually input of an executable file and additional arguments; not guaranteed to work.
 
     ### Shell Launcher
 
@@ -125,6 +126,6 @@
     ![assign1](../static/doc/assign1.png)
 
     <p>Profiles already assigned to a user/group can be overwritten by another profile if needed.</p>
-    </md-block>
+</md-block>
 
 {% endblock %}
