@@ -168,9 +168,9 @@ def kioskProfileScan():
         if "ProfileId" in line and "DefaultProfileId" not in line and "GlobalProfileId" not in line:
             profileID = line.replace("ProfileId", "").replace("REG_SZ", "").replace(" ", "")
             profileType = aaconfig[aaconfig.index(line) + 2]
-            if "0" in profileType:
+            if "0x0" in profileType:
                 profileType = "Multi-App Kiosk"
-            elif "1" in profileType:
+            elif "0x1" in profileType:
                 profileType = "Kiosk-Mode App"
 
             profile = (profileID, profileType)
