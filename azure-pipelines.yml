@@ -2,7 +2,8 @@ trigger:
 - main
 
 pool:
-  name: sv2019_OnPrem_IIS
+  vmImage: 'windows-latest'
+  
 strategy:
   matrix:
     Python310:
