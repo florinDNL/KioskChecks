@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kioskchecks-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kioskchecks-app
+  template:
+    metadata:
+      labels:
+        app: kioskchecks-app
+    spec:
+      nodeSelector:
+        "kubernetes.io/os": linux
+      containers:
+      - name: kioskchecks-app
+        image: dalianflorin/kioskchecks-kubernetes:1.0.0
+        env:
+        - name: ALLOW_EMPTY_PASSWORD
+          value: "yes"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 250m
+            memory: 256Mi
+        ports:
+        - containerPort: 5000
+          name: defaultPort
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: kioskchecks-service
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 5000
+  selector:
+    app: kioskchecks-app
