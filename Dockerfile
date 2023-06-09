@@ -1,4 +1,4 @@
-FROM python:3-windowsservercore
+FROM python:3-windowsservercore-1809
 
 WORKDIR /app/webapp
 
@@ -8,4 +8,4 @@ RUN pip install -r /app/requirements.txt
 
 EXPOSE 5000
 
-CMD python kskcheck.py
+CMD ["python", "kskcheck.py"]
