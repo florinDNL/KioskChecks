@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kioskchecks-app
+  labels:
+    app: kioskchecks-app
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: kioskchecks-app
+      labels:
+        app: kioskchecks-app
+    spec:
+      nodeSelector:
+        "kubernetes.io/os": windows
+      containers:
+      - name: kioskchecks-app
+        image: dalianflorin/kioskchecks-kubetest:0.0.1
+        resources:
+          limits:
+            cpu: 1
+            memory: 800M
+        ports:
+          - containerPort: 5000
+  selector:
+    matchLabels:
+      app: kioskchecks-app
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kioskchecks-service
+spec:
+  type: LoadBalancer
+  ports:
+  - protocol: TCP
+    port: 5000
+  selector:
+    app: kioskchecks-app
