@@ -27,6 +27,10 @@ def documentation():
 def download():
     return redirect(KA_REL_URL)
 
+@app.route('/downloadscript')
+def downloadScript():
+    return send_file(KIOSKMDM, as_attachment=True)
+
 @app.route('/download_report/<report_file>')
 def download_report(report_file):
     return send_file(os.path.join(REPORT_DIR, report_file), as_attachment=True)
