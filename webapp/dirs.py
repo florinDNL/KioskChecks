@@ -19,6 +19,7 @@ GETAP_PS        = os.path.join(UPLOAD_FOLDER, 'Get-AppxPackage-AllUsers.txt')
 TRACEFMT        = os.path.join(UTIL_DIR, 'tracefmt.exe')
 ERR             = os.path.join(UTIL_DIR, 'err.exe')  
 TMFOUTPUT       = os.path.join(UPLOAD_FOLDER, 'tmf_trace.txt')
+KIOSKMDM        = os.path.join(UTIL_DIR, 'kioskMDM.ps1')
 
 KA_REL_URL      = "https://github.com/florinDNL/KioskAssistant/releases/latest/download/KioskAssistant.zip"
 

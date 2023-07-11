@@ -1,13 +1,3 @@
-{% extends "base.html" %}
-{% block title %} KioskMDM {% endblock %}
-
-{% block content %}
-<style> .docdiv { border-left: 5px solid #012456 ;} </style>
-<h1 id="kioskmdm">kioskMDM</h1>
-<p class="altp">Powershell cmdlets for applying/extracting Multi-App Kiosk and Shell Launcher configurations</p>
-</br>
-<a class="nospace" href="/downloadscript">kioskmdm.ps1 | Download</a>
-<textarea class="psScript" readonly rows="25" cols="139">
 function PrintCfg
 {
 
@@ -176,26 +166,3 @@ function Format-XML ([xml]$xml, $indent=2) #from https://devblogs.microsoft.com/
     return $StringWriter.ToString()
     
 }
-</textarea>
-<p class="altp">How To:</p>
-<ol>
-<li>Download PSExec: <a href="https://docs.microsoft.com/en-us/sysinternals/downloads/psexec">https://docs.microsoft.com/en-us/sysinternals/downloads/psexec</a></li>
-<li>Run powershell as SYSTEM using psexec in an elevated CMD: <strong>psexec -s -i powershell</strong></li>
-<li>Import the script: <strong>. .\kioskMDM.ps1</strong></li>
-</ol>
-<p class="altp">Available Functions:</p>
-<ul>
-<li><p class="altp"><strong>printcfg</strong>    - Shows current configuration</p>
-<p class="altp">   <img src="https://user-images.githubusercontent.com/79944491/160303609-5683b48a-d976-458d-b6ed-86adcb01f185.png" alt="image"></p>
-</li>
-<li><p class="altp"><strong>applycfg</strong>    - Applies a Multi-App Kiosk or ShellLauncher XML</p>
-<p class="altp">   <img src="https://user-images.githubusercontent.com/79944491/160303637-600fa903-9719-4939-a32d-0233473b029e.png" alt="image"></p>
-</li>
-<li><p class="altp"><strong>clearcfg</strong>    - Clears any configuration found on the system</p>
-<p class="altp">   <img src="https://user-images.githubusercontent.com/79944491/160303670-c01a7e25-2f3b-4b7a-9cf8-a31c3edfda9f.png" alt="image"></p>
-</li>
-<li><p class="altp"><strong>extractcfg</strong>  - Scans for Multi-App Kiosk / Shell Launcher configurations then formats and extracts them to an XML file</p>
-<p class="altp">   <img src="https://user-images.githubusercontent.com/79944491/160303662-781f0387-c9ad-4226-a442-16ac4c0aac3d.png" alt="image"></p>
-</li>
-</ul>
-{% endblock %}
